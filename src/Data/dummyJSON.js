@@ -1,0 +1,235 @@
+export const DUMMY_COLLECTIONS = [
+    {
+        id: 1,
+        img: "../img/partner/icon_1.png",
+        Heading: "Generate Revenue",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 2,
+        img: "../img/partner/icon_2.png",
+        Heading: "Reach Millions",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 3,
+        img: "../img/partner/icon_3.png",
+        Heading: "Spend Less",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 4,
+        img: "../img/partner/icon_4.png",
+        Heading: "Gas-free Marketplace",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 5,
+        img: "../img/partner/icon_5.png",
+        Heading: "Robust Deatures",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 6,
+        img: "../img/partner/icon_6.png",
+        Heading: "Breadth of Categories",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    }
+]
+
+export const PartnerWithUs = [
+    {
+        id: 1,
+        img: "../img/collections/coll1.png",
+        profile_img: "../img/collections/coll1.png",
+        Heading: "Name Last Name",
+        Subheading: "ERC-73",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 2,
+        img: "../img/partner/partner_1.png",
+        profile_img: "../img/collections/coll1.png",
+        Heading: "Name Last Name",
+        Subheading: "ERC-73",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 3,
+        img: "../img/partner/partner_2.png",
+        profile_img: "../img/collections/coll1.png",
+        Heading: "Name Last Name",
+        Subheading: "ERC-73",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 4,
+        img: "../img/partner/partner_3.png",
+        profile_img: "../img/collections/coll1.png",
+        Heading: "Name Last Name",
+        Subheading: "ERC-73",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 5,
+        img: "../img/partner/partner_4.png",
+        profile_img: "../img/collections/coll1.png",
+        Heading: "Name Last Name",
+        Subheading: "ERC-73",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    },
+    {
+        id: 6,
+        img: "../img/partner/partner_5.png",
+        profile_img: "../img/collections/coll1.png",
+        Heading: "Name Last Name",
+        Subheading: "ERC-73",
+        Text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra sed gravida sem quam. Nulla sit cursus adipiscing amet elit dignissim ullamcorper. Elit cras vitae dignissim tincidunt."
+    }
+]
+
+export const PartnersLogos = [
+    {
+        id: 1,
+        img: "../img/partner/blockChain-Aus.png"
+    },
+    {
+        id: 2,
+        img: "../img/partner/brands-Netvrk.png"
+    },
+    {
+        id: 3,
+        img: "../img/partner/NeoLegal-Exclusive-Partnership-1.png"
+    },
+    {
+        id: 4,
+        img: "../img/partner/Partners-HACKEN-Cybersecurity.png"
+    },
+    {
+        id: 5,
+        img: "../img/partner/Partners-Xentrix-studios.png"
+    }
+]
+
+export const CollectionCard = [
+    {
+        id: 1,
+        img: "../img/collections/list1.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list2.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list3.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list4.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list5.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list6.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list7.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list8.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list9.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list10.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list11.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list12.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    }
+]
