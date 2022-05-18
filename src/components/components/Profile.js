@@ -20,6 +20,24 @@ const AddressImg = {
 }
 
 function Profile() {
+
+    const uploadedImage = React.useRef(null);
+    const imageUploader = React.useRef(null);
+    
+    const handleImageUpload = e => {
+        const [file] = e.target.files;
+        if (file) {
+        const reader = new FileReader();
+        const { current } = uploadedImage;
+        current.file = file;
+        reader.onload = e => {
+            current.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        }
+    };
+
+
   return (
     <div className="profile_area pdd_8">
         <h1 className='profile_h1'>Profile Settings</h1>
@@ -92,6 +110,44 @@ function Profile() {
                         <div className="profile_image">
                             <img alt='' src={'../img/profile/profile2.png'} class="img-fluid profile_square_img" />
                             <div class="overlat_btn"><button type="" class="img_edit_btn"><i class="fa fa-edit fa-lg"></i></button></div>
+                        </div>
+                        <div className="profile_image">
+                            {/* <img alt='' src={'../img/profile/profile1.png'} class="img-fluid profile_circle_img" /> */}
+                            <div
+                                style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center"
+                                }}
+                            >
+                                <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                ref={imageUploader}
+                                style={{
+                                    display: "none"
+                                }}
+                                />
+                                <div className="profile_me"
+                                    style={{
+                                        height: "160px",
+                                        width: "160px",
+                                        position: "relative"
+                                    }}
+                                    onClick={() => imageUploader.current.click()}
+                                >
+                                    <img ref={uploadedImage} src={'../img/profile/profile1.png'} 
+                                    style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    }}
+                                    className="img-fluid profile_circle_img" />
+                                    <div class="overlat_btn"><button type="" class="img_edit_btn"><i class="fa fa-edit fa-lg"></i></button></div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </li>
                 </ul>
