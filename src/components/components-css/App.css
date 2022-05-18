@@ -3628,3 +3628,6 @@ a:hover {
 .Hepl-details ul li {
   margin-bottom: 15px;
 }
+.profile_me:hover .overlat_btn {
+  display: flex;
+}
