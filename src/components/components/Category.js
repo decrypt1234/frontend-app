@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 
-const catgor= () => (
+const Category= () => (
   <div className='row text-center'>
     <div className="col">
         <Link className="icon-box style-2 rounded" to="">
@@ -216,4 +216,4 @@ const catgor= () => (
     </div>
   </div>
 );
-export default catgor;
+export default Category;

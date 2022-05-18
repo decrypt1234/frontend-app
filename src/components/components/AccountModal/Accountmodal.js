@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useCallback } from "react";
 import Web3 from "web3";
-import { connect } from "react-redux";
-import { accountUpdate, tokenUpdate } from "./../../../redux/actions";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import detectEthereumProvider from "@metamask/detect-provider";
@@ -17,7 +15,7 @@ import { checkuseraddress } from "./../../../apiServices";
 import { NotificationManager } from "react-notifications";
 import PopupModal from "./popupModal";
 import { BsExclamationLg } from "react-icons/bs";
-import "../../../App.css";
+import "../../components-css/App.css";
 
 function initWeb3(provider) {
   const web3 = new Web3(provider);
@@ -126,13 +124,7 @@ const AccountModal = (props) => {
             window.sessionStorage.getItem("selected_account")
           );
           console.log("bal", bal);
-          props.dispatch(
-            accountUpdate({
-              account: window.sessionStorage.getItem("selected_account"),
-              chainId: chainId,
-              balance: bal,
-            })
-          );
+         
         }
       }
     }
@@ -185,13 +177,7 @@ const AccountModal = (props) => {
         console.log("Wrong network");
         setWrongNetwork(true);
         setIsPopup(true);
-        props.dispatch(
-          accountUpdate({
-            account: null,
-            chainId: chainId,
-            balance: null,
-          })
-        );
+        
       } else {
         // Get list of accounts of the connected wallet
         setWrongNetwork(false);
@@ -204,13 +190,7 @@ const AccountModal = (props) => {
         let bal = await web3.eth.getBalance(accounts[0]);
         console.log("bal", bal);
         window.sessionStorage.setItem("balance", bal);
-        props.dispatch(
-          accountUpdate({
-            account: accounts[0],
-            chainId: chainId,
-            balance: bal,
-          })
-        );
+        
         setCurrentAccount(accounts[0]);
         let response = await checkuseraddress(
           window.sessionStorage.getItem("selected_account")
@@ -228,11 +208,7 @@ const AccountModal = (props) => {
             let token = await Login(
               window.sessionStorage.getItem("selected_account")
             );
-            props.dispatch(
-              tokenUpdate({
-                token: token,
-              })
-            );
+            
             NotificationManager.success("Logged In Successfully");
 
             setTimeout(() => (window.location.href = "/profile"), 2000);
@@ -245,11 +221,7 @@ const AccountModal = (props) => {
             let token = await Login(
               window.sessionStorage.getItem("selected_account")
             );
-            props.dispatch(
-              tokenUpdate({
-                token: token,
-              })
-            );
+            
             NotificationManager.success("Logged In Successfully");
             setTimeout(() => (window.location.href = "/profile"), 2000);
             window.location.href = "/profile";
@@ -274,13 +246,7 @@ const AccountModal = (props) => {
     }
     if (web3) {
       const chainId = await web3.eth.getChainId();
-      props.dispatch(
-        accountUpdate({
-          account: null,
-          chainId: chainId,
-          balance: null,
-        })
-      );
+      
     }
     window.sessionStorage.removeItem("selected_account");
     window.sessionStorage.removeItem("Provider");
@@ -312,18 +278,7 @@ const AccountModal = (props) => {
         if (chainId.toString() !== process.env.REACT_APP_CHAIN_ID) {
           setWrongNetwork(true);
           setIsPopup(true);
-          props.dispatch(
-            accountUpdate({
-              account: null,
-              chainId: chainId,
-              balance: null,
-            })
-          );
-          props.dispatch(
-            tokenUpdate({
-              token: null,
-            })
-          );
+          
           onDisconnect();
         } else {
           console.log("accountt", currentAccount);
@@ -334,13 +289,7 @@ const AccountModal = (props) => {
           console.log("bal", bal);
           window.sessionStorage.setItem("balance", bal);
           console.log("accounttt", currentAccount);
-          props.dispatch(
-            accountUpdate({
-              account: currentAccount,
-              chainId: chainId,
-              balance: bal,
-            })
-          );
+         
         }
       });
     }
@@ -365,13 +314,7 @@ const AccountModal = (props) => {
           let bal = await web3.eth.getBalance(accounts[0]);
           console.log("bal", bal);
           window.sessionStorage.setItem("balance", bal);
-          props.dispatch(
-            accountUpdate({
-              account: accounts[0],
-              chainId: chainId,
-              balance: bal,
-            })
-          );
+          
           let response = await checkuseraddress(
             window.sessionStorage.getItem("selected_account")
           );
@@ -390,11 +333,7 @@ const AccountModal = (props) => {
               let token = await Login(
                 window.sessionStorage.getItem("selected_account")
               );
-              props.dispatch(
-                tokenUpdate({
-                  token: token,
-                })
-              );
+              
               NotificationManager.success("Logged In Successfully");
               setTimeout(() => (window.location.href = "/profile"), 2000);
               window.location.href = "/profile";
@@ -407,11 +346,7 @@ const AccountModal = (props) => {
               let token = await Login(
                 window.sessionStorage.getItem("selected_account")
               );
-              props.dispatch(
-                tokenUpdate({
-                  token: token,
-                })
-              );
+             
               NotificationManager.success("Logged In Successfully");
               setTimeout(() => (window.location.href = "/profile"), 2000);
               window.location.href = "/profile";
@@ -424,13 +359,7 @@ const AccountModal = (props) => {
           setWrongNetwork(true);
           setIsPopup(true);
 
-          props.dispatch(
-            accountUpdate({
-              account: null,
-              chainId: chainId,
-              balance: null,
-            })
-          );
+         
           window.sessionStorage.removeItem("selected_account");
           setCurrentAccount(null);
           await onDisconnect();
@@ -454,13 +383,7 @@ const AccountModal = (props) => {
         console.log("bal", bal);
         window.sessionStorage.setItem("balance", currentAccount);
         console.log("accounttt", currentAccount);
-        props.dispatch(
-          accountUpdate({
-            account: currentAccount,
-            chainId: chainId,
-            balance: bal,
-          })
-        );
+        
       }
     }
     if (currentAccount) {
@@ -537,12 +460,5 @@ const AccountModal = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    account: state.account,
-    token: state.token,
-    profileData: state.profileData,
-  };
-};
 
-export default connect(mapStateToProps)(AccountModal);
+export default AccountModal;

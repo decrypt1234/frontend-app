@@ -20,7 +20,6 @@ import {
   handleRemoveFromAuction,
   handleUpdateBidStatus,
 } from "../../helpers/sendFunctions";
-import { connect } from "react-redux";
 import { convertToEth } from "../../helpers/numberFormatter";
 import { handleRemoveFromSale } from "../../helpers/sendFunctions";
 import PopupModal from "../components/AccountModal/popupModal";
@@ -1477,12 +1476,4 @@ const ItemDetails = function (props) {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    account: state.account,
-    token: state.token,
-    profileData: state.profileData,
-  };
-};
-
-export default connect(mapStateToProps)(ItemDetails);
+export default ItemDetails;

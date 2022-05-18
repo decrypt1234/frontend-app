@@ -4,7 +4,7 @@ import SliderMain from "../components/SliderMain";
 import CarouselCollection from "../components/CarouselCollection";
 import CarouselNew from "../components/CarouselNew";
 import AuthorList from "../components/AuthorList";
-import Catgor from "../components/Catgor";
+import Category from "../components/Category";
 import Footer from "../components/footer";
 import Reveal from "react-awesome-reveal";
 import { keyframes } from "@emotion/react";
@@ -344,7 +344,7 @@ const Home = () => (
             </div>
           </div>
         </div>
-          <Catgor />
+          <Category />
       </div>
     </section>
 
