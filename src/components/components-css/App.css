@@ -1,3 +1,11 @@
+:root {
+  /* --onboard-wallet-columns: 1; */
+  --onboard-connect-sidebar-background: #0d171e;
+  --onboard-wallet-columns: 1;
+  --onboard-connect-sidebar-color: white;
+}
+
+
 @font-face {
   font-family: helvetica-light;
   src: url("./../../assets/helvetica-light.ttf");

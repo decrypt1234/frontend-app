@@ -3,42 +3,123 @@ import { setDefaultBreakpoints } from "react-socks";
 // import useOnclickOutside from "react-cool-onclickoutside";
 // import AccountModal from "./../components/AccountModal/Accountmodal";
 import { Link } from "react-router-dom";
-import { checkuseraddress } from "./../../apiServices";
+import Onboard from "@web3-onboard/core";
+import injectedModule from "@web3-onboard/injected-wallets";
+import walletConnectModule from "@web3-onboard/walletconnect";
+import Logo from "./../../assets/images/logo.svg";
+import { checkuseraddress, Login, Logout, Register } from "../../apiServices";
+
 
 setDefaultBreakpoints([{ xs: 0 }, { l: 1199 }, { xl: 1200 }]);
 
+const injected = injectedModule();
+const walletConnect = walletConnectModule();
+
+const onboard = Onboard({
+  wallets: [walletConnect, injected],
+  chains: [
+    {
+      id: "0x13881",
+      token: "MATIC",
+      label: "Mumbai matic testnet",
+      rpcUrl: `https://rpc-mumbai.maticvigil.com`,
+    },
+    // {
+    //   id: "0x1",
+    //   token: "ETH",
+    //   label: "Ethereum Mainnet",
+    //   rpcUrl: `https://mainnet.infura.io/v3/${process.env.INFURA_ID}`,
+    // },
+    // {
+    //   id: "0x3",
+    //   token: "tROP",
+    //   label: "Ethereum Ropsten Testnet",
+    //   rpcUrl: `https://ropsten.infura.io/v3/${process.env.INFURA_ID}`,
+    // },
+    {
+      id: "0x4",
+      token: "rETH",
+      label: "Ethereum Rinkeby Testnet",
+      rpcUrl: `https://rinkeby.infura.io/v3/59c3f3ded6a045b8a92d1ffb5c26e91f`,
+    },
+    {
+      id: "0x38",
+      token: "BNB",
+      label: "Binance Smart Chain",
+      rpcUrl: "https://bsc-dataseed.binance.org/",
+    },
+    {
+      id: "0x89",
+      token: "MATIC",
+      label: "Matic Mainnet",
+      rpcUrl: "https://matic-mainnet.chainstacklabs.com",
+    },
+    {
+      id: "0xfa",
+      token: "FTM",
+      label: "Fantom Mainnet",
+      rpcUrl: "https://rpc.ftm.tools/",
+    },
+  ],
+  appMetadata: {
+    name: "DigitalArms",
+    icon: Logo,
+    logo: Logo,
+    description: "DigitalArms using Onboard",
+    agreement: {
+      version: "1.0.0",
+      termsUrl: "https://www.blocknative.com/terms-conditions",
+      privacyUrl: "https://www.blocknative.com/privacy-policy",
+    },
+    recommendedInjectedWallets: [
+      { name: "MetaMask", url: "https://metamask.io" },
+      { name: "Coinbase", url: "https://wallet.coinbase.com/" },
+    ],
+  },
+  i18n: {
+    en: {
+      connect: {
+        selectingWallet: {
+          header: "Select a Wallet",
+        },
+      },
+    },
+  },
+});
+
 const Header = function () {
   const [walletAddress, setWalletAddress] = useState("");
-  const [showConected, setShowConected] = useState("Connect Wallet");
-
-  async function requestAccount() {
-    console.log("Requesting account...");
-    if (window.ethereum) {
-      console.log("detected");
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        setWalletAddress(accounts[0]);
-        console.log(walletAddress);
-        if (walletAddress != null) {
-          setShowConected("Connected");
-        }
-      } catch (error) {
-        console.log("Error connecting...");
-      }
-    } else {
-      alert("Please install Meta Mask");
-    }
-  }
-
-  useEffect(() => {
-    requestAccount();
-  });
+  const [showConnected, setShowConnected] = useState(true);
 
   const connectWallet = async () => {
-    const isUserExist = await checkuseraddress(walletAddress);
-    console.log("isUserExist", isUserExist);
+    const wallets = await onboard.connectWallet();
+    console.log("wallet address--->", wallets[0].accounts[0].address);
+    try {
+      const address = wallets[0].accounts[0].address;
+      const isUserExist = await checkuseraddress(address);
+      console.log("isUserExist", isUserExist);
+      if (isUserExist === "User not found") {
+        const res = await Register(address);
+        console.log("Register API response", res);
+      } else {
+        const res = await Login(address);
+        console.log("Login API response", res);
+      }
+      setShowConnected(false);
+      setWalletAddress(address);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const disconnectWallet = async () => {
+    const primaryWallet = onboard.state.get().wallets[0];
+    console.log("primaryWallet", primaryWallet.accounts[0].address);
+    const walletAddress = primaryWallet.accounts[0].address;
+    await onboard.disconnectWallet({ label: primaryWallet.label });
+    await Logout(walletAddress);
+    setShowConnected(true);
+    console.log("wallet disconnected successfully");
   };
 
   return (
@@ -266,11 +347,15 @@ const Header = function () {
               </li>
               <li className='nav-item'>
                 <Link
-                  onClick={connectWallet}
+                  onClick={showConnected ? connectWallet : disconnectWallet}
                   className='main_btn'
                   to=''
                   tabindex='-1'>
-                  {showConected}
+                  {showConnected
+                    ? "Connect Wallet"
+                    : walletAddress.slice(0, 4) +
+                      "..." +
+                      walletAddress.slice(38, 42)}
                 </Link>
               </li>
             </ul>
