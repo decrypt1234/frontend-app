@@ -124,7 +124,6 @@ const AccountModal = (props) => {
             window.sessionStorage.getItem("selected_account")
           );
           console.log("bal", bal);
-         
         }
       }
     }
