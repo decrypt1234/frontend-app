@@ -100,6 +100,7 @@ export const Logout = async () => {
 };
 
 export const getProfile = async () => {
+  console.log("get profile is called")
   const response = await fetch(
     process.env.REACT_APP_API_BASE_URL + "/user/Profile",
     {
@@ -110,6 +111,7 @@ export const getProfile = async () => {
     .get("content-type")
     ?.includes("application/json");
   const data = isJson && (await response.json());
+  console.log("data is----->",data)
   return data;
 };
 

@@ -2290,7 +2290,7 @@ span.lastone {
   border: 0;
 }
 .edit_btn i {color: #fff;font-size: 24px;}
-button.img_edit_btn {
+.img_edit_btn {
   background: #EF981D;
   border-radius: 39px;
   width: 45px;
@@ -3406,4 +3406,35 @@ font-size: 36px;
 }
 .Hepl-details ul li {
   margin-bottom: 15px;
+}
+.profile_image {position: relative;    width: 165px;
+  height: 165px;
+  margin: auto;}
+.profile_image:hover .overlat_btn {
+  display: flex;
+}
+
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn-wrapper .btn {
+  border: 2px solid gray;
+  color: gray;
+  /*background-color: white;+*/
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
 }
