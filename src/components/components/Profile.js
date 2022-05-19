@@ -64,32 +64,32 @@ const [fname, setFname] = useState("");
   useEffect(() => {
     if (profile && Object.keys(profile).length > 0) {
       console.log("profile is---->",profile)
-      let username = profile?.sUserName;
+      let username = profile?.username;
       
     
       setUname(username.trim());
     
-      
-      setWebsite(
-        profile.sWebsite &&
-          profile.sWebsite !== undefined &&
-          profile.sWebsite !== "undefined"
-          ? profile.sWebsite
-          : ""
-      );
+     
+      //setWebsite(
+      //  profile.sWebsite &&
+      //    profile.sWebsite !== undefined &&
+      //    profile.sWebsite !== "undefined"
+      //    ? profile.sWebsite
+      //    : ""
+      //);
       setBio(
-        profile.sBio &&
-          profile.sBio !== undefined &&
-          profile.sBio !== "undefined"
-          ? profile.sBio
+        profile.bio &&
+          profile.bio !== undefined &&
+          profile.bio !== "undefined"
+          ? profile.bio
           : ""
       );
      
       setEmail(
-        profile.sEmail &&
-          profile.sEmail !== undefined &&
-          profile.sEmail !== "undefined"
-          ? profile.sEmail
+        profile.email &&
+          profile.email !== undefined &&
+          profile.email !== "undefined"
+          ? profile.email
           : ""
       );
       setTwitterHandle(
@@ -179,6 +179,21 @@ const [fname, setFname] = useState("");
       setProfilePic(img);
     }
   };
+  const uploadedImage = React.useRef(null);
+    const imageUploader = React.useRef(null);
+    
+    const handleImageUpload = e => {
+        const [file] = e.target.files;
+        if (file) {
+        const reader = new FileReader();
+        const { current } = uploadedImage;
+        current.file = file;
+        reader.onload = e => {
+            current.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        }
+    };
   
       useEffect(()=>{
           
@@ -256,6 +271,46 @@ const [fname, setFname] = useState("");
                                 <div className="upload-btn-wrapper img_edit_btn">
                                     <button class="btn"><i class="fa fa-edit fa-lg"></i></button>
                                     <input type="file" name="myfile" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div className="profile_image">
+                            {/* <img alt='' src={'../img/profile/profile1.png'} class="img-fluid profile_circle_img" /> */}
+                            <div
+                                style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center"
+                                }}
+                            >
+                                <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                ref={imageUploader}
+                                style={{
+                                    display: "none"
+                                }}
+                                />
+                                <div className="profile_me"
+                                style={{
+                                    height: "160px",
+                                    width: "160px"
+                                }}
+                                onClick={() => imageUploader.current.click()}
+                                >
+                                <img
+                                    ref={uploadedImage}
+                                    src={'../img/profile/profile1.png'}
+                                    style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    }}
+                                    className="img-fluid profile_circle_img"
+                                />
+                                <div class="overlat_btn"><button type="" class="img_edit_btn"><i class="fa fa-edit fa-lg"></i></button></div>
                                 </div>
                             </div>
                             

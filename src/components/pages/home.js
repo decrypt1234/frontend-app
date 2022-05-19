@@ -4,7 +4,7 @@ import SliderMain from "../components/SliderMain";
 import CarouselCollection from "../components/CarouselCollection";
 import CarouselNew from "../components/CarouselNew";
 import AuthorList from "../components/AuthorList";
-import Catgor from "../components/Catgor";
+import Category from "../components/Category";
 import Footer from "../components/footer";
 import Reveal from "react-awesome-reveal";
 import { keyframes } from "@emotion/react";
@@ -250,7 +250,7 @@ const Home = () => (
             </Link>
           </div>
           <div class="col-md-12 text-center mt-5">
-            <Link to={'/collection'} className="view_all_bdr">View All</Link>
+            <Link to={'/mintcollectionlive'} className="view_all_bdr">View All</Link>
           </div>
         </div>
       </div>
@@ -344,7 +344,7 @@ const Home = () => (
             </div>
           </div>
         </div>
-          <Catgor />
+          <Category />
       </div>
     </section>
 

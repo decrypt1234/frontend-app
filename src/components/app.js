@@ -4,8 +4,8 @@ import React  from "react";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/Register";
-import Marketplace from "./pages/Marketplace";
 import Marketplacecollection from "./pages/Marketplacecollection";
+import Marketplace from "./pages/Marketplace";
 import NFTDetails from "./pages/NFTDetails";
 import BlogTagged from "./pages/BlogTagged";
 import Helpcenter from "./pages/Helpcenter";
@@ -25,19 +25,15 @@ import MintCollection from "./pages/MintCollection";
 import MintCollectionLive from "./pages/MintCollectionLive";
 
 // import Create3 from "./pages/createMultiple";
-import '../App.css'
+import './components-css/App.css'
 import Blogdetails from "./pages/Blogdetails";
 import Minttab from "./components/Minttab"
 import LogInHeader from "./menu/LogInHeader";
 import LoginHome from "./pages/LoginHome";
 // import { createGlobalStyle } from "styled-components";
 import UpdateProfile from "./pages/updateProfile";
-import PersonalProfile from "./pages/personalProfile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ItemNotFound from "./pages/ItemNotFound";
-// import { getProfile } from "../apiServices";
-import { connect } from "react-redux";
-// import { userProfileDataLoaded } from "../redux/actions";
 import MintingPage from "./pages/MintingPage";
 // import MintEvent from "./components/MintEvent";
 import MultiMintingPage from "./pages/MultiMintingPage";
@@ -61,13 +57,12 @@ const App = (props) => {
         <Route exact path="/author" element={<Author />} />
         <Route exact path="/login" element={<Login/>} />
         <Route path="/register" element={<Register />} />
-        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/marketplacecollection" element={<Marketplacecollection />} />
+        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/NFTdetails" element={<NFTDetails />} />
         <Route path="/updateProfile" element={<UpdateProfile />} />
         <Route path="/userprofile"element={<UserProfile />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/personalprofile" element={<PersonalProfile />} />
         <Route path="/collection" element={<Collection />} />
         <Route path="/collectionwithcollection" element={<CollectionWithCollection />} />
         <Route path="/collectionActivity" element={<CollectionActivity />} />
@@ -96,13 +91,6 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    account: state.account,
-    token: state.token,
-    paramType: state.paramType,
-    profileData: state.profileData,
-  };
-};
 
-export default connect(mapStateToProps)(App);
+
+export default App;

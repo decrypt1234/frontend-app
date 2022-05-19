@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Footer from "../components/footer";
 import { createGlobalStyle } from "styled-components";
 import { updateProfile } from "../../apiServices";
-import { connect } from "react-redux";
 import { NotificationManager } from "react-notifications";
 import Loader from "../components/loader";
 
@@ -299,10 +298,5 @@ const UpdateProfile = (props) => {
     </div>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    account: state.account,
-  };
-};
 
-export default connect(mapStateToProps)(UpdateProfile);
+export default UpdateProfile;
