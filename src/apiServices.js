@@ -17,7 +17,7 @@ export const Register = async (account) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      sWalletAddress: account,
+      walletAddress: account,
     }),
   };
   try {
@@ -37,6 +37,8 @@ export const Register = async (account) => {
       const error = (data && data.message) || response.status;
       return Promise.reject(error);
     }
+    localStorage.setItem("Authorization", data.data.token);
+    return data;
   } catch (error) {
     //   this.setState({ postId: data.id });
 
@@ -50,7 +52,7 @@ export const Login = async (account) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      sWalletAddress: account,
+      walletAddress: account,
     }),
   };
   try {
@@ -70,7 +72,7 @@ export const Login = async (account) => {
       return Promise.reject(error);
     }
     localStorage.setItem("Authorization", data.data.token);
-    return data.data.token;
+    return data;
     //   this.setState({ postId: data.id });
   } catch (error) {
     // this.setState({ errorMessage: error.toString() });
@@ -125,7 +127,7 @@ export const checkuseraddress = async (account) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      sWalletAddress: account,
+      walletAddress: account,
     }),
   };
   try {
@@ -143,18 +145,20 @@ export const checkuseraddress = async (account) => {
   }
 };
 
-export const updateProfile = async (account, data) => {
+export const updateProfile = async (data) => {
+  console.log("data in api iis------>",data)
   let formData = new FormData();
 
-  formData.append("sUserName", data.uname ? data.uname : "");
-  formData.append("sFirstname", data.fname ? data.fname : "");
-  formData.append("sLastname", data.lname ? data.lname : "");
-  formData.append("sBio", data.bio ? data.bio : "");
-  formData.append("sWebsite", data.website ? data.website : "");
-  formData.append("sEmail", data.email ? data.email : "");
-  formData.append("sWalletAddress", account);
-  formData.append("userProfile", data.profilePic ? data.profilePic : "");
-
+  formData.append("userName", data.uname ? data.uname : "");
+  //formData.append("sFirstname", data.fname ? data.fname : "");
+  //formData.append("sLastname", data.lname ? data.lname : "");
+  formData.append("bio", data.bio ? data.bio : "");
+  formData.append("website", data.website ? data.website : "");
+  formData.append("email", data.email ? data.email : "");
+  //formData.append("sWalletAddress", account);
+  //formData.append("userProfile", data.profilePic ? data.profilePic : "");
+   
+  console.log("form data is---->",formData)
   const requestOptions = {
     method: "PUT",
     headers: {

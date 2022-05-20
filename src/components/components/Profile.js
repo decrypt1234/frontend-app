@@ -35,6 +35,7 @@ const [fname, setFname] = useState("");
   const [bio, setBio] = useState("");
 
   const [email, setEmail] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
   const [website, setWebsite] = useState("");
   const [uname, setUname] = useState("");
   const [profilePic, setProfilePic] = useState("");
@@ -84,7 +85,7 @@ const [fname, setFname] = useState("");
           ? profile.bio
           : ""
       );
-     
+     console.log("bio of user is--->",bio)
       setEmail(
         profile.email &&
           profile.email !== undefined &&
@@ -92,6 +93,10 @@ const [fname, setFname] = useState("");
           ? profile.email
           : ""
       );
+      
+      setWalletAddress(
+        profile.walletAddress && profile.walletAddress !==undefined && profile.walletAddress !=='undefined'?profile.walletAddress:"0x00"
+      )
       setTwitterHandle(
         profile.twitterHandle &&
           profile.twitterHandle !== undefined &&
@@ -150,27 +155,40 @@ const [fname, setFname] = useState("");
     //   }
     // }
     
-   
-
-    if (currentUser) {
-      setLoading(true);
-      try {
-        let res = await updateProfile(currentUser, data);
-        if (res === "User Details Updated successfully") {
-          NotificationManager.success(res);
-          setTimeout(() => {
-            window.location.href = "/profile";
-          }, 200);
-        } else {
-          NotificationManager.error(res);
-        }
-      } catch (e) {
-        console.log("error", e);
-        NotificationManager.error("Something Went Wrong");
-      }
-
-      setLoading(false);
+   console.log("data to be updated is---->",data)
+   try {
+    let res = await updateProfile( data);
+    if (res === "User Details Updated successfully") {
+      NotificationManager.success(res);
+      setTimeout(() => {
+        window.location.href = "/userprofile";
+      }, 200);
+    } else {
+      NotificationManager.error(res);
     }
+  } catch (e) {
+    console.log("error", e);
+    NotificationManager.error("Something Went Wrong");
+  }
+    //if (currentUser) {
+    //  setLoading(true);
+    //  try {
+    //    let res = await updateProfile( data);
+    //    if (res === "User Details Updated successfully") {
+    //      NotificationManager.success(res);
+    //      setTimeout(() => {
+    //        window.location.href = "/userprofile";
+    //      }, 200);
+    //    } else {
+    //      NotificationManager.error(res);
+    //    }
+    //  } catch (e) {
+    //    console.log("error", e);
+    //    NotificationManager.error("Something Went Wrong");
+    //  }
+
+    //  setLoading(false);
+    //}
   };
 
   const onImageChange = (event) => {
@@ -213,10 +231,10 @@ const [fname, setFname] = useState("");
                 <div class="mb-3 mt-3">
                     <label HTMLfor="comment" class="form-label">Bio</label>
                     <textarea class="form-control profile_textarea" 
-                    rows="5" id="comment" name="comment"   
+                    rows="5" id="comment" name="comment"   value={bio?bio:"Enter your bio"}
                     onChange={(r) => {
                         setBio(r.target.value);
-                      }}>{bio?bio:"Enter Your Bio"}</textarea>
+                      }}></textarea>
                 </div>
                 <div class="mb-3 mt-3">
                     <label for="email">Email Address</label>
@@ -244,7 +262,7 @@ const [fname, setFname] = useState("");
                 <div class="mb-3 mt-3">
                     <label for="Wallet">Wallet Address</label>
                     <div className="copy_input">
-                        <input type="text" value="0x0247842319CA3E517491cD28252097A7AD0d9De6" id="myInput" className="form-control profile_input" />
+                        <input type="text" value={walletAddress} id="myInput" className="form-control profile_input" />
                         <button onclick="myFunction()">
                         <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 21V22.875C15 23.4963 14.4963 24 13.875 24H1.125C0.503672 24 0 23.4963 0 22.875V5.625C0 5.00367 0.503672 4.5 1.125 4.5H4.5V18.375C4.5 19.8225 5.67755 21 7.125 21H15ZM15 4.875V0H7.125C6.50367 0 6 0.503672 6 1.125V18.375C6 18.9963 6.50367 19.5 7.125 19.5H19.875C20.4963 19.5 21 18.9963 21 18.375V6H16.125C15.5063 6 15 5.49375 15 4.875ZM20.6705 3.42052L17.5795 0.329484C17.3685 0.11852 17.0824 1.55998e-06 16.784 0L16.5 0V4.5H21V4.21598C21 3.91763 20.8815 3.63149 20.6705 3.42052Z" fill="#485E6E"/>
@@ -253,7 +271,7 @@ const [fname, setFname] = useState("");
                     </div>
                 </div>
                 <div className='mt-5'>
-                    <button type="submit" class="yellow_btn mr-3" onClick={() => {
+                    <button type="button" class="yellow_btn mr-3" onClick={() => {
                         handleUpdateProfile();
                       }}>Save</button>
                     {/*<button type="submit" class="yellow_btn yellow_dark">Save</button>*/}
