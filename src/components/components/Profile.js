@@ -86,6 +86,9 @@ const [fname, setFname] = useState("");
           : ""
       );
      console.log("bio of user is--->",bio)
+     
+     setProfilePic(profile.profileIcon && profile.profileIcon !== undefined && profile.profileIcon!=='undefined' ?profile.profileIcon:"")
+     
       setEmail(
         profile.email &&
           profile.email !== undefined &&
@@ -118,6 +121,7 @@ const [fname, setFname] = useState("");
   //Update Profile 
   
   const handleUpdateProfile = async () => {
+    console.log("in handle update profile pic")
     let data = {
       uname: uname,
      
@@ -127,42 +131,44 @@ const [fname, setFname] = useState("");
       profilePic: profilePic,
       email: email,
     };
-    // if (profilePic === ""  profilePic === undefined) {
-    //   NotificationManager.error("Please choose profile pic", "", 800);
-    //   return;
-    // }
+    console.log("profile pic",profilePic)
+     if (profilePic === "" || profilePic === undefined) {
+       NotificationManager.error("Please choose profile pic", "", 800);
+       return;
+     }
    
   
     
 
    
-
-    if (uname === "" && uname === undefined) {
+     console.log("uname uname---->",uname)
+    if (uname === "" || uname === undefined || uname.length ==0 ) {
+      console.log("uname is invalid")
       NotificationManager.error("Please choose valid username", "", 800);
       return;
-    } else {
-      if(uname.trim().length === 0)
-      {
-        NotificationManager.error("Space not allowed", "", 800);
-        return;
-      }
+    } 
+    if(uname.indexOf(' '))
+    {
+      NotificationManager.error("Space not allowed", "", 800);
+      return;
     }
 
-    // if (email) {
-    //   let res = await isValidEmail(email);
-    //   if (!res) {
-    //     return;
-    //   }
-    // }
+    console.log("email is---->",email)
+     if (email !==""||email !==undefined) {
+       let res = await isValidEmail(email);
+       if (!res) {
+         return;
+       }
+     }
     
    console.log("data to be updated is---->",data)
    try {
     let res = await updateProfile( data);
     if (res === "User Details Updated successfully") {
       NotificationManager.success(res);
-      setTimeout(() => {
-        window.location.href = "/userprofile";
-      }, 200);
+      //setTimeout(() => {
+      //  window.location.href = "/userprofile";
+      //}, 200);
     } else {
       NotificationManager.error(res);
     }
@@ -190,13 +196,22 @@ const [fname, setFname] = useState("");
     //  setLoading(false);
     //}
   };
-
-  const onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
-      setProfilePic(img);
+  
+  const isValidEmail = async (email) => {
+    var atposition = email.indexOf("@");
+    var dotposition = email.lastIndexOf(".");
+    if (
+      atposition < 1||
+      dotposition < atposition + 2 ||
+      dotposition + 2 >= email.length
+    ) {
+      NotificationManager.error("Please enter a valid e-mail address");
+      return false;
     }
+    return true;
   };
+
+ 
   const uploadedImage = React.useRef(null);
     const imageUploader = React.useRef(null);
     
@@ -208,8 +223,16 @@ const [fname, setFname] = useState("");
         current.file = file;
         reader.onload = e => {
             current.src = e.target.result;
+            
         };
-        reader.readAsDataURL(file);
+       let image= reader.readAsDataURL(file);
+     
+        }
+        if (e.target.files && e.target.files[0]) {
+          let img = e.target.files[0];
+          
+          setProfilePic(img);
+          
         }
     };
   
@@ -225,6 +248,7 @@ const [fname, setFname] = useState("");
                 <div class="mb-3 mt-3">
                     <label HTMLfor="user" class="form-label">Username</label>
                     <input type="text" class="form-control profile_input" id="user" placeholder="Digital Arms Dealer" name="user" onChange={(r) => {
+                   
                         setUname(r.target.value);
                       }} value={uname} />
                 </div>
@@ -282,9 +306,20 @@ const [fname, setFname] = useState("");
             <div className="col-md-6">
                 <ul className="profile_images">
                     <li>
-                        <h4>Profile Image <img alt='' src={'../img/profile/mi_circle-information.png'} class="img-fluid" /></h4>
+                        <h4>Profile Image </h4>
                         <div className="profile_image">
-                            <img alt='' src={'../img/profile/profile1.png'} class="img-fluid profile_circle_img" />
+                          
+                        {/*{profilePic ? (
+                      <img
+                        className="upload-profile "
+                        src={URL.createObjectURL(profilePic)}
+                        alt="profile-pic"
+                      />
+                    ) : (
+                      ""
+                    )}*/}
+                          
+                
                             <div className="overlat_btn">
                                 <div className="upload-btn-wrapper img_edit_btn">
                                     <button class="btn"><i class="fa fa-edit fa-lg"></i></button>
@@ -321,7 +356,7 @@ const [fname, setFname] = useState("");
                                 >
                                 <img
                                     ref={uploadedImage}
-                                    src={'../img/profile/profile1.png'}
+                                    src={profilePic?profilePic:'../img/profile/profile1.png'}
                                     style={{
                                     width: "100%",
                                     height: "100%",

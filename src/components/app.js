@@ -44,7 +44,7 @@ import HelpCenterDetail from "./pages/HelpCenterDetail";
 
 // import {DUMMY_COLLECTIONS} from "../dummyJSON";
 
-
+import {NotificationContainer} from 'react-notifications';
 
 
 const App = (props) => {
@@ -87,6 +87,7 @@ const App = (props) => {
         <Route path="*" element={ItemNotFound} />
         
       </Routes>
+      <NotificationContainer/>
     </Router>
   );
 };

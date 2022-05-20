@@ -156,7 +156,7 @@ export const updateProfile = async (data) => {
   formData.append("website", data.website ? data.website : "");
   formData.append("email", data.email ? data.email : "");
   //formData.append("sWalletAddress", account);
-  //formData.append("userProfile", data.profilePic ? data.profilePic : "");
+  formData.append("userProfile", data.profilePic ? data.profilePic : "");
    
   console.log("form data is---->",formData)
   const requestOptions = {
