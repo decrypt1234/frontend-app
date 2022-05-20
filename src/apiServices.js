@@ -38,7 +38,7 @@ export const Register = async (account) => {
       return Promise.reject(error);
     }
     localStorage.setItem("Authorization", data.data.token);
-    return data.data.token;
+    return data;
   } catch (error) {
     //   this.setState({ postId: data.id });
 
@@ -72,7 +72,7 @@ export const Login = async (account) => {
       return Promise.reject(error);
     }
     localStorage.setItem("Authorization", data.data.token);
-    return data.data.token;
+    return data;
     //   this.setState({ postId: data.id });
   } catch (error) {
     // this.setState({ errorMessage: error.toString() });

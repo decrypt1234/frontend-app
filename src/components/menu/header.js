@@ -8,7 +8,12 @@ import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import Logo from "./../../assets/images/logo.svg";
 import { checkuseraddress, Login, Logout, Register } from "../../apiServices";
-
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
+import { useCookies } from "react-cookie";
 
 setDefaultBreakpoints([{ xs: 0 }, { l: 1199 }, { xl: 1200 }]);
 
@@ -80,7 +85,7 @@ const onboard = Onboard({
     en: {
       connect: {
         selectingWallet: {
-          header: "Select a Wallet",
+          header: "Available Wallets",
         },
       },
     },
@@ -90,40 +95,99 @@ const onboard = Onboard({
 const Header = function () {
   const [walletAddress, setWalletAddress] = useState("");
   const [showConnected, setShowConnected] = useState(true);
+  const [cookies, setCookie, removeCookie] = useCookies([]);
+
+  useEffect(() => {
+    console.log("here", cookies["selected_account"]);
+      setWalletAddress(cookies["selected_account"]);
+    
+  }, [cookies["selected_account"]]);
 
   const connectWallet = async () => {
     const wallets = await onboard.connectWallet();
-    console.log("wallet address--->", wallets[0].accounts[0].address);
+    console.log("wallet address--->", wallets[0]);
+    const success = await onboard.setChain({ chainId: "0x13881" });
+    console.log("setChain method", success);
     try {
       const address = wallets[0].accounts[0].address;
-      const isUserExist = await checkuseraddress(address);
-      console.log("isUserExist", isUserExist);
-      if (isUserExist === "User not found") {
-        const res = await Register(address);
-        console.log("Register API response", res);
-      } else {
-        const res = await Login(address);
-        console.log("Login API response", res);
+      try {
+        const isUserExist = await checkuseraddress(address);
+        setShowConnected(false);
+        setWalletAddress(address);
+        setCookie("selected_account", address, { path: "/" });
+        setCookie(
+          "chain_id",
+          parseInt(wallets[0].chains[0].id, 16).toString(),
+          { path: "/" }
+        );
+        console.log("selected_account", address);
+        console.log("isUserExist", isUserExist);
+        if (isUserExist === "User not found") {
+          try {
+            const res = await Register(address);
+            if (res === "Wallet Address required") {
+              NotificationManager.info(res.message);
+              return;
+            } else if (res === "User already exists") {
+              NotificationManager.error(res.message);
+              return;
+            } else {
+              NotificationManager.success(res.message);
+              window.location.reload();
+              return;
+            }
+          } catch (e) {
+            NotificationManager.error(e);
+            return;
+          }
+        } else {
+          try {
+            const res = await Login(address);
+            console.log("Login API response", res);
+            if (res === "Wallet Address required") {
+              NotificationManager.info(res.message);
+              return;
+            } else if (res === "User not found" || res === "Invalid Login") {
+              NotificationManager.error(res.message);
+              return;
+            } else {
+              NotificationManager.success(res.message);
+              window.location.reload();
+              return;
+            }
+          } catch (e) {
+            NotificationManager.error(e);
+            return;
+          }
+        }
+      } catch (e) {
+        console.log(e);
       }
-      setShowConnected(false);
-      setWalletAddress(address);
     } catch (e) {
       console.log(e);
     }
   };
 
   const disconnectWallet = async () => {
-    const primaryWallet = onboard.state.get().wallets[0];
-    console.log("primaryWallet", primaryWallet.accounts[0].address);
-    const walletAddress = primaryWallet.accounts[0].address;
-    await onboard.disconnectWallet({ label: primaryWallet.label });
-    await Logout(walletAddress);
+    removeCookie("selected_account", { path: "/" });
+    const currentState = onboard.state.get();
+    const state = onboard.state.select();
+
+    console.log("current state", currentState, state);
+    // const primaryWallet = onboard.state.get().wallets[0];
+    // console.log(primaryWallet.accounts[0].address);
+    // const walletAddress = primaryWallet.accounts[0].address;
+    await onboard.disconnectWallet({ label: "Metamask" });
+    await Logout(cookies["selected_account"]);
+
     setShowConnected(true);
-    console.log("wallet disconnected successfully");
+    NotificationManager.success("User Logged out Successfully.");
+    window.location.reload();
   };
 
   return (
     <header id='myHeader'>
+      <NotificationContainer />
       <nav className='navbar navbar-expand-lg'>
         <div className='nav-container container'>
           <Link className='navbar-brand' to='/'>
@@ -347,15 +411,19 @@ const Header = function () {
               </li>
               <li className='nav-item'>
                 <Link
-                  onClick={showConnected ? connectWallet : disconnectWallet}
+                  onClick={
+                    !cookies["selected_account"]
+                      ? connectWallet
+                      : disconnectWallet
+                  }
                   className='main_btn'
                   to=''
                   tabindex='-1'>
-                  {showConnected
+                  {!cookies["selected_account"]
                     ? "Connect Wallet"
-                    : walletAddress.slice(0, 4) +
+                    : cookies["selected_account"].slice(0, 4) +
                       "..." +
-                      walletAddress.slice(38, 42)}
+                      cookies["selected_account"].slice(38, 42)}
                 </Link>
               </li>
             </ul>
