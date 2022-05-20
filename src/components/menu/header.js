@@ -8,13 +8,11 @@ import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import Logo from "./../../assets/images/logo.svg";
 import { checkuseraddress, Login, Logout, Register } from "../../apiServices";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import { useCookies } from "react-cookie";
 import { slowRefresh } from "./../../helpers/NotifyStatus";
+import { ethers } from "ethers";
 
 setDefaultBreakpoints([{ xs: 0 }, { l: 1199 }, { xl: 1200 }]);
 
@@ -91,16 +89,50 @@ const onboard = Onboard({
       },
     },
   },
+  accountCenter: {
+    desktop: {
+      enabled: false,
+    },
+  },
 });
 
 const Header = function () {
   const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [provider, setProvider] = useState();
+  const [account, setAccount] = useState();
+  const [chainId, setChainId] = useState();
+
+  const refreshState = () => {
+    setAccount("");
+    setChainId("");
+    setProvider();
+  };
+
+  const init = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    console.log("provider", provider.provider);
+    provider.on("accountsChanged", async (accounts) => {
+      console.log("accounts",accounts)
+    })
+  };
+
+init();
+  useEffect(() => {
+  
+      console.log("account changed!!!")
+  },[provider])
 
   const connectWallet = async () => {
     const wallets = await onboard.connectWallet();
     console.log("wallet address--->", wallets[0]);
-    const primaryWallet = onboard.state.get();
-    console.log("primaryWallet", primaryWallet);
+    const { accounts, chains, provider } = wallets[0];
+    setAccount(accounts[0].address);
+    setChainId(chains[0].id);
+    setProvider(provider);
+
+    console.log("provider", provider);
+    const balance = wallets[0].accounts[0].balance;
+    console.log("balance", balance);
     const success = await onboard.setChain({ chainId: "0x4" });
     console.log("setChain method", success);
     try {
@@ -113,6 +145,7 @@ const Header = function () {
           parseInt(wallets[0].chains[0].id, 16).toString(),
           { path: "/" }
         );
+        setCookie("balance", wallets[0].accounts[0].balance, { path: "/" });
         console.log("selected_account", address);
         console.log("isUserExist", isUserExist);
         if (isUserExist === "User not found") {
@@ -148,7 +181,7 @@ const Header = function () {
               return;
             } else {
               NotificationManager.success(res.message);
-              slowRefresh(3000);
+              slowRefresh(1000);
               return;
             }
           } catch (e) {
@@ -166,15 +199,14 @@ const Header = function () {
 
   const disconnectWallet = async () => {
     removeCookie("selected_account", { path: "/" });
-    const currentState = onboard.state.get();
-    const state = onboard.state.select();
+    removeCookie("chain_id", { path: "/" });
+    removeCookie("balance", { path: "/" });
 
-    console.log("current state", currentState, state);
-    // const primaryWallet = onboard.state.get().wallets[0];
-    // console.log(primaryWallet.accounts[0].address);
-    // const walletAddress = primaryWallet.accounts[0].address;
+    // const [primaryWallet] = await onboard.state.get().wallets;
+    // if (!primaryWallet) return;
     await onboard.disconnectWallet({ label: "Metamask" });
     await Logout(cookies["selected_account"]);
+    refreshState();
     NotificationManager.success("User Logged out Successfully.");
     slowRefresh(1000);
   };
@@ -184,6 +216,7 @@ const Header = function () {
     console.log("wallet address--->", wallets[0]);
     const success = await onboard.setChain({ chainId: "0x4" });
     console.log("setChain method", success);
+
     try {
       const address = wallets[0].accounts[0].address;
       try {
@@ -231,7 +264,6 @@ const Header = function () {
 
   return (
     <header id='myHeader'>
-      <NotificationContainer />
       <nav className='navbar navbar-expand-lg'>
         <div className='nav-container container'>
           <Link className='navbar-brand' to='/'>
