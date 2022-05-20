@@ -41,6 +41,9 @@ import Partners from "./pages/Partners";
 // import PartnersBanner from "./components/PartnersBanner";
 import HelpCenterQuery from "./pages/HelpCenterQuery";
 import HelpCenterDetail from "./pages/HelpCenterDetail";
+import Offers from "./pages/Offers";
+import AccountSupport from "./pages/AccountSupport";
+import Earnings from "./pages/Earnings";
 
 // import {DUMMY_COLLECTIONS} from "../dummyJSON";
 
@@ -84,6 +87,9 @@ const App = (props) => {
         <Route path="/partners" element={<Partners />} />
         <Route path="/helpcenterquery" element={<HelpCenterQuery />} />
         <Route path="/helpcenterdetail" element={<HelpCenterDetail />} />
+        <Route path="/earnings" element={<Earnings />} />
+        <Route path="/offers" element={<Offers />} />
+        <Route path="/accountsupport" element={<AccountSupport />} />
         <Route path="*" element={ItemNotFound} />
         
       </Routes>

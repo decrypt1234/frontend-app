@@ -80,20 +80,6 @@ function Author() {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Iaculis egestas a, praesent elit faucibus magnis dignissim. Lorem aliquet faucibus metus nibh amet cursus. Lorem suspendisse malesuada tortor, faucibus.</p>
             <h6>Joined March 2022</h6>
           </div>
-
-        <div className="row">
-            <div className="col-md-12">
-                <h4 className="second_hd text-center mb-3">Collection</h4>
-            </div>
-        </div>
-            <Relatedcollection />
-        
-          <div className="row mb-5">
-            <div className="col-md-12 text-center">
-              <button type="button" className='item_btn mr-3'><img alt='' src={'../img/items.svg'} class="img-fluid" /> Items</button>
-              <button type="button" className="activity_btn"><img alt='' src={'../img/activity.svg'} class="img-fluid" /> Activity</button>
-            </div>
-          </div>
           
           <ul className="auther_cart">
             <li className="active"><img alt='' src={'../img/author/icon1.svg'} class="img-fluid" /> Collected 45</li>

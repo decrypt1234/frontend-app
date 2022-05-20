@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function ItemsList() {
 
   var settings = {
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -233,6 +233,9 @@ function ItemsList() {
             </div>
             <Link to={'#'} className='border_btn width-100 title_color'>Place bids</Link>
           </div>
+        </div>
+        <div className='items_slide last_slide'>
+          <Link to={'/'} className='view_slide align-items-center justify-content-center d-flex'>View All</Link>
         </div>
       </Slider>
     </div>
