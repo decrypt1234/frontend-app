@@ -1286,6 +1286,11 @@ button.slick-arrow.slick-next {
   color: #ef981d;
   text-shadow: 0px 0px 4px rgb(0 0 0 / 40%);
   display: inline-block;
+  transition: .5s ease;
+}
+.view_all_bdr:hover {
+  background: linear-gradient(180deg, #EF981D 56.77%, #F9BF50 100%);
+  color: #fff !important;
 }
 /* About Section*/
 .about_learnmore {
@@ -2079,25 +2084,27 @@ button.filter_btn {
   margin: 0;
   list-style: none;
 }
+.nft_list th,
 .nft_list h6 {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
   color: #fff;
+  border-bottom: 0px;
   margin-bottom: 20px;
 }
+.nft_list td,
 .nft_list li {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
+  color: #ffffff;vertical-align: middle;
   margin-bottom: 15px;
 }
+.nft_list tbody {border-top: 0px !important;}
 .circle_dot {
   width: 29px;
   height: 29px;
@@ -2114,14 +2121,14 @@ button.filter_btn {
 .blue_dot {
   background: #335abd;
 }
-li.blue_text {
-  color: #1b76ff;
+.blue_text {
+  color: #1b76ff !important;
 }
-li.green_text {
-  color: #39d649;
+.green_text {
+  color: #39d649 !important;
 }
-li.red_text {
-  color: #ff2d2d;
+.red_text {
+  color: #ff2d2d !important;
 }
 .hunter_fav {
   width: 29px;
@@ -2627,6 +2634,14 @@ span.special_text {
 }
 .usersidebar li .active {
   color: #ef981d;
+}
+.usersidebar li .active svg,
+.usersidebar li .active path,
+.usersidebar li .active g,
+.usersidebar li:hover svg,
+.usersidebar li:hover path,
+.usersidebar li:hover g {
+  fill: #ef981d;
 }
 .notification_list h6,
 .notification_bottom h6 {
@@ -3638,4 +3653,46 @@ a:hover {
 }
 .profile_me:hover .overlat_btn {
   display: flex;
+}
+.slick-disabled {
+  opacity: .5;
+}
+.nft .slick-list,
+.nft .slick-list .slick-track {display: flex;}
+.nft .slick-list .slick-slide,
+.nft .slick-list .slick-slide>div,
+.nft .items_slide {height: 100%;}
+.view_slide {
+  color: #ef981d;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+  height: 100%;
+    width: 100%;
+}
+.last_slide:hover {
+  background: linear-gradient(120.91deg, #ef981d 1.08%, #f5aa3e 100.06%);
+  box-shadow: 0px 0px 10px #ef981d;
+}
+.last_slide:hover .view_slide {
+  color: #fff !important;
+}
+.small_yellow_btn {
+  background: #FF9901;
+  border-radius: 20px;
+}
+.small_border_btn {
+  background: #0D171E;
+  border: 1px solid #FF9901;
+  border-radius: 20px;
+}
+.small_btn {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #FFFFFF;
+  padding: 5px 20px;
+  display: inline-block;
 }

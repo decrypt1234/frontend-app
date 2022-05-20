@@ -307,13 +307,16 @@ const Home = () => (
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2 className="text-center second_hd color-light mb-5">New Items
+              <h2 className="text-center second_hd color-light mb-5">Recently Added
               <div class="border_div"><span class="title_bottom_border"></span></div>
               </h2>
             </div>
           </div>
           <div className="col-lg-12">
             <CarouselNew />
+          </div>
+          <div class="col-md-12 text-center mt-5">
+            <Link to={'/collection'} className="view_all_bdr">View All</Link>
           </div>
         </div>
       </section>
