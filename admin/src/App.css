@@ -359,7 +359,7 @@ div#content {
 .define_mode {
     position: absolute;
     top: 50%;
-    z-index: 1;
+    z-index: 99;
     right: 0px;
     transform: translateY(-50%);
     transition: .5s ease;

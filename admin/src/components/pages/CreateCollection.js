@@ -13,6 +13,14 @@ function CreateCollection() {
         setDatetime(dt);
       }
 
+      const [ datetime2, setDatetime2 ] = useState('');
+
+    function handleChange2(evv) {
+        if (!evv.target['validity'].valid) return;
+        const dtt= evv.target['value'] + ':00Z';
+        setDatetime2(dtt);
+      }
+
       const [images, setImages] = React.useState([]);
         const maxNumber = 69;
 
@@ -20,6 +28,15 @@ function CreateCollection() {
             // data for submit
             console.log(imageList, addUpdateIndex);
             setImages(imageList);
+        };
+
+        const [images2, setImages2] = React.useState([]);
+        const maxNumber2 = 69;
+
+        const onChange2 = (imageList, addUpdateIndex) => {
+            // data for submit
+            console.log(imageList, addUpdateIndex);
+            setImages2(imageList);
         };
 
   return (
@@ -136,7 +153,7 @@ function CreateCollection() {
                         </div>
                         <div className="mb-1 col-md-8">
                             <label for="recipient-name" className="col-form-label">Upload Collection Cover Image *</label>
-                            <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
+                            <ImageUploading multiple value={images2} onChange={onChange2} maxNumber={maxNumber2} dataURLKey="data_url">
                                 {({
                                 imageList,
                                 onImageUpload,
@@ -187,15 +204,11 @@ function CreateCollection() {
                         
                         <div className="col-md-6 mb-1">
                             <label for="recipient-name" className="col-form-label">Start Date *</label>
-                            <input type="datetime-local"
-  value={(datetime || '').toString().substring(0, 16)}
-  onChange={handleChange} className="form-control" />
+                            <input type="datetime-local" value={(datetime || '').toString().substring(0, 16)} onChange={handleChange} className="form-control" />
                         </div>
                         <div className="col-md-6 mb-1">
                             <label for="recipient-name" className="col-form-label">End Date *</label>
-                            <input type="datetime-local"
-  value={(datetime || '').toString().substring(0, 16)}
-  onChange={handleChange} className="form-control" />
+                            <input type="datetime-local" value={(datetime2 || '').toString().substring(0, 16)} onChange={handleChange2} className="form-control" />
                         </div>
                         <div className="col-md-6 mb-1">
                             <label for="recipient-name" className="col-form-label">Max Supply *</label>
