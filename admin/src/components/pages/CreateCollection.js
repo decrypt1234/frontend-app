@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import ImageUploading from 'react-images-uploading';
 
 
 function CreateCollection() {
@@ -21,22 +20,36 @@ function CreateCollection() {
         setDatetime2(dtt);
       }
 
-      const [images, setImages] = React.useState([]);
-        const maxNumber = 69;
-
-        const onChange = (imageList, addUpdateIndex) => {
-            // data for submit
-            console.log(imageList, addUpdateIndex);
-            setImages(imageList);
+        const uploadedImage = React.useRef(null);
+        const imageUploader = React.useRef(null);
+        
+        const handleImageUpload = e => {
+            const [file] = e.target.files;
+            if (file) {
+            const reader = new FileReader();
+            const { current } = uploadedImage;
+            current.file = file;
+            reader.onload = e => {
+                current.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            }
         };
 
-        const [images2, setImages2] = React.useState([]);
-        const maxNumber2 = 69;
-
-        const onChange2 = (imageList, addUpdateIndex) => {
-            // data for submit
-            console.log(imageList, addUpdateIndex);
-            setImages2(imageList);
+        const uploadedImage2 = React.useRef(null);
+        const imageUploader2 = React.useRef(null);
+        
+        const handleImageUpload2 = e => {
+            const [file] = e.target.files;
+            if (file) {
+            const reader = new FileReader();
+            const { current } = uploadedImage2;
+            current.file = file;
+            reader.onload = e => {
+                current.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            }
         };
 
   return (
@@ -115,79 +128,81 @@ function CreateCollection() {
                     <form className='row'>
                         <div className="mb-1 col-md-4">
                             <label for="recipient-name" className="col-form-label">Upload Image *</label>
-                            <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
-                                {({
-                                imageList,
-                                onImageUpload,
-                                onImageRemoveAll,
-                                onImageUpdate,
-                                onImageRemove,
-                                isDragging,
-                                dragProps,
-                                }) => (
-                                // write your building UI
-                                <div className="upload__image-wrapper">
-                                    <button
-                                    style={isDragging ? { color: 'red' } : undefined}
-                                    onClick={onImageUpload}
-                                    {...dragProps}
-                                    className="update_btn image_update"
-                                    >
-                                    <p>Click or Drop here</p>
-                                    <img src='../images/upload.png' alt=''/>
-                                    </button>
-                                    &nbsp;
-                                    {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
-                                    {imageList.map((image, index) => (
-                                    <div key={index} className="image-item">
-                                        <img src={image['data_url']} alt="" width="100" />
-                                        <div className="image-item__btn-wrapper">
-                                        <button onClick={() => onImageUpdate(index)}>Update</button>
-                                        <button onClick={() => onImageRemove(index)}>Remove</button>
-                                        </div>
-                                    </div>
-                                    ))}
+                            <div
+                                style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center"
+                                }}
+                            >
+                                <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                ref={imageUploader}
+                                style={{
+                                    display: "none"
+                                }}
+                                />
+                                <div className="update_btn"
+                                    style={{
+                                        height: "100%",
+                                        width: "100%",
+                                        position: "relative"
+                                    }}
+                                    onClick={() => imageUploader.current.click()}
+                                >
+                                    <p className='text-center'>Click or Drop here</p>
+                                    <img alt='' ref={uploadedImage} src={'../images/upload.png'} 
+                                    style={{
+                                    width: "110px",
+                                    height: "110px",
+                                    margin: "auto"
+                                    }}
+                                    className="img-fluid profile_circle_img" />
+                                    {/* <div class="overlat_btn"><button type="" class="img_edit_btn"><i class="fa fa-edit fa-lg"></i></button></div> */}
                                 </div>
-                                )}
-                            </ImageUploading>
+                            </div>
                         </div>
                         <div className="mb-1 col-md-8">
                             <label for="recipient-name" className="col-form-label">Upload Collection Cover Image *</label>
-                            <ImageUploading multiple value={images2} onChange={onChange2} maxNumber={maxNumber2} dataURLKey="data_url">
-                                {({
-                                imageList,
-                                onImageUpload,
-                                onImageRemoveAll,
-                                onImageUpdate,
-                                onImageRemove,
-                                isDragging,
-                                dragProps,
-                                }) => (
-                                // write your building UI
-                                <div className="upload__image-wrapper">
-                                    <button
-                                    style={isDragging ? { color: 'red' } : undefined}
-                                    onClick={onImageUpload}
-                                    {...dragProps}
-                                    className="update_btn"
-                                    >
-                                    <h4>Click or Drop here</h4>
-                                    <img src='../images/upload.png' alt=''/>
-                                    </button>
-                                    &nbsp;
-                                    {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
-                                    {imageList.map((image, index) => (
-                                    <div key={index} className="image-item">
-                                        <img src={image['data_url']} alt="" width="100" />
-                                        <div className="image-item__btn-wrapper">
-                                        <button onClick={() => onImageUpdate(index)}>Update</button>
-                                        <button onClick={() => onImageRemove(index)}>Remove</button>
-                                        </div>
-                                    </div>
-                                    ))}
+                            <div
+                                style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center"
+                                }}
+                            >
+                                <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload2}
+                                ref={imageUploader2}
+                                style={{
+                                    display: "none"
+                                }}
+                                />
+                                <div className="update_btn"
+                                    style={{
+                                        height: "100%",
+                                        width: "100%",
+                                        position: "relative"
+                                    }}
+                                    onClick={() => imageUploader2.current.click()}
+                                >
+                                    <h4 className='text-center'>Click or Drop here</h4>
+                                    <img alt='' ref={uploadedImage2} src={'../images/upload.png'} 
+                                    style={{
+                                    width: "110px",
+                                    height: "110px",
+                                    margin: "auto"
+                                    }}
+                                    className="img-fluid profile_circle_img" />
+                                    {/* <div class="overlat_btn"><button type="" class="img_edit_btn"><i class="fa fa-edit fa-lg"></i></button></div> */}
                                 </div>
-                                )}
-                            </ImageUploading>
+                            </div>
                         </div>
                         <div className="col-md-6 mb-1">
                             <label for="recipient-name" className="col-form-label">Title *</label>

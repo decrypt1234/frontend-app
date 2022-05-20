@@ -138,7 +138,7 @@ function Profile() {
                                     }}
                                     onClick={() => imageUploader.current.click()}
                                 >
-                                    <img ref={uploadedImage} src={'../img/profile/profile1.png'} 
+                                    <img alt='' ref={uploadedImage} src={'../img/profile/profile1.png'} 
                                     style={{
                                     width: "100%",
                                     height: "100%",
