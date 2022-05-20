@@ -17,7 +17,7 @@ export const Register = async (account) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      sWalletAddress: account,
+      walletAddress: account,
     }),
   };
   try {
@@ -37,6 +37,8 @@ export const Register = async (account) => {
       const error = (data && data.message) || response.status;
       return Promise.reject(error);
     }
+    localStorage.setItem("Authorization", data.data.token);
+    return data;
   } catch (error) {
     //   this.setState({ postId: data.id });
 
@@ -50,7 +52,7 @@ export const Login = async (account) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      sWalletAddress: account,
+      walletAddress: account,
     }),
   };
   try {
@@ -70,7 +72,7 @@ export const Login = async (account) => {
       return Promise.reject(error);
     }
     localStorage.setItem("Authorization", data.data.token);
-    return data.data.token;
+    return data;
     //   this.setState({ postId: data.id });
   } catch (error) {
     // this.setState({ errorMessage: error.toString() });
@@ -123,7 +125,7 @@ export const checkuseraddress = async (account) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      sWalletAddress: account,
+      walletAddress: account,
     }),
   };
   try {
