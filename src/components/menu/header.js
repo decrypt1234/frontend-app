@@ -7,7 +7,13 @@ import Onboard from "@web3-onboard/core";
 import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
 import Logo from "./../../assets/images/logo.svg";
-import { checkuseraddress, Login, Logout, Register } from "../../apiServices";
+import {
+  checkuseraddress,
+  getProfile,
+  Login,
+  Logout,
+  Register,
+} from "../../apiServices";
 import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import { useCookies } from "react-cookie";
@@ -111,6 +117,7 @@ const Header = function () {
   const [chainId, setChainId] = useState();
   const [isAccountSwitched, setIsAccountSwitched] = useState(false);
   const [isChainSwitched, setIsChainSwitched] = useState(false);
+  const [userDetails, setUserDetails] = useState();
 
   useEffect(() => {
     if (cookies["selected_account"]) {
@@ -137,6 +144,13 @@ const Header = function () {
       });
     }
   }, [provider]);
+
+  const getUserProfile = async () => {
+    const profile = await getProfile();
+    console.log("profile", profile.data);
+    setUserDetails(profile.data);
+  }
+
 
   const connectWallet = async () => {
     setIsAccountSwitched(false);
@@ -173,6 +187,7 @@ const Header = function () {
               return;
             } else {
               NotificationManager.success(res.message);
+              getUserProfile();
               return;
             }
           } catch (e) {
@@ -194,6 +209,7 @@ const Header = function () {
               return;
             } else {
               NotificationManager.success(res.message);
+              getUserProfile();
               return;
             }
           } catch (e) {
@@ -204,9 +220,11 @@ const Header = function () {
       } catch (e) {
         console.log(e);
       }
+     
     } catch (e) {
       console.log(e);
     }
+   
   };
 
   const disconnectWallet = async () => {
@@ -261,6 +279,7 @@ const Header = function () {
               return;
             } else {
               NotificationManager.success(res.message);
+              getUserProfile();
               return;
             }
           } catch (e) {
@@ -517,12 +536,16 @@ const Header = function () {
                             <img src='./img/favicon.png' alt='favicon' />
                           </div>
                           <div className=''>
-                            <h6>User Name</h6>
-                            <p>{account?.slice(0, 4) + "..." + account?.slice(38, 42)}</p>
+                            <h6>{userDetails?.username === "" ? "unnamed" : userDetails?.username}</h6>
+                            <p>
+                              {account?.slice(0, 4) +
+                                "..." +
+                                account?.slice(38, 42)}
+                            </p>
                           </div>
                         </div>
                       </li>
-                      <li >
+                      <li>
                         <NavLink to={"/userprofile"} className='sub-items'>
                           <svg
                             width='20'
@@ -572,7 +595,10 @@ const Header = function () {
                         </NavLink>
                       </li>
                       <li>
-                        <NavLink to={""} className='sub-items' onClick={disconnectWallet}>
+                        <NavLink
+                          to={""}
+                          className='sub-items'
+                          onClick={disconnectWallet}>
                           <svg
                             width='24'
                             height='24'
@@ -596,7 +622,8 @@ const Header = function () {
                   </li>
                   <li className='nav-item'>
                     <NavLink className='square_yello' to='' tabindex='-1'>
-                      <img src='../img/edit.png' alt='edit' /> {account?.slice(0, 4) + "..." + account?.slice(38, 42)}
+                      <img src='../img/edit.png' alt='edit' />{" "}
+                      {account?.slice(0, 4) + "..." + account?.slice(38, 42)}
                     </NavLink>
                   </li>
                 </>
