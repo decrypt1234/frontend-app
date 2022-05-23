@@ -136,6 +136,7 @@ const Header = function () {
     if (provider) {
       provider.on("accountsChanged", (accounts) => {
         console.log("account switched!!", accounts[0]);
+        if(account)
         setIsAccountSwitched(true);
       });
       provider.on("chainChanged", (chains) => {
@@ -149,8 +150,7 @@ const Header = function () {
     const profile = await getProfile();
     console.log("profile", profile.data);
     setUserDetails(profile.data);
-  }
-
+  };
 
   const connectWallet = async () => {
     setIsAccountSwitched(false);
@@ -159,7 +159,7 @@ const Header = function () {
     const success = await onboard.setChain({ chainId: "0x4" });
     console.log("setChain method", success);
     const primaryWallet = wallets[0];
-    setAccount(primaryWallet.accounts[0].address);
+
     setChainId(primaryWallet.chains[0].id);
     console.log("provider", primaryWallet.provider);
     setProvider(primaryWallet.provider);
@@ -167,11 +167,7 @@ const Header = function () {
 
     try {
       const address = wallets[0].accounts[0].address;
-      setCookie("selected_account", address, { path: "/" });
-      setCookie("chain_id", parseInt(wallets[0].chains[0].id, 16).toString(), {
-        path: "/",
-      });
-      setCookie("balance", wallets[0].accounts[0].balance, { path: "/" });
+
       try {
         const isUserExist = await checkuseraddress(address);
         console.log("selected_account", address);
@@ -181,12 +177,26 @@ const Header = function () {
             const res = await Register(address);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
+              refreshState();
               return;
             } else if (res.message === "User already exists") {
               NotificationManager.error(res.message);
+              refreshState();
               return;
             } else {
               NotificationManager.success(res.message);
+              setAccount(primaryWallet.accounts[0].address);
+              setCookie("selected_account", address, { path: "/" });
+              setCookie(
+                "chain_id",
+                parseInt(wallets[0].chains[0].id, 16).toString(),
+                {
+                  path: "/",
+                }
+              );
+              setCookie("balance", wallets[0].accounts[0].balance, {
+                path: "/",
+              });
               getUserProfile();
               return;
             }
@@ -200,15 +210,29 @@ const Header = function () {
             console.log("Login API response", res);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
+              refreshState();
               return;
             } else if (
               res.message === "User not found" ||
-              res.message === "Invalid Login"
+              res.message === "Login Invalid"
             ) {
               NotificationManager.error(res.message);
+              refreshState();
               return;
             } else {
               NotificationManager.success(res.message);
+              setAccount(primaryWallet.accounts[0].address);
+              setCookie("selected_account", address, { path: "/" });
+              setCookie(
+                "chain_id",
+                parseInt(wallets[0].chains[0].id, 16).toString(),
+                {
+                  path: "/",
+                }
+              );
+              setCookie("balance", wallets[0].accounts[0].balance, {
+                path: "/",
+              });
               getUserProfile();
               return;
             }
@@ -220,11 +244,9 @@ const Header = function () {
       } catch (e) {
         console.log(e);
       }
-     
     } catch (e) {
       console.log(e);
     }
-   
   };
 
   const disconnectWallet = async () => {
@@ -247,7 +269,7 @@ const Header = function () {
     const success = await onboard.setChain({ chainId: "0x4" });
     console.log("setChain method", success);
     const primaryWallet = wallets[0];
-    setAccount(primaryWallet.accounts[0].address);
+
     setChainId(primaryWallet.chains[0].id);
     console.log("provider", primaryWallet.provider);
     setProvider(primaryWallet.provider);
@@ -255,11 +277,7 @@ const Header = function () {
 
     try {
       const address = wallets[0].accounts[0].address;
-      setCookie("selected_account", address, { path: "/" });
-      setCookie("chain_id", parseInt(wallets[0].chains[0].id, 16).toString(), {
-        path: "/",
-      });
-      setCookie("balance", wallets[0].accounts[0].balance, { path: "/" });
+
       try {
         const isUserExist = await checkuseraddress(address);
         console.log("selected_account", address);
@@ -270,15 +288,29 @@ const Header = function () {
             console.log("Login API response", res);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
+              refreshState();
               return;
             } else if (
               res.message === "User not found" ||
-              res.message === "Invalid Login"
+              res.message === "Login invalid"
             ) {
               NotificationManager.error(res.message);
+              refreshState();
               return;
             } else {
               NotificationManager.success(res.message);
+              setAccount(primaryWallet.accounts[0].address);
+              setCookie("selected_account", address, { path: "/" });
+              setCookie(
+                "chain_id",
+                parseInt(wallets[0].chains[0].id, 16).toString(),
+                {
+                  path: "/",
+                }
+              );
+              setCookie("balance", wallets[0].accounts[0].balance, {
+                path: "/",
+              });
               getUserProfile();
               return;
             }
@@ -536,7 +568,11 @@ const Header = function () {
                             <img src='./img/favicon.png' alt='favicon' />
                           </div>
                           <div className=''>
-                            <h6>{userDetails?.username === "" ? "unnamed" : userDetails?.username}</h6>
+                            <h6>
+                              {userDetails?.username === ""
+                                ? "unnamed"
+                                : userDetails?.username}
+                            </h6>
                             <p>
                               {account?.slice(0, 4) +
                                 "..." +
