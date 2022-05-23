@@ -27,7 +27,8 @@ function Navbar(props) {
             <span className='badge badge-danger navbar-badge text-dark'>3</span>
           </div>
         </li>
-        <li><Link to={'/'} className="round-btn montserrat text-light text-decoration-none"><Wallet /> x01a5x21...</Link></li>
+        <li><Link to={'/'} className="round-btn montserrat text-light text-decoration-none">
+          <Wallet />  </Link></li>
       </ul>
     </div>
   )
