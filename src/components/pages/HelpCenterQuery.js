@@ -1,6 +1,5 @@
 import React from 'react';
 import Footer from '../components/footer';
-import Header from '../menu/header';
 import Star from '../SVG/Star';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +16,6 @@ var bgImgStyle = {
 function HelpCenterQuery() {
   return (
     <div style={bgImgStyle}>
-      <Header />
         <section className="pdd_8">
             <div className="container">
                 <div className="row">

@@ -4,7 +4,6 @@ import FirearmsCollection from '../components/FirearmsCollection';
 import NFTlisting from '../components/NFTlisting';
 import NFToffer from '../components/NFToffer';
 import NFThistory from '../components/NFThistory';
-import Header from '../menu/header';
 
 
 var bgImgStyle = {
@@ -22,7 +21,6 @@ var bgImgStyle = {
 function NFTDetails() {
   return (
     <div>
-        <Header />
       <section style={bgImgStyle} className="pdd_8">
           <div className="container">
               <div className="row mb-5">

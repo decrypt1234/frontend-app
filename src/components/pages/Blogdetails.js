@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/footer';
-import Header from '../menu/header';
 
 var blog_bg = {
     backgroundImage: "url(./img/blog/singleblog.jpg)",
@@ -21,7 +20,6 @@ var bgImgStyle = {
 function Blogdetails() {
   return (
     <div style={bgImgStyle}>
-        <Header />
         <section className='register_hd pdd_12' style={blog_bg}>
             <div className='container'>
                 <div className='row'>

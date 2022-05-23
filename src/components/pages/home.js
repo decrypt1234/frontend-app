@@ -9,7 +9,6 @@ import Footer from "../components/footer";
 import Reveal from "react-awesome-reveal";
 import { keyframes } from "@emotion/react";
 import { Link } from "react-router-dom";
-import Header from "../menu/header";
 
 const fadeInUp = keyframes`
   0% {
@@ -63,7 +62,6 @@ var mint_bg = {
 
 const Home = () => (
   <div style={bgImgStyle}>
-    <Header />
     <section style={bgImgStylesec1} className="jumbotron breadcumb no-bg h-vh pdd_8">
       <SliderMain />
     </section>

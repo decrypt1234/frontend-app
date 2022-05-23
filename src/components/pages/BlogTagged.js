@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../components/footer';
 import BlogContent from '../components/BlogContent';
-import Header from '../menu/header';
+
 
 var bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -15,7 +15,6 @@ var bgImgStyle = {
 function BlogTagged() {
   return (
     <div style={bgImgStyle} >
-      <Header />
       <section className="pdd_8 blogtagged">
         <div className="container">
           <div className="row">

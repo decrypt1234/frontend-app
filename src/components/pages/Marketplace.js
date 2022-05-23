@@ -1,6 +1,5 @@
 import React from 'react';
 import Footer from "../components/footer";
-import Header from '../menu/header';
 import { Link } from 'react-router-dom';
 
 var register_bg = {
@@ -22,7 +21,6 @@ var bgImgStyle = {
 function Marketplace() {
   return (
     <div>
-        <Header />
       <section className='register_hd pdd_12' style={register_bg}>
           <div className='container'>
               <div className='row'>
