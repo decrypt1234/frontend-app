@@ -149,7 +149,6 @@ const Navbar = (props) => {
     const success = await onboard.setChain({ chainId: "0x4" });
     console.log("setChain method", success);
     const primaryWallet = wallets[0];
-
     setChainId(primaryWallet.chains[0].id);
     console.log("provider", primaryWallet.provider);
     setProvider(primaryWallet.provider);
@@ -157,21 +156,18 @@ const Navbar = (props) => {
 
     try {
       const address = wallets[0].accounts[0].address;
-
-      try {
+        try {
         const isUserExist = await checkuseraddress(address);
         console.log("selected_account", address);
         console.log("isUserExist", isUserExist);
-        if (isUserExist === "User not found") {
+        if (isUserExist.message === "User not found") {
           try {
             const res = await Register(address);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
-              refreshState();
               return;
             } else if (res.message === "User already exists") {
               NotificationManager.error(res.message);
-              refreshState();
               return;
             } else {
               NotificationManager.success(res.message);
@@ -200,14 +196,12 @@ const Navbar = (props) => {
             console.log("Login API response", res);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
-              refreshState();
               return;
             } else if (
               res.message === "User not found" ||
               res.message === "Login Invalid"
             ) {
               NotificationManager.error(res.message);
-              refreshState();
               return;
             } else {
               NotificationManager.success(res.message);

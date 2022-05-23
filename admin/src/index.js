@@ -5,11 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
+import { CookiesProvider } from "react-cookie";
+import { NotificationContainer } from "react-notifications";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <CookiesProvider>
+    <NotificationContainer />
     <App />
+    </CookiesProvider>
   </React.StrictMode>
 );
 
