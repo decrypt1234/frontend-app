@@ -11,7 +11,7 @@ import {
   getProfile,
   Login,
   Logout,
-  Register,
+  adminRegister,
 } from "./../apiServices";
 import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
@@ -163,7 +163,7 @@ const Navbar = (props) => {
         console.log("isUserExist", isUserExist);
         if (isUserExist.message === "User not found") {
           try {
-            const res = await Register(address);
+            const res = await adminRegister(address);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
               return;
@@ -190,42 +190,42 @@ const Navbar = (props) => {
           } catch (e) {
             NotificationManager.error(e);
             return;
-          }
-        } else {
-          try {
-            const res = await Login(address);
-            console.log("Login API response", res);
-            if (res.message === "Wallet Address required") {
-              NotificationManager.info(res.message);
-              return;
-            } else if (
-              res.message === "User not found" ||
-              res.message === "Login Invalid"
-            ) {
-              NotificationManager.error(res.message);
-              return;
-            } else {
-              NotificationManager.success(res.message);
-              setAccount(primaryWallet.accounts[0].address);
-              setCookie("selected_account", address, { path: "/" });
-              setCookie(
-                "chain_id",
-                parseInt(wallets[0].chains[0].id, 16).toString(),
-                {
-                  path: "/",
-                }
-              );
-              setCookie("balance", wallets[0].accounts[0].balance, {
-                path: "/",
-              });
-              getUserProfile();
-              return;
-            }
-          } catch (e) {
-            NotificationManager.error(e);
-            return;
-          }
-        }
+          }}
+        //  else {
+        //   try {
+        //     const res = await Login(address);
+        //     console.log("Login API response", res);
+        //     if (res.message === "Wallet Address required") {
+        //       NotificationManager.info(res.message);
+        //       return;
+        //     } else if (
+        //       res.message === "User not found" ||
+        //       res.message === "Login Invalid"
+        //     ) {
+        //       NotificationManager.error(res.message);
+        //       return;
+        //     } else {
+        //       NotificationManager.success(res.message);
+        //       setAccount(primaryWallet.accounts[0].address);
+        //       setCookie("selected_account", address, { path: "/" });
+        //       setCookie(
+        //         "chain_id",
+        //         parseInt(wallets[0].chains[0].id, 16).toString(),
+        //         {
+        //           path: "/",
+        //         }
+        //       );
+        //       setCookie("balance", wallets[0].accounts[0].balance, {
+        //         path: "/",
+        //       });
+        //       getUserProfile();
+        //       return;
+        //     }
+        //   } catch (e) {
+        //     NotificationManager.error(e);
+        //     return;
+        //   }
+        // }
       } catch (e) {
         console.log(e);
       }
