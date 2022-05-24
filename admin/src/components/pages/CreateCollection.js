@@ -100,16 +100,26 @@ function CreateCollection() {
             }
             let hash = res1;
            res1 = await res1.wait();
+           console.log("res1 is--->",res1)
             if (res1.status === 1) {
                 let contractAddress = await readReceipt(hash);
                 console.log("contract address is--->",contractAddress)
                 var fd = new FormData();
-          
-                fd.append("sName", title);
-                fd.append("sDescription", description);
-                fd.append("nftFile", image);
-                fd.append("sContractAddress", contractAddress);
-                fd.append("erc721", JSON.stringify(true));
+                fd.append("name", title);
+                fd.append("description", description);
+                fd.append("logoImage", logoImage);
+                fd.append("coverImage", coverImage);
+                fd.append("categoryID", categoryID);
+                fd.append("brandID", brandID);
+                fd.append("chainID", chainID);
+                fd.append("contractAddress", contractAddress);
+                fd.append("preSaleStartTime", preSaleStartTime);
+                fd.append("totalSupply", totalSupply);
+                fd.append("type", 0);
+                setLoading(true);
+                await createCollection(fd);
+                setLoading(false);
+                NotificationManager.success("Collection Created Successfully");
               }
         }
         

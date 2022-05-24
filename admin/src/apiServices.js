@@ -315,6 +315,7 @@ export const getNFTList = async () => {
 };
 
 export const createCollection = async (data) => {
+  console.log("data of collection is--->",data)
   const requestOptions = {
     method: "POST",
     headers: {
