@@ -102,6 +102,7 @@ export const Logout = async () => {
 };
 
 export const getProfile = async () => {
+  console.log("get profile is called")
   const response = await fetch(
     process.env.REACT_APP_API_BASE_URL + "/user/Profile",
     {
@@ -112,6 +113,7 @@ export const getProfile = async () => {
     .get("content-type")
     ?.includes("application/json");
   const data = isJson && (await response.json());
+  console.log("data is----->",data)
   return data;
 };
 
@@ -143,18 +145,20 @@ export const checkuseraddress = async (account) => {
   }
 };
 
-export const updateProfile = async (account, data) => {
+export const updateProfile = async (data) => {
+  console.log("data in api iis------>",data)
   let formData = new FormData();
 
-  formData.append("sUserName", data.uname ? data.uname : "");
-  formData.append("sFirstname", data.fname ? data.fname : "");
-  formData.append("sLastname", data.lname ? data.lname : "");
-  formData.append("sBio", data.bio ? data.bio : "");
-  formData.append("sWebsite", data.website ? data.website : "");
-  formData.append("sEmail", data.email ? data.email : "");
-  formData.append("sWalletAddress", account);
+  formData.append("userName", data.uname ? data.uname : "");
+  //formData.append("sFirstname", data.fname ? data.fname : "");
+  //formData.append("sLastname", data.lname ? data.lname : "");
+  formData.append("bio", data.bio ? data.bio : "");
+  formData.append("website", data.website ? data.website : "");
+  formData.append("email", data.email ? data.email : "");
+  //formData.append("sWalletAddress", account);
   formData.append("userProfile", data.profilePic ? data.profilePic : "");
-
+   
+  console.log("form data is---->",formData)
   const requestOptions = {
     method: "PUT",
     headers: {

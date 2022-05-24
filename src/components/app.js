@@ -4,8 +4,8 @@ import React  from "react";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/Register";
-import Marketplace from "./pages/Marketplace";
 import Marketplacecollection from "./pages/Marketplacecollection";
+import Marketplace from "./pages/Marketplace";
 import NFTDetails from "./pages/NFTDetails";
 import BlogTagged from "./pages/BlogTagged";
 import Helpcenter from "./pages/Helpcenter";
@@ -47,7 +47,7 @@ import Earnings from "./pages/Earnings";
 
 // import {DUMMY_COLLECTIONS} from "../dummyJSON";
 
-
+import {NotificationContainer} from 'react-notifications';
 
 
 const App = (props) => {
@@ -60,8 +60,8 @@ const App = (props) => {
         <Route exact path="/author" element={<Author />} />
         <Route exact path="/login" element={<Login/>} />
         <Route path="/register" element={<Register />} />
-        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/marketplacecollection" element={<Marketplacecollection />} />
+        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/NFTdetails" element={<NFTDetails />} />
         <Route path="/updateProfile" element={<UpdateProfile />} />
         <Route path="/userprofile"element={<UserProfile />} />
@@ -93,6 +93,7 @@ const App = (props) => {
         <Route path="*" element={ItemNotFound} />
         
       </Routes>
+      <NotificationContainer/>
     </Router>
   );
 };
