@@ -1,8 +1,25 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
+import { connect } from "react-redux";
+import { createCollection, exportInstance } from "../../apiServices";
+import contracts from "../../config/contracts";
+import degnrABI from "./../../config/abis/dgnr8.json";
+import { ethers } from "ethers";
+//import Loader from "../components/loader";
+import NotificationManager from "react-notifications/lib/NotificationManager";
 
 
 function CreateCollection() {
+    
+    const [files, setFiles] = useState([]);
+    const [image, setImage] = useState("www.image.com");
+    const [title, setTitle] = useState("collection1");
+    const [symbol, setSymbol] = useState("CLT");
+    const [description, setDescription] = useState("");
+    const [royalty, setRoyalty] = useState(1000);
+    const [loading, setLoading] = useState(false);
+    const [maxSupply,setMaxSupply]=useState(1)
+   
 
     const [ datetime, setDatetime ] = useState('');
 
@@ -52,6 +69,51 @@ function CreateCollection() {
             }
         };
 
+        const readReceipt = async (hash) => {
+            let provider = new ethers.providers.Web3Provider(window.ethereum);
+            const receipt = await provider.getTransactionReceipt(hash.hash);
+            let contractAddress = receipt.logs[0].address;
+            return contractAddress;
+          };
+        
+        //handle collection creator
+        const handleCollectionCreation = async () => {
+            let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
+            console.log("creator is---->",creator);
+            console.log("create collection is called");
+            console.log("contracts usdt address",contracts.USDT)
+            
+            let res1;
+            try {
+              setLoading(true);
+              maxSupply==1
+                ? (res1 = await creator.deployExtendedERC721(
+                    title,
+                    symbol,
+                    image,
+                    royalty,
+                    contracts.USDT
+                  ))
+                : (res1 = await creator.deployExtendedERC1155("www.image.com",1000,contracts.USDT));
+            } catch (e) {
+              console.log(e);
+            }
+            let hash = res1;
+           res1 = await res1.wait();
+            if (res1.status === 1) {
+                let contractAddress = await readReceipt(hash);
+                console.log("contract address is--->",contractAddress)
+                var fd = new FormData();
+          
+                fd.append("sName", title);
+                fd.append("sDescription", description);
+                fd.append("nftFile", image);
+                fd.append("sContractAddress", contractAddress);
+                fd.append("erc721", JSON.stringify(true));
+              }
+        }
+        
+        
   return (
     <div className="wrapper">
         {/* <!-- Sidebar  --> */}
@@ -212,11 +274,6 @@ function CreateCollection() {
                             <label for="recipient-name" className="col-form-label">Royalty *</label>
                             <input type="text" className="form-control" id="recipient-name" />
                         </div>
-                        <div className="col-md-12 mb-1">
-                            <label for="message-text" className="col-form-label">Description *</label>
-                            <textarea className="form-control" id="message-text"></textarea>
-                        </div>
-                        
                         <div className="col-md-6 mb-1">
                             <label for="recipient-name" className="col-form-label">Start Date *</label>
                             <input type="datetime-local" value={(datetime || '').toString().substring(0, 16)} onChange={handleChange} className="form-control" />
@@ -227,7 +284,12 @@ function CreateCollection() {
                         </div>
                         <div className="col-md-6 mb-1">
                             <label for="recipient-name" className="col-form-label">Max Supply *</label>
-                            <input type="text" className="form-control" id="recipient-name" />
+                            <input type="number" className="form-control" id="recipient-name" onChange={(e)=>{
+                               
+                                let maxSupply=parseInt(e.target.value,10);
+                                console.log("max supply is-->",e.target.value,typeof maxSupply)
+                                setMaxSupply(e.target.value)
+                            }} />
                         </div>
                         <div className="col-md-6 mb-1">
                             <label for="recipient-name" className="col-form-label">Price *</label>
@@ -251,10 +313,20 @@ function CreateCollection() {
                                 <option value="3">Three</option>
                             </select>
                         </div>
+                        <div className="col-md-12 mb-1">
+                            <label for="recipient-name" className="col-form-label">Symbol *</label>
+                            <input type="text" className="form-control" id="recipient-name" onChange={(e)=>{
+                                setSymbol(e.target.value)
+                            }} />
+                        </div>
+                        <div className="col-md-12 mb-1">
+                            <label for="message-text" className="col-form-label">Description *</label>
+                            <textarea className="form-control" id="message-text"></textarea>
+                        </div>
                     </form>
                 </div>
                 <div className="modal-footer justify-content-center">
-                    <button type="button" className="btn btn-admin text-light">Create Collection</button>
+                    <button type="button" className="btn btn-admin text-light" onClick={handleCollectionCreation}>Create Collection</button>
                 </div>
                 </div>
             </div>

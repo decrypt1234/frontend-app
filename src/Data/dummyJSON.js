@@ -233,3 +233,47 @@ export const CollectionCard = [
         Slug: "Buy Now"
     }
 ]
+
+export const marketPlaceCollection=[
+    {
+    id:1,
+    img:"../img/marketplace/Marines.png",
+    heading:"Primary Arms PLx 1-8x24 Riflescope"
+},
+{
+    id:1,
+    img:"../img/marketplace/solider-nft.png",
+    heading:"Primary Arms PLx 1-8x24 Riflescope"
+},
+{
+    id:1,
+    img:"../img/marketplace/SoloImages.png",
+    heading:"Primary Arms PLx 1-8x24 Riflescope"
+},
+{
+    id:1,
+    img:"../img/marketplace/markit2.png",
+    heading:"Primary Arms PLx 1-8x24 Riflescope"
+},
+{
+    id:1,
+    img:"../img/marketplace/marketplace1.png",
+    heading:"Primary Arms PLx 1-8x24 Riflescope"
+},
+{
+    id:1,
+    img:"../img/marketplace/Ellipse 2.png",
+    heading:"Primary Arms PLx 1-8x24 Riflescope"
+},
+{
+    id:1,
+    img:"../img/marketplace/ZeroTechScope.png",
+    heading:"Primary Arms PLx 1-8x24 Riflescope"
+},
+{
+    id:1,
+    img:"../img/marketplace/markit2.png",
+    heading:"Primary Arms PLx 1-8x24 Riflescope"
+},
+
+]

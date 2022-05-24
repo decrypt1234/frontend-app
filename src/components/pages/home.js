@@ -248,7 +248,7 @@ const Home = () => (
             </Link>
           </div>
           <div class="col-md-12 text-center mt-5">
-            <Link to={'/collection'} className="view_all_bdr">View All</Link>
+            <Link to={'/mintcollectionlive'} className="view_all_bdr">View All</Link>
           </div>
         </div>
       </div>
