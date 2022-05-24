@@ -119,6 +119,8 @@ const Header = function () {
   const [isChainSwitched, setIsChainSwitched] = useState(false);
   const [userDetails, setUserDetails] = useState();
 
+  
+
   useEffect(() => {
     if (cookies["selected_account"]) {
       setAccount(cookies["selected_account"]);
@@ -136,7 +138,7 @@ const Header = function () {
     if (provider) {
       provider.on("accountsChanged", (accounts) => {
         console.log("account switched!!", accounts[0]);
-        // if(account)
+        if(account)
         setIsAccountSwitched(true);
       });
       provider.on("chainChanged", (chains) => {

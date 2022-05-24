@@ -68,7 +68,7 @@
     /* background: #7386D5; */
     color: #fff;
     transition: all 0.3s;
-    filter: drop-shadow(1.5px 2.598px 3.5px rgba(0,0,0,0.35));
+    /* filter: drop-shadow(1.5px 2.598px 3.5px rgba(0,0,0,0.35)); */
     background-image: linear-gradient(0deg, #394955 0%, #394955 29%, #0d171d 100%);
     height: calc(100vh - 72px);
 }
@@ -417,8 +417,6 @@ tbody td {vertical-align: middle;}
     width: fit-content;
     top: 25%;
     margin: 0 auto;
-    height: auto;
-    max-height: 50vh;
     min-height: fit-content;
     background: #fff;
     border-radius: 16px;
@@ -458,3 +456,50 @@ tbody td {vertical-align: middle;}
     font-style: normal;
   }
 
+.switch_container h3{
+    font-size: 20px;
+    font-weight: 600;
+}
+/********** Switch Pop modal css ********/
+.switch_container .confirm_btn{
+    border: 2px solid mediumseagreen;
+      border-radius: 10px;
+      color: #fff;
+      background: #28a745;
+      transition: all .1s ease;
+  }
+  
+  
+  .switch_container .confirm_btn:hover{
+    color: #28a745;
+    background: #fff;
+    font-weight: bold;
+  }
+  
+  .switch_container .cancel_btn{
+    border: 2px solid;
+    border-radius: 10px;
+    color: #fff;
+    background: red;
+    transition: all .1s ease;
+  }
+  
+  .switch_container .cancel_btn:hover{
+    color: red;
+    background: #fff;
+    
+  }
+  
+  .switch_container .network_btn{
+    border: 2px solid;
+    border-radius: 10px;
+    color: #fff;
+    background: #007bff;
+    font-weight: bold;
+    transition: all .1s ease;
+  }
+  
+  .switch_container .network_btn:hover{
+    color: #007bff;
+    background: #fff
+  }

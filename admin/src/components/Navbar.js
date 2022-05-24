@@ -110,9 +110,8 @@ const Navbar = (props) => {
   const [userDetails, setUserDetails] = useState();
 
   useEffect(() => {
-    if (cookies["selected_account"]) {
-      setAccount(cookies["selected_account"]);
-    } else refreshState();
+    if (cookies["selected_account"]) setAccount(cookies["selected_account"]);
+    else refreshState();
   }, []);
 
   const refreshState = () => {
@@ -126,12 +125,14 @@ const Navbar = (props) => {
     if (provider) {
       provider.on("accountsChanged", (accounts) => {
         console.log("account switched!!", accounts[0]);
-        if(account)
+        console.log("isAccountSwitched", isAccountSwitched);
         setIsAccountSwitched(true);
       });
       provider.on("chainChanged", (chains) => {
         console.log("chain changed", chains);
-        if (chains !== "0x4") setIsChainSwitched(true);
+        if (chains !== "0x4") {
+          setIsChainSwitched(true);
+        }
       });
     }
   }, [provider]);
@@ -156,7 +157,7 @@ const Navbar = (props) => {
 
     try {
       const address = wallets[0].accounts[0].address;
-        try {
+      try {
         const isUserExist = await checkuseraddress(address);
         console.log("selected_account", address);
         console.log("isUserExist", isUserExist);
@@ -308,7 +309,7 @@ const Navbar = (props) => {
         <div className='profile_img'>
           <img src={"../images/user.jpg"} alt='' className='img-fluid' />
         </div>
-       {props.model} Decryptblock
+        {props.model} Decryptblock
       </div>
       <ul className='p-0 m-0'>
         <li className='text-light'>
@@ -326,12 +327,16 @@ const Navbar = (props) => {
         <li>
           <Link
             to={"/"}
-            className='round-btn montserrat text-light text-decoration-none' onClick={!account ? connectWallet 
-              : disconnectWallet}>
-            {!account
-              ? "Connect Wallet"
-              : <><Wallet />{account.slice(0, 4) + "..." + account.slice(38, 42)}
-              </>} 
+            className='round-btn montserrat text-light text-decoration-none'
+            onClick={!account ? connectWallet : disconnectWallet}>
+            {!account ? (
+              "Connect Wallet"
+            ) : (
+              <>
+                <Wallet />
+                {account.slice(0, 4) + "..." + account.slice(38, 42)}
+              </>
+            )}
           </Link>
         </li>
       </ul>
