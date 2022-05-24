@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Footer from '../components/footer';
-import Relatedcollection from '../components/Relatedcollection';
+// import Relatedcollection from '../components/Relatedcollection';
 import AuthorListing from '../components/AuthorListing';
-import Header from '../menu/header';
+import DownloadSVG from '../SVG/DownloadSVG';
+import OffermadeSVG from '../SVG/OffermadeSVG';
+import { NavLink } from 'react-router-dom';
+import { AuthorCard } from '../../Data/dummyJSON';
 
 const bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -24,6 +27,18 @@ var bgImgarrow = {
 };
 
 function Author() {
+
+  const gridtwo =()=>{
+    console.log("red");
+    setgrid("col-md-6 mb-4");
+  }
+  const gridthree =()=>{
+    console.log("red");
+    setgrid("col-md-4 mb-4");
+  }
+
+  const [grid, setgrid] = useState("col-md-3 mb-4");
+
   return (
     <div style={bgImgStyle}>
       <section className="collection_banner pdd_8 d-flex align-items-center justify-content-center" style={bgImage}>
@@ -85,7 +100,15 @@ function Author() {
             <li><img alt='' src={'../img/author/icon2.svg'} class="img-fluid" /> Created</li>
             <li><img alt='' src={'../img/author/icon3.svg'} class="img-fluid" /> Favourited</li>
             <li><img alt='' src={'../img/author/icon4.svg'} class="img-fluid" /> Activity</li>
-            <li><img alt='' src={'../img/author/icon5.svg'} class="img-fluid" /> Offers</li>
+            <li> 
+              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                <img alt='' src={'../img/author/icon5.svg'} class="img-fluid" /> Offers
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><NavLink activeclassname="active-link" className="dropdown-item" to={"/"}><DownloadSVG /> Offer Received</NavLink></li>
+                <li><NavLink className="dropdown-item" to={"/"}><OffermadeSVG /> Offer Made</NavLink></li>
+              </ul>
+            </li>
           </ul>
 
           <div className="row">
@@ -108,10 +131,10 @@ function Author() {
                   <option value="3">$6000</option>
                 </select>
                 {/* <div className="market_div"> */}
-                  <div className="market_grid">
+                  <div className="market_grid"  onClick={gridtwo}>
                     <img alt='' src={'../img/twogrid.png'} class="img-fluid" />
                   </div>
-                  <div className="market_grid">
+                  <div className="market_grid"  onClick={gridthree}>
                     <img alt='' src={'../img/threegrid.png'} class="img-fluid" />
                   </div>
                 {/* </div> */}
@@ -124,7 +147,14 @@ function Author() {
       </section>
       <section className="collection_list mb-5 pb-5">
         <div className="container">
-          <AuthorListing />
+          <div className='row'>
+            {AuthorCard.map(card =>(
+            <div className={grid}  key={card.id}>
+              <AuthorListing  image={card.img} submenu={card.Subheading} heading={card.Heading} price={card.price} date={card.Date}
+                button={card.Slug} link={card.Like} />
+            </div>
+            ))}
+          </div>
         </div>
       </section>
       <Footer />

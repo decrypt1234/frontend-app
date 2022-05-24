@@ -277,3 +277,181 @@ export const marketPlaceCollection=[
 },
 
 ]
+
+export const AuthorCard = [
+    {
+        id: 1,
+        img: "../img/collections/list1.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list2.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list3.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list4.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list5.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list6.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list7.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list8.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list9.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list10.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list11.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    },
+    {
+        id: 1,
+        img: "../img/collections/list12.png",
+        Subheading: "Barrett Collection",
+        Heading: "BARRETT GUNS #2454",
+        price: "550",
+        Date: "7 days left",
+        Like: "999",
+        Slug: "Buy Now"
+    }
+]
+export const MintingSlider = [
+    {
+        id: 1,
+        mintQuant:0,
+        title: "Mint Event",
+        subtitle: "150 / 500 Minted",
+        img: "../img/mint/da.png",
+        btnslug: "/",
+        mintprice: "Mint Price 2000 HNTR"
+    },
+    {
+        id: 2,
+        mintQuant:0,
+        title: "Mint Event",
+        subtitle: "150 / 500 Minted",
+        img: "../img/mint/da.png",
+        btnslug: "/",
+        mintprice: "Mint Price 2000 HNTR"
+    },
+    {
+        id: 3,
+        mintQuant:0,
+        title: "Mint Event",
+        subtitle: "150 / 500 Minted",
+        img: "../img/mint/da.png",
+        btnslug: "/",
+        mintprice: "Mint Price 2000 HNTR"
+    },
+    {
+        id: 4,
+        mintQuant:0,
+        title: "Mint Event",
+        subtitle: "150 / 500 Minted",
+        img: "../img/mint/da.png",
+        btnslug: "/",
+        mintprice: "Mint Price 2000 HNTR"
+    },
+    {
+        id: 5,
+        mintQuant:0,
+        title: "Mint Event",
+        subtitle: "150 / 500 Minted",
+        img: "../img/mint/da.png",
+        btnslug: "/",
+        mintprice: "Mint Price 2000 HNTR"
+    },
+    {
+        id: 6,
+        title: "Mint Event",
+        subtitle: "150 / 500 Minted",
+        img: "../img/mint/da.png",
+        btnslug: "/",
+        mintprice: "Mint Price 2000 HNTR"
+    }
+]

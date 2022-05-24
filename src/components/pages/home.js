@@ -305,7 +305,7 @@ const Home = () => (
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2 className="text-center second_hd color-light mb-5">Recently Added
+              <h2 className="text-center second_hd color-light mb-5">Most recent items put on sale per<br /> Collection
               <div class="border_div"><span class="title_bottom_border"></span></div>
               </h2>
             </div>

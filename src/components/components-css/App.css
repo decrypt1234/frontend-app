@@ -2255,10 +2255,10 @@ button.filter_btn {
   margin: auto;
   margin-bottom: 40px;
 }
-.item_btn {
+.item_active .active {
   background: #ef981d;
   border-radius: 10px;
-  padding: 10px 35px;
+  padding: 12px 35px;
   border: 0;
   font-family: "Montserrat";
   font-weight: 600;
@@ -2268,12 +2268,13 @@ button.filter_btn {
   align-items: center;
   justify-content: center;
   min-width: 185px;
+  border: 1px solid #ef981d;
 }
 .item_btn img,
-.activity_btn img {
+.item_active a img {
   margin-right: 10px;
 }
-.activity_btn {
+.item_active a {
   background: #0d171e;
   border: 1px solid #ef981d;
   box-sizing: border-box;
@@ -2288,6 +2289,12 @@ button.filter_btn {
   padding: 12px 35px;
   min-width: 185px;
 }
+.item_active .active svg,
+.item_active .active path,
+.item_active .active g {
+  fill: #fff !important;
+}
+.item_active .active:hover {color: #fff !important;}
 .collection_items {
   background: linear-gradient(180deg, #394956 0%, #25323c 76.04%, #0d171e 100%);
   border: 1px solid #313f4a;
@@ -2432,7 +2439,8 @@ button.img_edit_btn {
   text-align: center;
   margin-bottom: 50px;
 }
-.auther_cart li {
+.auther_cart li,
+.auther_cart li a {
   font-family: "Montserrat";
   font-weight: 600;
   font-size: 24px;
@@ -2442,6 +2450,15 @@ button.img_edit_btn {
 }
 .auther_cart li.active {
   border-bottom: 2px solid #ef981d;
+}
+.auther_cart .dropdown-menu li {
+  display: block;
+}
+.auther_cart .dropdown-menu {
+  background: #0D171E;
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 50%);
+  border-radius: 0px 0px 10px 10px;
+  padding: 10px;
 }
 .martop-100 {
   margin-top: -100px;
@@ -3209,6 +3226,7 @@ button#btn-submit {
   display: inline-block;
   padding: 10px 20px;
 }
+.connect_wallet_btn:hover {color: #fff !important;}
 .mintprice {
   border: 1px solid #ef981d;
   border-radius: 10px;
@@ -3651,18 +3669,9 @@ a:hover {
 .Hepl-details ul li {
   margin-bottom: 15px;
 }
-.profile_me {
-  position: relative;
-  overflow: hidden;
-  border-radius: 100%;
-}
 .profile_me:hover .overlat_btn {
   display: flex;
 }
-
-
-
-
 .slick-disabled {
   opacity: .5;
 }
@@ -3705,48 +3714,30 @@ a:hover {
   padding: 5px 20px;
   display: inline-block;
 }
-
-
-/********** Switch Pop modal css ********/
-.switch_container .confirm_btn{
-  border: 2px solid mediumseagreen;
-    border-radius: 10px;
-    color: #fff;
-    background: #28a745;
-    transition: all .1s ease;
+.auther_cart .dropdown-menu li {
+  padding: 0px;
 }
-
-
-.switch_container .confirm_btn:hover{
-  color: #28a745;
-  background: #fff;
-  font-weight: bold;
+.auther_cart .dropdown-menu li .dropdown-item {
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  text-align: center;
+  padding: 10px 20px;
 }
-
-.switch_container .cancel_btn{
-  border: 2px solid;
-  border-radius: 10px;
-  color: #fff;
-  background: red;
-  transition: all .1s ease;
+.auther_cart .dropdown-menu li .dropdown-item:hover,
+.auther_cart .dropdown-menu li .dropdown-item.active {
+  background: #ef981d;
+  border-radius: 50px;
+  color: #fff !important;
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  text-align: center;
+  padding: 10px 20px;
 }
-
-.switch_container .cancel_btn:hover{
-  color: red;
-  background: #fff;
-  
+.auther_cart .dropdown-menu li .dropdown-item.active svg,
+.auther_cart .dropdown-menu li .dropdown-item:hover svg {
+  fill: #fff;
 }
-
-.switch_container .network_btn{
-  border: 2px solid;
-  border-radius: 10px;
-  color: #fff;
-  background: #007bff;
-  font-weight: bold;
-  transition: all .1s ease;
-}
-
-.switch_container .network_btn:hover{
-  color: #007bff;
-  background: #fff
+.auther_cart .dropdown-menu li .dropdown-item svg {
+  fill: #ef981d;
 }

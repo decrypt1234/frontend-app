@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Footer from '../components/footer';
 import CollectionList from '../components/CollectionList';
 import Relatedcollection from '../components/Relatedcollection';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { CollectionCard } from '../../Data/dummyJSON';
+import ItemSVG from '../SVG/ItemSVG';
+import ActivitySVG from '../SVG/ActivitySVG';
 
 
 const bgImgStyle = {
@@ -99,9 +101,11 @@ function CollectionWithCollection() {
             <Relatedcollection />
         
           <div className="row mb-5">
-            <div className="col-md-12 text-center">
-            <Link to={'/collection'} ><button type="button" className='item_btn mr-3'><img alt='' src={'../img/items.svg'} class="img-fluid" /> Items</button></Link>
-              <Link to={'/collectionActivity'} ><button type="button" className="activity_btn"><img alt='' src={'../img/activity.svg'} class="img-fluid" /> Activity</button></Link>
+            <div className="col-md-12 text-center item_active">
+              <NavLink activeclassname="active-link" to={'/collection'} className="mr-3 active">
+              <span className='mr-3'><ItemSVG /></span> Items</NavLink>
+              <NavLink to={'/collectionActivity'} >
+              <span className='mr-3'><ActivitySVG /></span> Activity</NavLink>
             </div>
           </div>
 

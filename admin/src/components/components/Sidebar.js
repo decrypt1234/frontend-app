@@ -41,6 +41,11 @@ function Sidebar() {
                     </NavLink>
                 </li>
                 <li>
+                    <NavLink to={'/createbrands'} className="text-decoration-none text-light">
+                        <Performancesvg /> Create Brands
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink to={'/performance'} className="text-decoration-none text-light">
                         <Performancesvg /> Performance
                     </NavLink>
