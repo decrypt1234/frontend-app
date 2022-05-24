@@ -11,6 +11,8 @@ import CreateCollection from './components/pages/CreateCollection';
 import CreateNFTs from './components/pages/CreateNFTs';
 import Rightarrow from './components/SVG/rightarrow';
 
+import {NotificationContainer} from 'react-notifications';
+
 const instaImg = {
   backgroundImage: "url(./images/main_bg.png)",
   backgroundRepeat: "no-repeat",
@@ -52,6 +54,7 @@ function App() {
           <Route path='createcollection' element={ <CreateCollection />  } />
           <Route path='createnfts' element={ <CreateNFTs /> } />
         </Routes>
+        <NotificationContainer/>
       </BrowserRouter>
     </div>
   );
