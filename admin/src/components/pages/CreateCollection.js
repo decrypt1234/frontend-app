@@ -6,26 +6,23 @@ import contracts from "../../config/contracts";
 import degnrABI from "./../../config/abis/dgnr8.json";
 import { ethers } from "ethers";
 //import Loader from "../components/loader";
-import NotificationManager from "react-notifications/lib/NotificationManager";
+import { NotificationManager } from "react-notifications";
 
 function CreateCollection() {
   const [files, setFiles] = useState([]);
-  const [image, setImage] = useState("www.image.com");
-  const [title, setTitle] = useState("collection1");
-  const [symbol, setSymbol] = useState("CLT");
+  const [logoImg, setLogoImg] = useState("");
+  const [coverImg, setCoverImg] = useState("");
+  const [title, setTitle] = useState("");
+  const [symbol, setSymbol] = useState("");
   const [description, setDescription] = useState("");
-  const [royalty, setRoyalty] = useState(1000);
+  const [royalty, setRoyalty] = useState("");
   const [loading, setLoading] = useState(false);
-  const [maxSupply, setMaxSupply] = useState(1);
+  const [maxSupply, setMaxSupply] = useState();
   const [price, setPrice] = useState();
-  const [brand,setBrand] = useState();
-  const [category, setCategory] = useState();
+  const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
   const [datetime, setDatetime] = useState("");
   const [datetime2, setDatetime2] = useState("");
-
-  function handleInputValidation(e) {
-
-  }
 
   function handleChange(ev) {
     if (!ev.target["validity"].valid) return;
@@ -52,8 +49,9 @@ function CreateCollection() {
         current.src = e.target.result;
       };
       reader.readAsDataURL(file);
-    } else {
-      NotificationManager.error("Please upload an image.");
+      if (e.target.files && e.target.files[0]) {
+        setLogoImg(e.target.files[0]);
+      }
     }
   };
 
@@ -70,8 +68,9 @@ function CreateCollection() {
         current.src = e.target.result;
       };
       reader.readAsDataURL(file);
-    } else {
-      NotificationManager.error("Please upload a cover image.");
+      if (e.target.files && e.target.files[0]) {
+        setCoverImg(e.target.files[0]);
+      }
     }
   };
 
@@ -82,44 +81,156 @@ function CreateCollection() {
     return contractAddress;
   };
 
+  const handleValidationCheck = () => {
+    // let collectionFields = {
+    //   title,
+    //   price,
+    //   symbol,
+    //   maxSupply,
+    //   sDate: datetime,
+    //   eDate: datetime2,
+    //   royalty,
+    //   description,
+    //   logoImg,
+    //   coverImg,
+    //   brand,
+    //   category,
+    // };
+
+    if (logoImg === "" || logoImg === undefined) {
+      NotificationManager.error("Please Upload a Logo Image.", "", 1000);
+      return false;
+    }
+    if (
+      coverImg === "" ||
+      coverImg === undefined
+    ) {
+      NotificationManager.error("Please Upload a Cover Image.");
+      return false;
+    }
+    if (
+      title === "" ||
+      title === undefined
+    ) {
+      NotificationManager.error("Please Enter a Title");
+      return false;
+    }
+    if (title.trim()) {
+      NotificationManager.error("Space(s) not allowed in Title.");
+      return false;
+    }
+    if (
+      royalty === "" ||
+      royalty === undefined
+    ) {
+      NotificationManager.error("Please Enter the value for Royalty.");
+      return false;
+    }
+    if (royalty.trim()) {
+      NotificationManager.error("Space(s) not allowed in Royalty.");
+      return false;
+    }
+    if (datetime === "" || datetime === undefined) {
+      NotificationManager.error("Please Choose a Valid Start Date.");
+      return false;
+    }
+    if (datetime2 === "" || datetime2 === undefined) {
+      NotificationManager.error("Please Choose a Valid End Date.");
+      return false;
+    }
+    if (
+      maxSupply === "" ||
+      maxSupply === undefined
+    ) {
+      NotificationManager.error("Please Enter Max Supply.");
+      return false;
+    }
+    if (price === "" || price === undefined) {
+      NotificationManager.error("Please Enter a Price");
+      return false;
+    }
+    if (price.trim()) {
+      NotificationManager.error("Space(s) not allowed in Price.");
+      return false;
+    }
+    if (
+      category === "" ||
+      category === undefined
+    ) {
+      NotificationManager.error("Please Choose a Category.");
+      return false;
+    }
+    if (brand === "" || brand === undefined) {
+      NotificationManager.error("Please Choose a Brand.");
+      return false;
+    }
+    if (
+      symbol === "" ||
+      symbol === undefined
+    ) {
+      NotificationManager.error("Symbol can't be empty.");
+      return false;
+    }
+    if (symbol.trim()) {
+      NotificationManager.error("Space(s) not allowed in Symbol.");
+      return false;
+    }
+    if (
+      description === "" ||
+      description === undefined
+    ) {
+      NotificationManager.error(
+        "Please Enter a Description for your collection."
+      );
+      return false;
+    }
+    if (description.trim()) {
+      NotificationManager.error("Space(s) not allowed in Description.");
+      return false;
+    }
+    return true;
+  };
+
   //handle collection creator
   const handleCollectionCreation = async () => {
-    let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
-    console.log("creator is---->", creator);
-    console.log("create collection is called");
-    console.log("contracts usdt address", contracts.USDT);
+    if (handleValidationCheck()) {
+      let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
+      console.log("creator is---->", creator);
+      console.log("create collection is called");
+      console.log("contracts usdt address", contracts.USDT);
 
-    let res1;
-    try {
-      setLoading(true);
-      maxSupply == 1
-        ? (res1 = await creator.deployExtendedERC721(
-            title,
-            symbol,
-            image,
-            royalty,
-            contracts.USDT
-          ))
-        : (res1 = await creator.deployExtendedERC1155(
-            "www.image.com",
-            1000,
-            contracts.USDT
-          ));
-    } catch (e) {
-      console.log(e);
-    }
-    let hash = res1;
-    res1 = await res1.wait();
-    if (res1.status === 1) {
-      let contractAddress = await readReceipt(hash);
-      console.log("contract address is--->", contractAddress);
-      var fd = new FormData();
+      let res1;
+      try {
+        setLoading(true);
+        maxSupply == 1
+          ? (res1 = await creator.deployExtendedERC721(
+              title,
+              symbol,
+              logoImg,
+              royalty,
+              contracts.USDT
+            ))
+          : (res1 = await creator.deployExtendedERC1155(
+              "www.image.com",
+              1000,
+              contracts.USDT
+            ));
+      } catch (e) {
+        console.log(e);
+      }
+      let hash = res1;
+      res1 = await res1.wait();
+      if (res1.status === 1) {
+        let contractAddress = await readReceipt(hash);
+        console.log("contract address is--->", contractAddress);
+        var fd = new FormData();
 
-      fd.append("sName", title);
-      fd.append("sDescription", description);
-      fd.append("nftFile", image);
-      fd.append("sContractAddress", contractAddress);
-      fd.append("erc721", JSON.stringify(true));
+        fd.append("sName", title);
+        fd.append("sDescription", description);
+        fd.append("nftFile", logoImg);
+        fd.append("sContractAddress", contractAddress);
+        fd.append("erc721", JSON.stringify(true));
+      }
     }
   };
 
@@ -332,8 +443,11 @@ function CreateCollection() {
                     type='text'
                     className='form-control'
                     id='recipient-name'
+                    name='title'
                     value={title}
-                    onChange={(e) => handleInputValidation(e)}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
                   />
                 </div>
                 <div className='col-md-6 mb-1'>
@@ -345,7 +459,8 @@ function CreateCollection() {
                     className='form-control'
                     id='recipient-name'
                     value={royalty}
-                    onChange={(e) => handleInputValidation(e)}
+                    name='royalty'
+                    onChange={(e) => setRoyalty(e.target.value)}
                   />
                 </div>
                 <div className='col-md-6 mb-1'>
@@ -399,7 +514,7 @@ function CreateCollection() {
                     className='form-control'
                     id='recipient-name'
                     value={price}
-                    onChange={(e) => handleInputValidation(e)}
+                    onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
                 <div className='col-md-6 mb-1'>
@@ -410,7 +525,7 @@ function CreateCollection() {
                     class='form-select'
                     aria-label='Default select example'
                     value={category}
-                    onChange={(e) => handleInputValidation(e)}>
+                    onChange={(e) => setCategory(e.target.value)}>
                     <option selected>Open this select menu</option>
                     <option value='1'>One</option>
                     <option value='2'>Two</option>
@@ -425,7 +540,7 @@ function CreateCollection() {
                     class='form-select'
                     aria-label='Default select example'
                     value={brand}
-                    onChange={(e) => handleInputValidation(e)}>
+                    onChange={(e) => setBrand(e.target.value)}>
                     <option selected>Open this select menu</option>
                     <option value='1'>One</option>
                     <option value='2'>Two</option>
@@ -441,7 +556,7 @@ function CreateCollection() {
                     className='form-control'
                     id='recipient-name'
                     value={symbol}
-                    onChange={(e) => handleInputValidation(e)}
+                    onChange={(e) => setSymbol(e.target.value)}
                   />
                 </div>
                 <div className='col-md-12 mb-1'>
@@ -452,7 +567,7 @@ function CreateCollection() {
                     className='form-control'
                     id='message-text'
                     value={description}
-                    onChange={(e) => handleInputValidation(e)}></textarea>
+                    onChange={(e) => setDescription(e.target.value)}></textarea>
                 </div>
               </form>
             </div>
