@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { createCollection, exportInstance } from "../../apiServices";
 import contracts from "../../config/contracts";
 import degnrABI from "./../../config/abis/dgnr8.json";
 import { ethers } from "ethers";
-//import Loader from "../components/loader";
+// import Loader from "../components/loader";
 import NotificationManager from "react-notifications/lib/NotificationManager";
 
 

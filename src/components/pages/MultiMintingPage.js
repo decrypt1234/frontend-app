@@ -62,7 +62,7 @@ function MultiMintingPage() {
       <section className="collection_list mb-5 pb-5">
         <div className="container">
             <div className="event_slider">
-                <MintEventSlider />
+                <MintEventSlider  />
             </div>
         </div>
       </section>
