@@ -138,7 +138,7 @@ const Header = function () {
     if (provider) {
       provider.on("accountsChanged", (accounts) => {
         console.log("account switched!!", accounts[0]);
-        if(account)
+        // if(account)
         setIsAccountSwitched(true);
       });
       provider.on("chainChanged", (chains) => {
@@ -153,6 +153,10 @@ const Header = function () {
     console.log("profile", profile.data);
     setUserDetails(profile.data);
   };
+
+  useEffect(() => {
+    getUserProfile();
+  },[userDetails])
 
   const connectWallet = async () => {
     setIsAccountSwitched(false);

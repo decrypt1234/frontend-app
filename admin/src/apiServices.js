@@ -604,6 +604,7 @@ export const GetMyNftList = async (data) => {
 };
 
 export const GetMyCollectionsList = async (data) => {
+  
   const requestOptions = {
     method: "POST",
     headers: {
@@ -615,14 +616,15 @@ export const GetMyCollectionsList = async (data) => {
 
   try {
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + "/nft/myCollectionList",
+      process.env.REACT_APP_API_BASE_URL + "/nft/myCollections",
       requestOptions
     );
     const isJson = response.headers
       .get("content-type")
       ?.includes("application/json");
     const datas = isJson && (await response.json());
-    return datas.data;
+    console.log("collection data---->",datas)
+    return datas.data.results;
   } catch (err) {
     return err;
   }
