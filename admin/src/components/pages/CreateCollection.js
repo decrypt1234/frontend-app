@@ -74,6 +74,34 @@ function CreateCollection() {
     }
   };
 
+  const numberInputCheck = (e) => {
+    const re = /[+-]?[0-9]+\.?[0-9]*/;
+    let val = e.target.value;
+    if (val === "" || re.test(val)) {
+      const numStr = String(val);
+      if (numStr.includes(".")) {
+        if (numStr.split(".")[1].length > 8) {
+        } else {
+          if (val.split(".").length > 2) {
+            val = val.replace(/\.+$/, "");
+          }
+          if (val.length === 2 && val !== "0.") {
+            val = Number(val);
+          }
+          setPrice(val);
+        }
+      } else {
+        if (val.split(".").length > 2) {
+          val = val.replace(/\.+$/, "");
+        }
+        if (val.length === 2 && val !== "0.") {
+          val = Number(val);
+        }
+        setPrice(val);
+      }
+    }
+  }
+
   const readReceipt = async (hash) => {
     let provider = new ethers.providers.Web3Provider(window.ethereum);
     const receipt = await provider.getTransactionReceipt(hash.hash);
@@ -82,54 +110,53 @@ function CreateCollection() {
   };
 
   const handleValidationCheck = () => {
-    console.log("handle validation", category, brand);
     if (logoImg === "" || logoImg === undefined) {
-      NotificationManager.error("Please Upload a Logo Image.", "", 1000);
+      NotificationManager.error("Please Upload a Logo Image", "", 1000);
       return false;
     }
     if (coverImg === "" || coverImg === undefined) {
-      NotificationManager.error("Please Upload a Cover Image.");
+      NotificationManager.error("Please Upload a Cover Imag", "",1000);
       return false;
     }
     if (title.trim() === "" || title === undefined) {
-      NotificationManager.error("Please Enter a Title");
+      NotificationManager.error("Please Enter a Title","",1000);
       return false;
     }
     if (royalty.trim() === "" || royalty === undefined) {
-      NotificationManager.error("Please Enter the value for Royalty.");
+      NotificationManager.error("Please Enter the value for Royalty","",1000);
       return false;
     }
     if (datetime === "" || datetime === undefined) {
-      NotificationManager.error("Please Choose a Valid Start Date.");
+      NotificationManager.error("Please Choose a Valid Start Date","",1000);
       return false;
     }
     if (datetime2 === "" || datetime2 === undefined) {
-      NotificationManager.error("Please Choose a Valid End Date.");
+      NotificationManager.error("Please Choose a Valid End Date","",1000);
       return false;
     }
     if (maxSupply === "" || maxSupply === undefined) {
-      NotificationManager.error("Please Enter Max Supply.");
+      NotificationManager.error("Please Enter Max Supply","",1000);
       return false;
     }
     if (price.trim() === "" || price === undefined) {
-      NotificationManager.error("Please Enter a Price");
+      NotificationManager.error("Please Enter a Price","",1000);
       return false;
     }
     if (category === "" || category === undefined) {
-      NotificationManager.error("Please Choose a Category.");
+      NotificationManager.error("Please Choose a Category","",1000);
       return false;
     }
     if (brand === "" || brand === undefined) {
-      NotificationManager.error("Please Choose a Brand.");
+      NotificationManager.error("Please Choose a Brand","",1000);
       return false;
     }
     if (symbol.trim() === "" || symbol === undefined) {
-      NotificationManager.error("Symbol can't be empty.");
+      NotificationManager.error("Symbol can't be empty","",1000);
       return false;
     }
     if (description.trim() === "" || description === undefined) {
       NotificationManager.error(
-        "Please Enter a Description for your collection."
+        "Please Enter a Description for your collection","",1000
       );
       return false;
     }
@@ -459,7 +486,11 @@ function CreateCollection() {
                     className='form-control'
                     id='recipient-name'
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => numberInputCheck(e)}
+                    onKeyPress={(e) => {
+                      if (!(/^\d*\.?\d*$/.test(e.key)) )
+                        e.preventDefault();
+                    }}
                   />
                 </div>
                 <div className='col-md-6 mb-1'>
