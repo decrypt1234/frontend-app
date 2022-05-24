@@ -1,7 +1,6 @@
 import React from 'react';
 import Footer from "../components/footer";
 import Marketplacecart from "../components/Marketplacecart";
-import Header from '../menu/header';
 
 var register_bg = {
     backgroundImage: "url(./img/Marketplace/marketplace-bg.jpg)",
@@ -26,7 +25,6 @@ var bgImgarrow = {
 function Marketplace() {
   return (
     <div>
-      <Header />
         <section className='register_hd pdd_12' style={register_bg}>
             <div className='container'>
                 <div className='row'>

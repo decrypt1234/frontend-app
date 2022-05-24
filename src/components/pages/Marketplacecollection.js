@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from "../components/footer";
-import Header from '../menu/header';
+import Marketplacecart from "../components/Marketplacecart";
 import { Link } from 'react-router-dom';
 import { marketPlaceCollection } from '../../Data/dummyJSON';
 
@@ -23,7 +23,6 @@ var bgImgStyle = {
 function Marketplacecollection() {
   return (
     <div>
-        <Header />
       <section className='register_hd pdd_12' style={register_bg}>
           <div className='container'>
               <div className='row'>

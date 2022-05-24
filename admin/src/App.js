@@ -14,6 +14,8 @@ import CreateBrands from './components/pages/CreateBrands';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 
+import {NotificationContainer} from 'react-notifications';
+
 const instaImg = {
   backgroundImage: "url(./images/main_bg.png)",
   backgroundRepeat: "no-repeat",
@@ -58,6 +60,7 @@ function App() {
           <Route path='login' element={ <Login /> } />
           <Route path='register' element={ <Register /> } />
         </Routes>
+        <NotificationContainer/>
       </BrowserRouter>
     </div>
   );
