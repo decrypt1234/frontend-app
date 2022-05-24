@@ -82,20 +82,7 @@ function CreateCollection() {
   };
 
   const handleValidationCheck = () => {
-    // let collectionFields = {
-    //   title,
-    //   price,
-    //   symbol,
-    //   maxSupply,
-    //   sDate: datetime,
-    //   eDate: datetime2,
-    //   royalty,
-    //   description,
-    //   logoImg,
-    //   coverImg,
-    //   brand,
-    //   category,
-    // };
+   
 
     if (logoImg === "" || logoImg === undefined) {
       NotificationManager.error("Please Upload a Logo Image.", "", 1000);
