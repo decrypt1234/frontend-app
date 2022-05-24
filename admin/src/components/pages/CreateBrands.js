@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { NotificationManager } from 'react-notifications';
 import Sidebar from '../components/Sidebar';
 
 function CreateBrands() {
-
+    const [logoImg, setLogoImg] = useState();
+    const [coverImg, setCoverImg] = useState();
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
 
         const uploadedImage = React.useRef(null);
         const imageUploader = React.useRef(null);
@@ -17,7 +21,11 @@ function CreateBrands() {
                 current.src = e.target.result;
             };
             reader.readAsDataURL(file);
+            if (e.target.files && e.target.files[0]) {
+                setLogoImg(e.target.files[0]);
+              }
             }
+        
         };
 
         const uploadedImage2 = React.useRef(null);
@@ -33,8 +41,41 @@ function CreateBrands() {
                 current.src = e.target.result;
             };
             reader.readAsDataURL(file);
+            if (e.target.files && e.target.files[0]) {
+                setCoverImg(e.target.files[0]);
+              }
             }
         };
+
+
+        const handleValidationCheck = () =>{
+            if(logoImg === "" || logoImg === undefined)
+            {
+                NotificationManager.error("Please Upload a Logo Image","",800);
+                return false;
+            }
+            if(coverImg === "" || coverImg === undefined)
+            {
+                NotificationManager.error("Please Upload a Cover Image","",800);
+                return false;
+            }
+            if(title.trim() === "" || title === undefined)
+            {
+                NotificationManager.error("Please Enter a Title","",800);
+                return false;
+            }
+            if(description.trim() === "" || description === undefined)
+            {
+                NotificationManager.error("Please Enter a Description","",800);
+                return false;
+            }
+        }
+
+        const handleCreateBrand = () => {
+            if(handleValidationCheck()){
+                //create brand logic
+            }
+        }
 
         
   return (
@@ -167,16 +208,16 @@ function CreateBrands() {
                         </div>
                         <div className="col-md-12 mb-1">
                             <label for="recipient-name" className="col-form-label">Title *</label>
-                            <input type="text" className="form-control" id="recipient-name" />
+                            <input type="text" className="form-control" id="recipient-name" value={title} onChange={(e) => setTitle(e.target.value)}/>
                         </div>
                         <div className="col-md-12 mb-1">
                             <label for="message-text" className="col-form-label">Description *</label>
-                            <textarea className="form-control" id="message-text"></textarea>
+                            <textarea className="form-control" id="message-text" value={description} onChange={(e) => setDescription(e.target.value)} ></textarea>
                         </div>
                     </form>
                 </div>
                 <div className="modal-footer justify-content-center">
-                    <button type="button" className="btn btn-admin text-light">Create Collection</button>
+                    <button type="button" className="btn btn-admin text-light" onClick={handleCreateBrand}>Create Brand</button>
                 </div>
                 </div>
             </div>
