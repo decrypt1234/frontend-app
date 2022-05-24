@@ -111,52 +111,52 @@ function CreateCollection() {
 
   const handleValidationCheck = () => {
     if (logoImg === "" || logoImg === undefined) {
-      NotificationManager.error("Please Upload a Logo Image", "", 1000);
+      NotificationManager.error("Please Upload a Logo Image", "", 800);
       return false;
     }
     if (coverImg === "" || coverImg === undefined) {
-      NotificationManager.error("Please Upload a Cover Imag", "",1000);
+      NotificationManager.error("Please Upload a Cover Imag", "",800);
       return false;
     }
     if (title.trim() === "" || title === undefined) {
-      NotificationManager.error("Please Enter a Title","",1000);
+      NotificationManager.error("Please Enter a Title","",800);
       return false;
     }
     if (royalty.trim() === "" || royalty === undefined) {
-      NotificationManager.error("Please Enter the value for Royalty","",1000);
+      NotificationManager.error("Please Enter the value for Royalty","",800);
       return false;
     }
     if (datetime === "" || datetime === undefined) {
-      NotificationManager.error("Please Choose a Valid Start Date","",1000);
+      NotificationManager.error("Please Choose a Valid Start Date","",800);
       return false;
     }
     if (datetime2 === "" || datetime2 === undefined) {
-      NotificationManager.error("Please Choose a Valid End Date","",1000);
+      NotificationManager.error("Please Choose a Valid End Date","",800);
       return false;
     }
     if (maxSupply === "" || maxSupply === undefined) {
-      NotificationManager.error("Please Enter Max Supply","",1000);
+      NotificationManager.error("Please Enter Max Supply","",800);
       return false;
     }
     if (price.trim() === "" || price === undefined) {
-      NotificationManager.error("Please Enter a Price","",1000);
+      NotificationManager.error("Please Enter a Price","",800);
       return false;
     }
     if (category === "" || category === undefined) {
-      NotificationManager.error("Please Choose a Category","",1000);
+      NotificationManager.error("Please Choose a Category","",800);
       return false;
     }
     if (brand === "" || brand === undefined) {
-      NotificationManager.error("Please Choose a Brand","",1000);
+      NotificationManager.error("Please Choose a Brand","",800);
       return false;
     }
     if (symbol.trim() === "" || symbol === undefined) {
-      NotificationManager.error("Symbol can't be empty","",1000);
+      NotificationManager.error("Symbol can't be empty","",800);
       return false;
     }
     if (description.trim() === "" || description === undefined) {
       NotificationManager.error(
-        "Please Enter a Description for your collection","",1000
+        "Please Enter a Description For Your Collection","",800
       );
       return false;
     }

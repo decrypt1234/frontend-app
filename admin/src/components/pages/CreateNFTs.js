@@ -22,35 +22,36 @@ function CreateNFTs() {
         current.src = e.target.result;
       };
       reader.readAsDataURL(file);
+      if (e.target.files && e.target.files[0]) {
+        setNftImg(e.target.files[0]);
+      }
     }
-    if (e.target.files && e.target.files[0]) {
-      setNftImg(e.target.files[0]);
-    }
+   
   };
 
   const handleValidationCheck = () => {
   
     if (nftImg === "" || nftImg === undefined) {
-      NotificationManager.error("Please upload a Image", "", 1000);
+      NotificationManager.error("Please Upload an Image", "", 800);
       return false;
     }
     if (title.trim() === "" || title === undefined) {
-        NotificationManager.error("Please Enter a Title", "", 1000);
+        NotificationManager.error("Please Enter a Title", "", 800);
         return false;
       }
     if(description.trim() === "" || description === undefined)
     {
-        NotificationManager.error("Please Enter a description", "", 1000);
+        NotificationManager.error("Please Enter a Description", "", 800);
         return false;
     }
     if(collection === "" || collection === undefined)
     {
-        NotificationManager.error("please choose a collection","",1000);
+        NotificationManager.error("Please Choose a Collection","",800);
         return false;
     }
     if(brand === "" || brand === undefined)
     {
-        NotificationManager.error("Please choose a brand","",1000);
+        NotificationManager.error("Please Choose a Brand","",800);
         return false;
     }
     return true;
@@ -310,7 +311,7 @@ function CreateNFTs() {
                 type='button'
                 className='btn btn-admin text-light'
                 onClick={handleCreateNFT}>
-                Create Collection
+                Create NFT
               </button>
             </div>
           </div>
