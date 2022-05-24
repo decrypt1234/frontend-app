@@ -91,11 +91,11 @@ function CreateCollection() {
       NotificationManager.error("Please Upload a Cover Image.");
       return false;
     }
-    if (title === "" || title === undefined) {
+    if (title.trim() === "" || title === undefined) {
       NotificationManager.error("Please Enter a Title");
       return false;
     }
-    if (royalty === "" || royalty === undefined) {
+    if (royalty.trim() === "" || royalty === undefined) {
       NotificationManager.error("Please Enter the value for Royalty.");
       return false;
     }
@@ -111,7 +111,7 @@ function CreateCollection() {
       NotificationManager.error("Please Enter Max Supply.");
       return false;
     }
-    if (price === "" || price === undefined) {
+    if (price.trim() === "" || price === undefined) {
       NotificationManager.error("Please Enter a Price");
       return false;
     }
@@ -123,11 +123,11 @@ function CreateCollection() {
       NotificationManager.error("Please Choose a Brand.");
       return false;
     }
-    if (symbol === "" || symbol === undefined) {
+    if (symbol.trim() === "" || symbol === undefined) {
       NotificationManager.error("Symbol can't be empty.");
       return false;
     }
-    if (description === "" || description === undefined) {
+    if (description.trim() === "" || description === undefined) {
       NotificationManager.error(
         "Please Enter a Description for your collection."
       );
