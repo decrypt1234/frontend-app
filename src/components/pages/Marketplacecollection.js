@@ -1,12 +1,8 @@
 import React from 'react';
 import Footer from "../components/footer";
-<<<<<<< HEAD
 import Marketplacecart from "../components/Marketplacecart";
-=======
-import Header from '../menu/header';
 import { Link } from 'react-router-dom';
 import { marketPlaceCollection } from '../../Data/dummyJSON';
->>>>>>> 6319a3f52d72a444bdcf802ed3f8ff96a0c514eb
 
 var register_bg = {
     backgroundImage: "url(../img/Marketplace/marketplace-bg.jpg)",
@@ -27,48 +23,12 @@ var bgImgStyle = {
 function Marketplacecollection() {
   return (
     <div>
-<<<<<<< HEAD
-        <section className='register_hd pdd_12' style={register_bg}>
-            <div className='container'>
-                <div className='row'>
-                    <div className='col-md-12'>
-                        <h1>Marketplace</h1>
-                    </div>
-                </div> 
-            </div>
-        </section>
-        <section className="marketplacecollection pdd_8" style={bgImgStyle}>
-          <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="market_search_form mb-5">
-                <form class="d-flex marketplace_form">
-                  <input class=" me-2" type="search" placeholder="Search item here..." aria-label="Search" />
-                  <button class="market_btn" type="submit"><img src="../img/search.svg" alt="" /></button>
-                </form>
-                <select class="market_select_form form-select" aria-label="Default select example" style={bgImgarrow}>
-                  <option selected>Single Items</option>
-                  <option value="1">Single Items 1</option>
-                  <option value="2">Single Items 2</option>
-                  <option value="3">Single Items 3</option>
-                </select>
-                <select class="market_select_form form-select" aria-label="Default select example" style={bgImgarrow}>
-                  <option selected>Price: Low to High</option>
-                  <option value="1">$2000</option>
-                  <option value="2">$4000</option>
-                  <option value="3">$6000</option>
-                </select>
-                {/* <div className="market_div"> */}
-                  <div className="market_grid">
-                    <img alt='' src={'../img/twogrid.png'} class="img-fluid" />
-=======
-        <Header />
+        
       <section className='register_hd pdd_12' style={register_bg}>
           <div className='container'>
               <div className='row'>
                   <div className='col-md-12'>
                       <h1>Marketplace</h1>
->>>>>>> 6319a3f52d72a444bdcf802ed3f8ff96a0c514eb
                   </div>
               </div>
           </div>
