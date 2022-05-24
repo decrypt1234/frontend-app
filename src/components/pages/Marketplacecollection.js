@@ -23,7 +23,6 @@ var bgImgStyle = {
 function Marketplacecollection() {
   return (
     <div>
-        
       <section className='register_hd pdd_12' style={register_bg}>
           <div className='container'>
               <div className='row'>

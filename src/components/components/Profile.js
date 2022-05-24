@@ -141,13 +141,13 @@ function Profile() {
 
 
 
-    console.log("uname uname---->",uname)
+    console.log("uname uname---->",uname.indexOf(' '))
     if(uname===""||uname===undefined||uname.length==0) {
       console.log("uname is invalid")
       NotificationManager.error("Please choose valid username","",800);
       return;
     }
-    if(uname.indexOf(' ')) {
+    if((uname.indexOf(' ')) !==-1) {
       NotificationManager.error("Space not allowed","",800);
       return;
     }
@@ -165,9 +165,9 @@ function Profile() {
       let res=await updateProfile(data);
       if(res==="User Details Updated successfully") {
         NotificationManager.success(res);
-        //setTimeout(() => {
-        //  window.location.href = "/userprofile";
-        //}, 200);
+        setTimeout(() => {
+          window.location.href = "/userprofile";
+        }, 200);
       } else {
         NotificationManager.error(res);
       }
@@ -252,8 +252,8 @@ function Profile() {
             </div>
             <div class="mb-3 mt-3">
               <label HTMLfor="comment" class="form-label">Bio</label>
-              <textarea class="form-control profile_textarea"
-                rows="5" id="comment" name="comment" value={bio? bio:"Enter your bio"}
+              <textarea class="form-control profile_textarea" placeholder="Describe yourself here..."
+                rows="5" id="comment" name="comment" value={bio}
                 onChange={(r) => {
                   setBio(r.target.value);
                 }}></textarea>
