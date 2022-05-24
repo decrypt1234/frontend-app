@@ -82,39 +82,21 @@ function CreateCollection() {
   };
 
   const handleValidationCheck = () => {
-   
-
+    console.log("handle validation", category, brand);
     if (logoImg === "" || logoImg === undefined) {
       NotificationManager.error("Please Upload a Logo Image.", "", 1000);
       return false;
     }
-    if (
-      coverImg === "" ||
-      coverImg === undefined
-    ) {
+    if (coverImg === "" || coverImg === undefined) {
       NotificationManager.error("Please Upload a Cover Image.");
       return false;
     }
-    if (
-      title === "" ||
-      title === undefined
-    ) {
+    if (title.trim() === "" || title === undefined) {
       NotificationManager.error("Please Enter a Title");
       return false;
     }
-    if (title.trim()) {
-      NotificationManager.error("Space(s) not allowed in Title.");
-      return false;
-    }
-    if (
-      royalty === "" ||
-      royalty === undefined
-    ) {
+    if (royalty.trim() === "" || royalty === undefined) {
       NotificationManager.error("Please Enter the value for Royalty.");
-      return false;
-    }
-    if (royalty.trim()) {
-      NotificationManager.error("Space(s) not allowed in Royalty.");
       return false;
     }
     if (datetime === "" || datetime === undefined) {
@@ -125,25 +107,15 @@ function CreateCollection() {
       NotificationManager.error("Please Choose a Valid End Date.");
       return false;
     }
-    if (
-      maxSupply === "" ||
-      maxSupply === undefined
-    ) {
+    if (maxSupply === "" || maxSupply === undefined) {
       NotificationManager.error("Please Enter Max Supply.");
       return false;
     }
-    if (price === "" || price === undefined) {
+    if (price.trim() === "" || price === undefined) {
       NotificationManager.error("Please Enter a Price");
       return false;
     }
-    if (price.trim()) {
-      NotificationManager.error("Space(s) not allowed in Price.");
-      return false;
-    }
-    if (
-      category === "" ||
-      category === undefined
-    ) {
+    if (category === "" || category === undefined) {
       NotificationManager.error("Please Choose a Category.");
       return false;
     }
@@ -151,28 +123,14 @@ function CreateCollection() {
       NotificationManager.error("Please Choose a Brand.");
       return false;
     }
-    if (
-      symbol === "" ||
-      symbol === undefined
-    ) {
+    if (symbol.trim() === "" || symbol === undefined) {
       NotificationManager.error("Symbol can't be empty.");
       return false;
     }
-    if (symbol.trim()) {
-      NotificationManager.error("Space(s) not allowed in Symbol.");
-      return false;
-    }
-    if (
-      description === "" ||
-      description === undefined
-    ) {
+    if (description.trim() === "" || description === undefined) {
       NotificationManager.error(
         "Please Enter a Description for your collection."
       );
-      return false;
-    }
-    if (description.trim()) {
-      NotificationManager.error("Space(s) not allowed in Description.");
       return false;
     }
     return true;

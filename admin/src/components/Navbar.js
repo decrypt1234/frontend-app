@@ -11,7 +11,7 @@ import {
   getProfile,
   Login,
   Logout,
-  Register,
+  adminRegister,
 } from "./../apiServices";
 import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
@@ -163,7 +163,7 @@ const Navbar = (props) => {
         console.log("isUserExist", isUserExist);
         if (isUserExist.message === "User not found") {
           try {
-            const res = await Register(address);
+            const res = await adminRegister(address);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
               return;
@@ -190,8 +190,8 @@ const Navbar = (props) => {
           } catch (e) {
             NotificationManager.error(e);
             return;
-          }
-        } else {
+          }}
+         else {
           try {
             const res = await Login(address);
             console.log("Login API response", res);

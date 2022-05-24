@@ -12,7 +12,46 @@ export const exportInstance = async (SCAddress, ABI) => {
   }
 };
 
-export const Register = async (account) => {
+// export const Register = async (account) => {
+//   const requestOptions = {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({
+//       walletAddress: account,
+//       role:"admin"
+//     }),
+//   };
+//   try {
+//     let response = await fetch(
+//       process.env.REACT_APP_API_BASE_URL + "/auth/Register",
+//       requestOptions
+//     );
+
+//     const isJson = response.headers
+//       .get("content-type")
+//       ?.includes("application/json");
+//     const data = isJson && (await response.json());
+
+//     // check for error response
+//     if (!response.ok) {
+//       // get error message from body or default to response status
+//       const error = (data && data.message) || response.status;
+//       return Promise.reject(error);
+//     }
+//     localStorage.setItem("Authorization", data.data.token);
+//     return data;
+//   } catch (error) {
+//     //   this.setState({ postId: data.id });
+
+//     // this.setState({ errorMessage: error.toString() });
+//     console.error("There was an error!", error);
+//   }
+// };
+
+
+// Admin Registeration
+
+export const adminRegister = async (account) => {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -23,7 +62,7 @@ export const Register = async (account) => {
   };
   try {
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + "/auth/Register",
+      process.env.REACT_APP_API_BASE_URL + "/auth/adminregister",
       requestOptions
     );
 
@@ -47,6 +86,7 @@ export const Register = async (account) => {
     console.error("There was an error!", error);
   }
 };
+
 
 export const Login = async (account) => {
   const requestOptions = {
@@ -80,6 +120,42 @@ export const Login = async (account) => {
     console.error("There was an error!", error);
   }
 };
+
+
+// Admin Login
+
+// export const adminLogin = async (account) => {
+//   const requestOptions = {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({
+//       walletAddress: account,
+//     }),
+//   };
+//   try {
+//     let response = await fetch(
+//       process.env.REACT_APP_API_BASE_URL + "/auth/adminlogin",
+//       requestOptions
+//     );
+
+//     const isJson = response.headers
+//       .get("content-type")
+//       ?.includes("application/json");
+//     const data = isJson && (await response.json());
+//     // check for error response
+//     if (!response.ok) {
+//       // get error message from body or default to response status
+//       const error = (data && data.message) || response.status;
+//       return Promise.reject(error);
+//     }
+//     localStorage.setItem("Authorization", data.data.token);
+//     return data;
+//     //   this.setState({ postId: data.id });
+//   } catch (error) {
+//     // this.setState({ errorMessage: error.toString() });
+//     console.error("There was an error!", error);
+//   }
+// };
 
 export const Logout = async () => {
   const requestOptions = {
