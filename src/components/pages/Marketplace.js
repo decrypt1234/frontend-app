@@ -1,7 +1,11 @@
 import React from 'react';
 import Footer from "../components/footer";
+<<<<<<< HEAD
+import { Link } from 'react-router-dom';
+=======
 import Marketplacecart from "../components/Marketplacecart";
 import Header from '../menu/header';
+>>>>>>> 6319a3f52d72a444bdcf802ed3f8ff96a0c514eb
 
 var register_bg = {
     backgroundImage: "url(./img/Marketplace/marketplace-bg.jpg)",
@@ -26,6 +30,34 @@ var bgImgarrow = {
 function Marketplace() {
   return (
     <div>
+<<<<<<< HEAD
+      <section className='register_hd pdd_12' style={register_bg}>
+          <div className='container'>
+              <div className='row'>
+                  <div className='col-md-12'>
+                      <h1>Marketplace</h1>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section className="marketplace-tab pdd_8" style={bgImgStyle}>
+      {/* <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">..dv.</div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...sv</div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...devf</div>
+            </div> */}
+=======
       <Header />
         <section className='register_hd pdd_12' style={register_bg}>
             <div className='container'>
@@ -37,6 +69,7 @@ function Marketplace() {
             </div>
         </section>
         <section className="marketplacecollection pdd_8" style={bgImgStyle}>
+>>>>>>> 6319a3f52d72a444bdcf802ed3f8ff96a0c514eb
           <div className="container">
           <div className="row">
             <div className="col-lg-12">

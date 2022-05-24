@@ -3659,6 +3659,10 @@ a:hover {
 .profile_me:hover .overlat_btn {
   display: flex;
 }
+
+
+
+
 .slick-disabled {
   opacity: .5;
 }
@@ -3700,4 +3704,49 @@ a:hover {
   color: #FFFFFF;
   padding: 5px 20px;
   display: inline-block;
+}
+
+
+/********** Switch Pop modal css ********/
+.switch_container .confirm_btn{
+  border: 2px solid mediumseagreen;
+    border-radius: 10px;
+    color: #fff;
+    background: #28a745;
+    transition: all .1s ease;
+}
+
+
+.switch_container .confirm_btn:hover{
+  color: #28a745;
+  background: #fff;
+  font-weight: bold;
+}
+
+.switch_container .cancel_btn{
+  border: 2px solid;
+  border-radius: 10px;
+  color: #fff;
+  background: red;
+  transition: all .1s ease;
+}
+
+.switch_container .cancel_btn:hover{
+  color: red;
+  background: #fff;
+  
+}
+
+.switch_container .network_btn{
+  border: 2px solid;
+  border-radius: 10px;
+  color: #fff;
+  background: #007bff;
+  font-weight: bold;
+  transition: all .1s ease;
+}
+
+.switch_container .network_btn:hover{
+  color: #007bff;
+  background: #fff
 }

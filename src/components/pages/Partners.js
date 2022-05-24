@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../menu/header';
 import Footer from '../components/footer';
 import PartnersBanner from '../components/PartnersBanner';
 import {DUMMY_COLLECTIONS} from "../../Data/dummyJSON";
@@ -28,7 +27,6 @@ var bgImgStyle = {
 function Partners() {
   return (
     <div style={bgImgStyle}>
-        <Header />
             <section style={bgImgStylesec1} className="jumbotron breadcumb no-bg h-vh pdd_8">
                 <PartnersBanner />
             </section>

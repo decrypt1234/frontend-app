@@ -1,7 +1,6 @@
 import React from 'react';
 import Footer from '../components/footer';
 import Minttab from '../components/Minttab';
-import Header from '../menu/header';
 
 var register_bg = {
     backgroundImage: "url(./img/mint/bg.jpg)",
@@ -23,7 +22,6 @@ var bgImgStyle = {
 function MintCollection() {
   return (
     <div style={bgImgStyle}>
-        <Header />
         <section className='register_hd pdd_12' style={register_bg}>
             <div className='container'>
                 <div className='row'>

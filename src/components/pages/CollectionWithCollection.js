@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Footer from '../components/footer';
 import CollectionList from '../components/CollectionList';
 import Relatedcollection from '../components/Relatedcollection';
-import Header from '../menu/header';
 import { Link } from 'react-router-dom';
 import { CollectionCard } from '../../Data/dummyJSON';
 
@@ -45,7 +44,6 @@ function CollectionWithCollection() {
 
   return (
     <div style={bgImgStyle}>
-      <Header />
       <section className="collection_banner pdd_8" style={bgImage}>
         
       </section>

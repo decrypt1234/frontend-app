@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Footer from '../components/footer';
 import CollectionList from '../components/CollectionList';
-import Header from '../menu/header';
 import { Link } from 'react-router-dom';
 import { CollectionCard } from '../../Data/dummyJSON';
 
@@ -40,7 +39,6 @@ function Collection() {
 
   return (
     <div style={bgImgStyle}>
-      <Header />
       <section className="collection_banner pdd_8" style={bgImage}>
         
       </section>

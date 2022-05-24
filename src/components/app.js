@@ -27,8 +27,7 @@ import MintCollectionLive from "./pages/MintCollectionLive";
 // import Create3 from "./pages/createMultiple";
 import './components-css/App.css'
 import Blogdetails from "./pages/Blogdetails";
-import Minttab from "./components/Minttab"
-import LogInHeader from "./menu/LogInHeader";
+import Minttab from "./components/Minttab";
 import LoginHome from "./pages/LoginHome";
 // import { createGlobalStyle } from "styled-components";
 import UpdateProfile from "./pages/updateProfile";
@@ -44,7 +43,7 @@ import HelpCenterDetail from "./pages/HelpCenterDetail";
 import Offers from "./pages/Offers";
 import AccountSupport from "./pages/AccountSupport";
 import Earnings from "./pages/Earnings";
-
+import Header from "./menu/header";
 // import {DUMMY_COLLECTIONS} from "../dummyJSON";
 
 import {NotificationContainer} from 'react-notifications';
@@ -55,6 +54,7 @@ const App = (props) => {
 
   return (
     <Router>
+      <Header />
       <Routes>
         <Route exact path="/" element={<Home/>} />
         <Route exact path="/author" element={<Author />} />
@@ -81,7 +81,7 @@ const App = (props) => {
         <Route path="/mintcollectionlive" element={<MintCollectionLive />} />
         <Route path="/minttab" element={<Minttab />} />
         <Route path="/loginhome" element={<LoginHome />} />
-        <Route path="/loginheader" element={<LogInHeader />} />
+        {/* <Route path="/loginheader" element={<LogInHeader />} /> */}
         <Route path="/mintingpage" element={<MintingPage />} />
         <Route path="/multimintingpage" element={<MultiMintingPage />} />
         <Route path="/partners" element={<Partners />} />

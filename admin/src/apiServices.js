@@ -1,32 +1,6 @@
 import { ethers } from "ethers";
 
-
-
-export const connect=async()=>{
-    if (window.ethereum) {
-      // commented for future use
-      return new Promise((resolve, reject) => {
-
-        let temp = window.ethereum.enable();
-        // web3.eth.accounts.create();
-        if (temp) {
-          resolve(temp)
-        } else {
-          reject(temp);
-        }
-
-      })
-    } else {
-      this.toaster.error('No account found! Make sure the Ethereum client is configured properly. ', 'Error!')
-      return 'error'
-    }
-  }
-
 export const exportInstance = async (SCAddress, ABI) => {
-	let account=await connect();
-	console.log("account is---->",account)
-	
-	console.log("in export instance")
   let provider = new ethers.providers.Web3Provider(window.ethereum);
   let signer = provider.getSigner();
   let a = new ethers.Contract(SCAddress, ABI, signer);
@@ -44,6 +18,7 @@ export const Register = async (account) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       walletAddress: account,
+      role:"admin"
     }),
   };
   try {
@@ -128,7 +103,6 @@ export const Logout = async () => {
 };
 
 export const getProfile = async () => {
-  console.log("get profile is called")
   const response = await fetch(
     process.env.REACT_APP_API_BASE_URL + "/user/Profile",
     {
@@ -139,7 +113,6 @@ export const getProfile = async () => {
     .get("content-type")
     ?.includes("application/json");
   const data = isJson && (await response.json());
-  console.log("data is----->",data)
   return data;
 };
 
@@ -165,26 +138,24 @@ export const checkuseraddress = async (account) => {
       .get("content-type")
       ?.includes("application/json");
     const data = isJson && (await response.json());
-    return data.message;
+    return data;
   } catch (err) {
     return err;
   }
 };
 
-export const updateProfile = async (data) => {
-  console.log("data in api iis------>",data)
+export const updateProfile = async (account, data) => {
   let formData = new FormData();
 
-  formData.append("userName", data.uname ? data.uname : "");
-  //formData.append("sFirstname", data.fname ? data.fname : "");
-  //formData.append("sLastname", data.lname ? data.lname : "");
-  formData.append("bio", data.bio ? data.bio : "");
-  formData.append("website", data.website ? data.website : "");
-  formData.append("email", data.email ? data.email : "");
-  //formData.append("sWalletAddress", account);
+  formData.append("sUserName", data.uname ? data.uname : "");
+  formData.append("sFirstname", data.fname ? data.fname : "");
+  formData.append("sLastname", data.lname ? data.lname : "");
+  formData.append("sBio", data.bio ? data.bio : "");
+  formData.append("sWebsite", data.website ? data.website : "");
+  formData.append("sEmail", data.email ? data.email : "");
+  formData.append("sWalletAddress", account);
   formData.append("userProfile", data.profilePic ? data.profilePic : "");
-   
-  console.log("form data is---->",formData)
+
   const requestOptions = {
     method: "PUT",
     headers: {
