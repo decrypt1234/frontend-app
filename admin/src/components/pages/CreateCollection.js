@@ -74,6 +74,34 @@ function CreateCollection() {
     }
   };
 
+  const numberInputCheck = (e) => {
+    const re = /[+-]?[0-9]+\.?[0-9]*/;
+    let val = e.target.value;
+    if (val === "" || re.test(val)) {
+      const numStr = String(val);
+      if (numStr.includes(".")) {
+        if (numStr.split(".")[1].length > 8) {
+        } else {
+          if (val.split(".").length > 2) {
+            val = val.replace(/\.+$/, "");
+          }
+          if (val.length === 2 && val !== "0.") {
+            val = Number(val);
+          }
+          setPrice(val);
+        }
+      } else {
+        if (val.split(".").length > 2) {
+          val = val.replace(/\.+$/, "");
+        }
+        if (val.length === 2 && val !== "0.") {
+          val = Number(val);
+        }
+        setPrice(val);
+      }
+    }
+  }
+
   const readReceipt = async (hash) => {
     let provider = new ethers.providers.Web3Provider(window.ethereum);
     const receipt = await provider.getTransactionReceipt(hash.hash);
@@ -458,7 +486,11 @@ function CreateCollection() {
                     className='form-control'
                     id='recipient-name'
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => numberInputCheck(e)}
+                    onKeyPress={(e) => {
+                      if (!(/^\d*\.?\d*$/.test(e.key)) )
+                        e.preventDefault();
+                    }}
                   />
                 </div>
                 <div className='col-md-6 mb-1'>
