@@ -4,8 +4,8 @@ import React  from "react";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/Register";
-import Marketplace from "./pages/Marketplace";
 import Marketplacecollection from "./pages/Marketplacecollection";
+import Marketplace from "./pages/Marketplace";
 import NFTDetails from "./pages/NFTDetails";
 import BlogTagged from "./pages/BlogTagged";
 import Helpcenter from "./pages/Helpcenter";
@@ -27,8 +27,7 @@ import MintCollectionLive from "./pages/MintCollectionLive";
 // import Create3 from "./pages/createMultiple";
 import './components-css/App.css'
 import Blogdetails from "./pages/Blogdetails";
-import Minttab from "./components/Minttab"
-import LogInHeader from "./menu/LogInHeader";
+import Minttab from "./components/Minttab";
 import LoginHome from "./pages/LoginHome";
 // import { createGlobalStyle } from "styled-components";
 import UpdateProfile from "./pages/updateProfile";
@@ -44,10 +43,10 @@ import HelpCenterDetail from "./pages/HelpCenterDetail";
 import Offers from "./pages/Offers";
 import AccountSupport from "./pages/AccountSupport";
 import Earnings from "./pages/Earnings";
-
+import Header from "./menu/header";
 // import {DUMMY_COLLECTIONS} from "../dummyJSON";
 
-
+import {NotificationContainer} from 'react-notifications';
 
 
 const App = (props) => {
@@ -55,13 +54,14 @@ const App = (props) => {
 
   return (
     <Router>
+      <Header />
       <Routes>
         <Route exact path="/" element={<Home/>} />
         <Route exact path="/author" element={<Author />} />
         <Route exact path="/login" element={<Login/>} />
         <Route path="/register" element={<Register />} />
-        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/marketplacecollection" element={<Marketplacecollection />} />
+        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/NFTdetails" element={<NFTDetails />} />
         <Route path="/updateProfile" element={<UpdateProfile />} />
         <Route path="/userprofile"element={<UserProfile />} />
@@ -81,7 +81,7 @@ const App = (props) => {
         <Route path="/mintcollectionlive" element={<MintCollectionLive />} />
         <Route path="/minttab" element={<Minttab />} />
         <Route path="/loginhome" element={<LoginHome />} />
-        <Route path="/loginheader" element={<LogInHeader />} />
+        {/* <Route path="/loginheader" element={<LogInHeader />} /> */}
         <Route path="/mintingpage" element={<MintingPage />} />
         <Route path="/multimintingpage" element={<MultiMintingPage />} />
         <Route path="/partners" element={<Partners />} />
@@ -93,6 +93,7 @@ const App = (props) => {
         <Route path="*" element={ItemNotFound} />
         
       </Routes>
+      <NotificationContainer/>
     </Router>
   );
 };

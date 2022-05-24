@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../menu/header';
 import Footer from '../components/footer';
 import { Link } from '@reach/router';
 
@@ -16,7 +15,6 @@ var bgImgStyle = {
 function HelpCenterDetail() {
   return (
     <div style={bgImgStyle}>
-      <Header />
         <section className="pdd_8">
           <div className="container">
             <div className="row mb-5">

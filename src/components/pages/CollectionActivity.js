@@ -1,6 +1,5 @@
 import React from 'react';
 import Footer from '../components/footer';
-import Header from '../menu/header';
 import { Link } from 'react-router-dom';
 
 
@@ -26,7 +25,6 @@ var bgImgarrow = {
 function CollectionActivity() {
   return (
     <div style={bgImgStyle}>
-      <Header />
       <section className="collection_banner pdd_8" style={bgImage}>
         
       </section>

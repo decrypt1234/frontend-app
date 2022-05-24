@@ -1,11 +1,9 @@
 import React from "react";
 import Footer from "../components/footer";
 import { Link } from "react-router-dom";
-import Header from "../menu/header";
 
 const Login = () => (
   <div>
-    <Header />
     <section
       className="login_sec jumbotron breadcumb no-bg pdd_8"
       style={{ backgroundImage: `url(${"./img/login/login-bg.jpg"})` }}

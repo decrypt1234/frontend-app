@@ -1,7 +1,6 @@
 import React from 'react';
 import BlogContent from '../components/BlogContent';
 import Footer from '../components/footer';
-import Header from '../menu/header';
 
 
 var register_bg = {
@@ -26,7 +25,6 @@ var bgImgStyle = {
 function blog() {
   return (
     <div style={bgImgStyle}>
-        <Header />
         <section className='register_hd pdd_12' style={register_bg}>
             <div className='container'>
                 <div className='row'>

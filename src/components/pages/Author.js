@@ -26,7 +26,6 @@ var bgImgarrow = {
 function Author() {
   return (
     <div style={bgImgStyle}>
-      <Header />
       <section className="collection_banner pdd_8 d-flex align-items-center justify-content-center" style={bgImage}>
         <div className="container d-flex align-items-center justify-content-center">
           <button type="" className="edit_btn"><i class='fa fa-edit fa-lg'></i></button>

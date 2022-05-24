@@ -1,7 +1,6 @@
 // import { Link } from 'react-router-dom';
 import React from 'react';
 import Footer from "../components/footer";
-import Header from '../menu/header';
 
 var register_bg = {
     backgroundImage: "url(./img/contact/contact_bg.jpg)",
@@ -22,7 +21,6 @@ var bgImgStyle = {
 function ContactUs() {
   return (
     <div style={bgImgStyle}>
-        <Header />
         <section className='register_hd pdd_12' style={register_bg}>
             <div className='container'>
                 <div className='row'>
