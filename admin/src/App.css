@@ -492,3 +492,62 @@ tbody td {vertical-align: middle;}
 .Darkmode .modal-content .form-control, .Darkmode .modal-content .form-select {
     border: 1px solid #e5e5e5 !important;
 }
+
+.image {
+    /* opacity: 0.8;
+    width: 200px;
+    height: 160px;
+    background-position: center center;
+    background-color: gray;
+    display: inline-block;
+    margin: 10px;
+    padding: 35px 10px;
+    color: rgba(0,0,0,.6);
+    background: none;
+    border: 2px solid rgba(0,0,0,.1);
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border-radius: 12px; */
+    width: 200px;
+    height: 160px;
+    padding: 35px 10px;
+    color: rgba(0,0,0,.6);
+    background: none;
+    border: 2px solid rgba(0,0,0,.1);
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+  .image:hover {
+    opacity: 1;
+  }
+  
+  .radio-img > input {
+    display: none;
+  }
+  .radio-img > .image {
+    cursor: pointer;
+    border: 2px solid black;
+  }
+  .radio-img > input:checked + .image {
+    border: 2px solid orange;
+  }
+  .radio-img .image svg {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 15px;
+}
+.radio-img .image span {
+    display: block;
+    width: 100%;
+}

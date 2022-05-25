@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Deletesvg from "../SVG/deletesvg";
 
 function CreateCategories() {
+
   const [catImg, setCatImg] = useState();
   const [CategorieName, setCategorieName] = useState("");
 
@@ -196,6 +197,7 @@ function CreateCategories() {
                     onChange={(e) => setCategorieName(e.target.value)}
                   />
                 </div>
+                
               </form>
             </div>
             <div className='modal-footer justify-content-center'>
