@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useCookies } from "react";
 import Sidebar from "../components/Sidebar";
 import { connect } from "react-redux";
-import { createCollection, exportInstance } from "../../apiServices";
+import { createCollection, exportInstance,GetMyCollectionsList } from "../../apiServices";
 import contracts from "../../config/contracts";
 import degnrABI from "./../../config/abis/dgnr8.json";
 import { ethers } from "ethers";
@@ -12,22 +12,49 @@ function CreateCollection() {
   const [files, setFiles] = useState([]);
   const [logoImg, setLogoImg] = useState("");
   const [coverImg, setCoverImg] = useState("");
-  const [title, setTitle] = useState("");
-  const [symbol, setSymbol] = useState("");
-  const [description, setDescription] = useState("");
-  const [royalty, setRoyalty] = useState("");
+  const [title, setTitle] = useState("MJ");
+  const [symbol, setSymbol] = useState("MJ");
+  const [description, setDescription] = useState("mj collection");
+  const [royalty, setRoyalty] = useState(1000);
   const [loading, setLoading] = useState(false);
-  const [maxSupply, setMaxSupply] = useState();
+  const [maxSupply, setMaxSupply] = useState(1);
   const [price, setPrice] = useState();
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-  const [datetime, setDatetime] = useState("");
+  //const [cookies] = useCookies(["selected_account"]);
+  const [preSaleStartTime, setPreSaleStartTime] = useState("");
   const [datetime2, setDatetime2] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
+  const [myCollections,setMyCollection]=useState("")
+  
+  
+  
+  //useEffect(() => {
+  //  if (cookies.selected_account) setCurrentUser(cookies.selected_account);
+  //  // eslint-disable-next-line react-hooks/exhaustive-deps
+  //}, [cookies.selected_account]);
 
+  
+  useEffect(() => {
+    const fetch = async () => {
+      let data={
+        page:1,
+        limit:12
+      }
+     
+    
+        let _myCollection = await GetMyCollectionsList(data);
+        setMyCollection(_myCollection);
+        console.log("my collection-fgasdf->",myCollections)
+      
+    };
+    fetch();
+  }, [currentUser]);
+  
   function handleChange(ev) {
     if (!ev.target["validity"].valid) return;
     const dt = ev.target["value"] + ":00Z";
-    setDatetime(dt);
+    setPreSaleStartTime(dt);
   }
 
   function handleChange2(evv) {
@@ -104,6 +131,7 @@ function CreateCollection() {
 
   const readReceipt = async (hash) => {
     let provider = new ethers.providers.Web3Provider(window.ethereum);
+    console.log("provider is--->",provider)
     const receipt = await provider.getTransactionReceipt(hash.hash);
     let contractAddress = receipt.logs[0].address;
     return contractAddress;
@@ -126,8 +154,13 @@ function CreateCollection() {
       NotificationManager.error("Please Enter the value for Royalty","",800);
       return false;
     }
+<<<<<<< HEAD
+    if (preSaleStartTime === "" || preSaleStartTime === undefined) {
+      NotificationManager.error("Please Choose a Valid Start Date.");
+=======
     if (datetime === "" || datetime === undefined) {
       NotificationManager.error("Please Choose a Valid Start Date","",800);
+>>>>>>> b85ee01dafdec448e7f18444b6f7ad2a0c487646
       return false;
     }
     if (datetime2 === "" || datetime2 === undefined) {
@@ -164,48 +197,60 @@ function CreateCollection() {
   };
 
   //handle collection creator
-  const handleCollectionCreation = async () => {
-    if (handleValidationCheck()) {
-      let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
-      console.log("creator is---->", creator);
-      console.log("create collection is called");
-      console.log("contracts usdt address", contracts.USDT);
+ 
 
-      let res1;
-      try {
-        setLoading(true);
-        maxSupply == 1
-          ? (res1 = await creator.deployExtendedERC721(
-              title,
-              symbol,
-              logoImg,
-              royalty,
-              contracts.USDT
-            ))
-          : (res1 = await creator.deployExtendedERC1155(
-              "www.image.com",
-              1000,
-              contracts.USDT
-            ));
-      } catch (e) {
-        console.log(e);
-      }
-      let hash = res1;
-      res1 = await res1.wait();
-      if (res1.status === 1) {
-        let contractAddress = await readReceipt(hash);
-        console.log("contract address is--->", contractAddress);
-        var fd = new FormData();
-
-        fd.append("sName", title);
-        fd.append("sDescription", description);
-        fd.append("nftFile", logoImg);
-        fd.append("sContractAddress", contractAddress);
-        fd.append("erc721", JSON.stringify(true));
-      }
-    }
-  };
-
+        
+        
+        //handle collection creator
+        const handleCollectionCreation = async () => {
+            let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
+            console.log("creator is---->",creator);
+            console.log("create collection is called");
+            console.log("contracts usdt address",contracts.USDT)
+            
+            let res1;
+            try {
+              setLoading(true);
+              maxSupply==1
+                ? (res1 = await creator.deployExtendedERC721(
+                    title,
+                    symbol,
+                    logoImg,
+                    royalty,
+                    contracts.USDT
+                  ))
+                : (res1 = await creator.deployExtendedERC1155("www.image.com",1000,contracts.USDT));
+            } catch (e) {
+              console.log(e);
+            }
+            let hash = res1;
+           res1 = await res1.wait();
+           console.log("res1 is--->",res1)
+            if (res1.status === 1) {
+                let contractAddress = await readReceipt(hash);
+                console.log("contract address is--->",contractAddress)
+                var fd = new FormData();
+                fd.append("name", title);
+                fd.append("description", description);
+                fd.append("logoImage", logoImg);
+                fd.append("coverImage", coverImg);
+                fd.append("categoryID", "62878304ee30230742fcab07");
+                fd.append("brandID", "628788089b97d717f190d9aa");
+                //fd.append("chainID", chain);
+                fd.append("contractAddress", contractAddress);
+                fd.append("preSaleStartTime", preSaleStartTime);
+                fd.append("totalSupply", maxSupply);
+                fd.append("type", 0);
+                
+                console.log("form data is---->",fd)
+                setLoading(true);
+                await createCollection(fd);
+                setLoading(false);
+                NotificationManager.success("Collection Created Successfully");
+              }
+        }
+        
+        
   return (
     <div className='wrapper'>
       {/* <!-- Sidebar  --> */}
@@ -244,15 +289,15 @@ function CreateCollection() {
                 <th>Brand</th>
               </tr>
             </thead>
-            <tbody>
+            {myCollections?myCollections.map((item,index)=>(
+              <tbody>
               <tr>
                 <td>
-                  <img src='../images/user.jpg' className='profile_i' alt='' />
+                  <img src={item[index].logoImage} className='profile_i' alt='' />
                 </td>
-                <td>Cat has Guns</td>
+                <td>{item[index].name}</td>
                 <td>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
+                {item[index].description}
                 </td>
                 <td>$200</td>
                 <td>Date</td>
@@ -261,39 +306,10 @@ function CreateCollection() {
                 <td>Zenjin Viperz</td>
                 <td>Hunter</td>
               </tr>
-              <tr>
-                <td>
-                  <img src='../images/user.jpg' className='profile_i' alt='' />
-                </td>
-                <td>Cat has Guns</td>
-                <td>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </td>
-                <td>$200</td>
-                <td>Date</td>
-                <td>24</td>
-                <td>$200</td>
-                <td>Zenjin Viperz</td>
-                <td>Hunter</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src='../images/user.jpg' className='profile_i' alt='' />
-                </td>
-                <td>Cat has Guns</td>
-                <td>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </td>
-                <td>$200</td>
-                <td>Date</td>
-                <td>24</td>
-                <td>$200</td>
-                <td>Zenjin Viperz</td>
-                <td>Hunter</td>
-              </tr>
+              
             </tbody>
+            )):"no collection"}
+            
           </table>
         </div>
       </div>
@@ -441,7 +457,7 @@ function CreateCollection() {
                   </label>
                   <input
                     type='datetime-local'
-                    value={(datetime || "").toString().substring(0, 16)}
+                    value={(preSaleStartTime || "").toString().substring(0, 16)}
                     onChange={handleChange}
                     className='form-control'
                   />
