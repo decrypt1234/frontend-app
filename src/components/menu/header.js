@@ -262,9 +262,9 @@ const Header = function () {
     removeCookie("chain_id", { path: "/" });
     removeCookie("balance", { path: "/" });
 
-    // const [primaryWallet] = await onboard.state.get().wallets;
-    // if (!primaryWallet) return;
-    await onboard.disconnectWallet({ label: "Metamask" });
+    const [primaryWallet] = await onboard.state.get().wallets;
+    if (!primaryWallet) return;
+    await onboard.disconnectWallet({ label: primaryWallet.label });
     await Logout(cookies["selected_account"]);
     refreshState();
     NotificationManager.success("User Logged out Successfully.");

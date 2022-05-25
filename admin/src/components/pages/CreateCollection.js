@@ -154,13 +154,10 @@ function CreateCollection() {
       NotificationManager.error("Please Enter the value for Royalty","",800);
       return false;
     }
-<<<<<<< HEAD
+
     if (preSaleStartTime === "" || preSaleStartTime === undefined) {
       NotificationManager.error("Please Choose a Valid Start Date.");
-=======
-    if (datetime === "" || datetime === undefined) {
-      NotificationManager.error("Please Choose a Valid Start Date","",800);
->>>>>>> b85ee01dafdec448e7f18444b6f7ad2a0c487646
+
       return false;
     }
     if (datetime2 === "" || datetime2 === undefined) {
