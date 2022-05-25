@@ -1,7 +1,9 @@
 import React from 'react';
 import Footer from '../components/footer';
 import Header from '../menu/header';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import ItemSVG from "../SVG/ItemSVG"
+import ActivitySVG from "../SVG/ActivitySVG"
 
 
 const bgImgStyle = {
@@ -75,9 +77,9 @@ function CollectionActivity() {
           </div>
 
           <div className="row mb-5">
-            <div className="col-md-12 text-center">
-            <Link to={'/collection'} ><button type="button" className='item_btn mr-3'><img alt='' src={'../img/items.svg'} class="img-fluid" /> Items</button></Link>
-              <Link to={'/collectionActivity'} ><button type="button" className="activity_btn"><img alt='' src={'../img/activity.svg'} class="img-fluid" /> Activity</button></Link>
+            <div className="col-md-12 text-center item_active">
+              <NavLink to={'/collection'} className="mr-3"><span className='mr-3'><ItemSVG /></span> Items</NavLink>
+              <NavLink to={'/collectionActivity'} activeclassname="active-link"><span className='mr-3'><ActivitySVG /></span> Activity</NavLink>
             </div>
           </div>
 

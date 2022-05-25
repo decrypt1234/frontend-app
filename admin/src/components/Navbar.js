@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Message from "./SVG/Message";
 import Notification from "./SVG/Notification";
 import Wallet from "./SVG/Wallet";
@@ -6,13 +6,19 @@ import { Link } from "react-router-dom";
 import Onboard from "@web3-onboard/core";
 import injectedModule from "@web3-onboard/injected-wallets";
 import walletConnectModule from "@web3-onboard/walletconnect";
-import Logo from "./../logo.svg";
-import { checkuseraddress, Login, Logout, Register } from "./../apiServices";
+import {
+  checkuseraddress,
+  getProfile,
+  Login,
+  Logout,
+  adminRegister,
+} from "./../apiServices";
 import { NotificationManager } from "react-notifications";
-
 import "react-notifications/lib/notifications.css";
 import { useCookies } from "react-cookie";
 import { slowRefresh } from "./../helpers/NotifyStatus";
+import Logo from "./../logo.svg";
+import PopupModal from "./components/popupModal";
 
 const injected = injectedModule();
 const walletConnect = walletConnectModule();
@@ -24,7 +30,7 @@ const onboard = Onboard({
       id: "0x13881",
       token: "MATIC",
       label: "Mumbai matic testnet",
-      rpcUrl: `https://rpc-mumbai.maticvigil.com`,
+      rpcUrl: `https://rpc-mumbai.matic.today/`,
     },
     // {
     //   id: "0x1",
@@ -89,37 +95,75 @@ const onboard = Onboard({
   },
   accountCenter: {
     desktop: {
-      position: "topRight", // default: 'topRight'
-      enabled: false
-    }
-  }
+      enabled: false,
+    },
+  },
 });
 
-function Navbar(props) {
+const Navbar = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [provider, setProvider] = useState(null);
+  const [account, setAccount] = useState();
+  const [chainId, setChainId] = useState();
+  const [isAccountSwitched, setIsAccountSwitched] = useState(false);
+  const [isChainSwitched, setIsChainSwitched] = useState(false);
+  const [userDetails, setUserDetails] = useState();
+
+  useEffect(() => {
+    if (cookies["selected_account"]) setAccount(cookies["selected_account"]);
+    else refreshState();
+  }, []);
+
+  const refreshState = () => {
+    setAccount("");
+    setChainId("");
+    setProvider(null);
+  };
+
+  useEffect(() => {
+    console.log("provider in useEffect", provider);
+    if (provider) {
+      provider.on("accountsChanged", (accounts) => {
+        console.log("account switched!!", accounts[0]);
+        console.log("isAccountSwitched", isAccountSwitched);
+        setIsAccountSwitched(true);
+      });
+      provider.on("chainChanged", (chains) => {
+        console.log("chain changed", chains);
+        if (chains !== "0x13881") {
+          setIsChainSwitched(true);
+        }
+      });
+    }
+  }, [provider]);
+
+  const getUserProfile = async () => {
+    const profile = await getProfile();
+    console.log("profile", profile.data);
+    setUserDetails(profile.data);
+  };
 
   const connectWallet = async () => {
+    setIsAccountSwitched(false);
     const wallets = await onboard.connectWallet();
     console.log("wallet address--->", wallets[0]);
-    const primaryWallet = onboard.state.get();
-    console.log("primaryWallet", primaryWallet);
-    const success = await onboard.setChain({ chainId: "0x4" });
+    const success = await onboard.setChain({ chainId: "0x13881" });
     console.log("setChain method", success);
+    const primaryWallet = wallets[0];
+    setChainId(primaryWallet.chains[0].id);
+    console.log("provider", primaryWallet.provider);
+    setProvider(primaryWallet.provider);
+    console.log("provider", provider);
+
     try {
       const address = wallets[0].accounts[0].address;
       try {
         const isUserExist = await checkuseraddress(address);
-        setCookie("selected_account", address, { path: "/" });
-        setCookie(
-          "chain_id",
-          parseInt(wallets[0].chains[0].id, 16).toString(),
-          { path: "/" }
-        );
         console.log("selected_account", address);
         console.log("isUserExist", isUserExist);
-        if (isUserExist === "User not found") {
+        if (isUserExist.message === "User not found") {
           try {
-            const res = await Register(address);
+            const res = await adminRegister(address);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
               return;
@@ -128,14 +172,26 @@ function Navbar(props) {
               return;
             } else {
               NotificationManager.success(res.message);
-              slowRefresh(1000);
+              setAccount(primaryWallet.accounts[0].address);
+              setCookie("selected_account", address, { path: "/" });
+              setCookie(
+                "chain_id",
+                parseInt(wallets[0].chains[0].id, 16).toString(),
+                {
+                  path: "/",
+                }
+              );
+              setCookie("balance", wallets[0].accounts[0].balance, {
+                path: "/",
+              });
+              getUserProfile();
               return;
             }
           } catch (e) {
             NotificationManager.error(e);
             return;
-          }
-        } else {
+          }}
+         else {
           try {
             const res = await Login(address);
             console.log("Login API response", res);
@@ -144,13 +200,25 @@ function Navbar(props) {
               return;
             } else if (
               res.message === "User not found" ||
-              res.message === "Invalid Login"
+              res.message === "Login Invalid"
             ) {
               NotificationManager.error(res.message);
               return;
             } else {
               NotificationManager.success(res.message);
-              slowRefresh(3000);
+              setAccount(primaryWallet.accounts[0].address);
+              setCookie("selected_account", address, { path: "/" });
+              setCookie(
+                "chain_id",
+                parseInt(wallets[0].chains[0].id, 16).toString(),
+                {
+                  path: "/",
+                }
+              );
+              setCookie("balance", wallets[0].accounts[0].balance, {
+                path: "/",
+              });
+              getUserProfile();
               return;
             }
           } catch (e) {
@@ -168,101 +236,105 @@ function Navbar(props) {
 
   const disconnectWallet = async () => {
     removeCookie("selected_account", { path: "/" });
-    const currentState = onboard.state.get();
-    const state = onboard.state.select();
+    removeCookie("chain_id", { path: "/" });
+    removeCookie("balance", { path: "/" });
 
-    console.log("current state", currentState, state);
-    // const primaryWallet = onboard.state.get().wallets[0];
-    // console.log(primaryWallet.accounts[0].address);
-    // const walletAddress = primaryWallet.accounts[0].address;
+    // const [primaryWallet] = await onboard.state.get().wallets;
+    // if (!primaryWallet) return;
     await onboard.disconnectWallet({ label: "Metamask" });
     await Logout(cookies["selected_account"]);
+    refreshState();
     NotificationManager.success("User Logged out Successfully.");
     slowRefresh(1000);
   };
 
-  const onLogin = async () => {
-    const wallets = await onboard.connectWallet();
-    console.log("wallet address--->", wallets[0]);
-    const success = await onboard.setChain({ chainId: "0x4" });
-    console.log("setChain method", success);
-    try {
-      const address = wallets[0].accounts[0].address;
-      try {
-        const isUserExist = await checkuseraddress(address);
-        setCookie("selected_account", address, { path: "/" });
-        setCookie(
-          "chain_id",
-          parseInt(wallets[0].chains[0].id, 16).toString(),
-          { path: "/" }
-        );
-        console.log("selected_account", address);
-        console.log("isUserExist", isUserExist);
-        if (isUserExist === "User Found successfully") {
-          try {
-            const res = await Login(address);
-            console.log("Login API response", res);
-            if (res.message === "Wallet Address required") {
-              NotificationManager.info(res.message);
-              return;
-            } else if (
-              res.message === "User not found" ||
-              res.message === "Invalid Login"
-            ) {
-              NotificationManager.error(res.message);
-              return;
-            } else {
-              NotificationManager.success(res.message);
-              slowRefresh(3000);
-              return;
-            }
-          } catch (e) {
-            NotificationManager.error(e);
-            return;
-          }
-        } else {
-          NotificationManager.error(isUserExist);
-        }
-      } catch (e) {
-        NotificationManager.error(e);
-      }
-    } catch (e) {
-      NotificationManager.error(e);
-    }
-  };
-
   return (
-    <div className="admin-navbar d-flex w-100">
-      <div className="profile_box text-light me-auto d-flex align-items-center text-uppercase montserrat font-400">
-        <div className="profile_img">
-          <img src={"../images/user.jpg"} alt="" className="img-fluid" />
+    <div className='admin-navbar d-flex w-100'>
+      {isAccountSwitched ? (
+        <PopupModal
+          content={
+            <div className='switch_container'>
+              <h3>Account Switched</h3>
+              <p className='my-4 mr-2'>
+                Please logout from the current account if you would like to
+                switch the account?
+              </p>
+              <div className='d-flex justify-content-between align-items-center'>
+                <button
+                  className='btn confirm_btn'
+                  onClick={() => {
+                    disconnectWallet();
+                  }}>
+                  Logout
+                </button>
+                <button
+                  className='btn cancel_btn'
+                  onClick={() => setIsAccountSwitched(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          }
+          handleClose={() => setIsAccountSwitched(false)}
+        />
+      ) : (
+        ""
+      )}
+      {isChainSwitched ? (
+        <PopupModal
+          content={
+            <div className='switch_container'>
+              <h3>Chain Switched</h3>
+              <p className='my-4 mr-2'>
+                Please Switch to Rinkeby Testnet Network
+              </p>
+              <div className='d-flex justify-content-center align-items-center'>
+                <button
+                  className='btn network_btn'
+                  onClick={async () => {
+                    await onboard.setChain({ chainId: "0x4" });
+                    setIsChainSwitched(false);
+                  }}>
+                  Switch Network
+                </button>
+              </div>
+            </div>
+          }
+          handleClose={() => setIsChainSwitched(false)}
+        />
+      ) : (
+        ""
+      )}
+      <div className='profile_box text-light me-auto d-flex align-items-center text-uppercase montserrat font-400'>
+        <div className='profile_img'>
+          <img src={"../images/user.jpg"} alt='' className='img-fluid' />
         </div>
         {props.model} Decryptblock
       </div>
-      <ul className="p-0 m-0">
-        <li className="text-light">
-          <div className="position-relative">
+      <ul className='p-0 m-0'>
+        <li className='text-light'>
+          <div className='position-relative'>
             <Message />
-            <span className="badge badge-danger navbar-badge text-dark">3</span>
+            <span className='badge badge-danger navbar-badge text-dark'>3</span>
           </div>
         </li>
-        <li className="text-light">
-          <div className="position-relative">
+        <li className='text-light'>
+          <div className='position-relative'>
             <Notification />
-            <span className="badge badge-danger navbar-badge text-dark">3</span>
+            <span className='badge badge-danger navbar-badge text-dark'>3</span>
           </div>
         </li>
         <li>
           <Link
-            to=''
-            className="round-btn montserrat text-light text-decoration-none"
-            onClick={!cookies["selected_account"] ? connectWallet : disconnectWallet}
-          >
-            {!cookies["selected_account"] ? (
+            to={"/"}
+            className='round-btn montserrat text-light text-decoration-none'
+            onClick={!account ? connectWallet : disconnectWallet}>
+            {!account ? (
               "Connect Wallet"
             ) : (
               <>
-                <Wallet /> {cookies["selected_account"]}
+                <Wallet />
+                {account.slice(0, 4) + "..." + account.slice(38, 42)}
               </>
             )}
           </Link>
@@ -270,6 +342,6 @@ function Navbar(props) {
       </ul>
     </div>
   );
-}
+};
 
 export default Navbar;

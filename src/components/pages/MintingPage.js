@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../menu/header';
 import Footer from '../components/footer';
 import MintEvent from "../components/MintEvent"
 
@@ -23,7 +22,6 @@ const bgImgStyle = {
 function MintingPage() {
   return (
     <div style={bgImgStyle}>
-      <Header />
         <section className="collection_banner pdd_8" style={bgImage}>
         
         </section>

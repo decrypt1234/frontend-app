@@ -9,9 +9,16 @@ import "../node_modules/bootstrap/dist/js/bootstrap.js";
 import App from "./components/app";
 import * as serviceWorker from "./serviceWorker";
 import "semantic-ui-css/semantic.min.css";
-import { CookiesProvider } from 'react-cookie';
+import { CookiesProvider } from "react-cookie";
+import { NotificationContainer } from "react-notifications";
 
-ReactDOM.render(<CookiesProvider><App /></CookiesProvider>, document.getElementById("root"));
+ReactDOM.render(
+  <CookiesProvider>
+    <NotificationContainer />
+    <App />
+  </CookiesProvider>,
+  document.getElementById("root")
+);
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA

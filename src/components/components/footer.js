@@ -15,10 +15,10 @@ const footer= () => (
                         <div className="menu-widget widget">
                             <h5 className='mb-4'>Marketplace</h5>
                             <ul>
-                                <li><Link to="">All NFTs</Link></li>
-                                <li><Link to="">Firearms</Link></li>
-                                <li><Link to="">Soldiers</Link></li>
-                                <li><Link to="">Hot List</Link></li>
+                                <li><Link to="/marketplace">All NFTs</Link></li>
+                                <li><Link to="/marketplacecollection">Firearms</Link></li>
+                                <li><Link to="/marketplacecollection">Soldiers</Link></li>
+                                <li><Link to="/marketplacecollection">Hot List</Link></li>
                                 <li><Link to="">NFT Ranking</Link></li>
                                 <li><Link to="">Live Auctions</Link></li>
                             </ul>

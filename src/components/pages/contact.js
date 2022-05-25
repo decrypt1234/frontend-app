@@ -59,7 +59,6 @@ const contact= function() {
 
   return (
   <div>
-    <Header />
   <GlobalStyles />
  
   <section className='jumbotron breadcumb no-bg' style={{backgroundImage: `url(${'./img/background/subheader.jpg'})`}}>

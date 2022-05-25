@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../menu/header';
 import Footer from '../components/footer';
 import MintEventSlider from "../components/MintEventSlider"
 
@@ -23,7 +22,6 @@ const bgImgStyle = {
 function MultiMintingPage() {
   return (
     <div style={bgImgStyle}>
-      <Header />
         <section className="collection_banner pdd_8" style={bgImage}>
         
         </section>
@@ -64,7 +62,7 @@ function MultiMintingPage() {
       <section className="collection_list mb-5 pb-5">
         <div className="container">
             <div className="event_slider">
-                <MintEventSlider />
+                <MintEventSlider  />
             </div>
         </div>
       </section>

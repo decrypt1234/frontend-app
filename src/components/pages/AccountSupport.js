@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '../components/Sidebar';
-import LogInHeader from '../menu/LogInHeader';
+// import LogInHeader from '../menu/LogInHeader';
 
 const bgImgStyle = {
     backgroundImage: "url(./img/background.jpg)",
@@ -14,7 +14,6 @@ const bgImgStyle = {
 function AccountSupport() {
   return (
     <div style={bgImgStyle}>
-      <LogInHeader />
         <div className="container">
             <div className="row userinfo">
                 <div className="col-md-3 usersidebar">

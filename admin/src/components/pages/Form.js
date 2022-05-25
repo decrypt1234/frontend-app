@@ -14,23 +14,26 @@ export default function Form() {
             <h5 class="card-title text-light mb-0">Quick Example</h5>
           </div>
 
-          <form>
+          <form class="needs-validation" novalidate>
             <div class="card-body text-light">
               <div class="form-group mb-3">
-                <label for="exampleInputEmail1" className='font-600 mb-1'>Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                <label for="exampleInputEmail1" className='font-600 mb-1 form-label'>Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required />
+                <div class="invalid-feedback">Please fill out this field.</div>
               </div>
 
               <div class="form-group mb-3">
                 <label for="exampleInputPassword1" className='font-600 mb-1'>Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required />
+                <div class="invalid-feedback">Please fill out this field.</div>
               </div>
 
               <div class="form-group mb-3">
                 <label for="exampleInputFile" className='font-600 mb-1'>File input</label>
                 <div class="input-group">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="exampleInputFile" />
+                    <input type="file" class="custom-file-input" id="exampleInputFile" required />
+                    <div class="invalid-feedback">Please fill out this field.</div>
                   </div>
                 </div>
               </div>

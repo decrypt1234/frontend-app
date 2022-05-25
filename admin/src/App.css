@@ -399,4 +399,96 @@ tbody td {vertical-align: middle;}
     height: 100%;
     padding: 20px;text-align: center;
 }
-
+.Lightmode .login_form {
+    width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 55px 55px 37px;
+    background: linear-gradient(180deg,#ef981d,#f9bf50);
+    border: 1px solid #ef981d;
+    margin: auto;
+}
+.Darkmode .login_form {
+    width: 500px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #313F4A 46.35%, #0D171E 100%);
+    border: 3px solid #394956;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 55px 55px 37px;
+    margin: auto;
+}
+.bg_img {
+    background-image: url("../public/images/register.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+}
+.Lightmode .bg_img:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255,255,255,.9);
+}
+.Darkmode .bg_img:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.7);
+}
+.login100-form-logo {
+    font-size: 60px;
+    color: #333;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 0 auto;
+}
+.login_btn {
+    padding: 10px 30px;
+    border:0;
+}
+.Darkmode .login_form .form-select, .Darkmode .login_form .form-control {
+    border: 2px solid #ffffff !important;
+    background-color: transparent !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    color: #888 !important;
+}
+.Darkmode .modal-content .form-control, .Darkmode .modal-content .form-select {
+    border: 1px solid #e5e5e5 !important;
+}

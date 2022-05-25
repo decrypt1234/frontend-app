@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Footer from '../components/footer';
 import CollectionList from '../components/CollectionList';
 import Header from '../menu/header';
-import { Link } from 'react-router-dom';
+import ItemSVG from "../SVG/ItemSVG";
+import ActivitySVG from "../SVG/ActivitySVG";
+import { Link, NavLink } from 'react-router-dom';
 import { CollectionCard } from '../../Data/dummyJSON';
 
 
@@ -89,9 +91,11 @@ function Collection() {
           </div>
 
           <div className="row mb-5">
-            <div className="col-md-12 text-center">
-            <Link to={'/collection'} ><button type="button" className='item_btn mr-3'><img alt='' src={'../img/items.svg'} class="img-fluid" /> Items</button></Link>
-              <Link to={'/collectionActivity'} ><button type="button" className="activity_btn"><img alt='' src={'../img/activity.svg'} class="img-fluid" /> Activity</button></Link>
+            <div className="col-md-12 text-center item_active">
+              <NavLink to={'/collection'} activeclassname="active-link" className="mr-3">
+              <span className='mr-3'><ItemSVG /></span> Items</NavLink>
+              <NavLink to={'/collectionActivity'} >
+              <span className='mr-3'><ActivitySVG /></span> Activity</NavLink>
             </div>
           </div>
 
@@ -138,7 +142,7 @@ function Collection() {
                 button={card.Slug} link={card.Like} />
               </div>
             ))};
-            <div class="col-md-12 text-center mt-5"><a class="view_all_bdr" href="/">Load More</a></div>
+            <div class="col-md-12 text-center mt-5"><Link class="view_all_bdr" to={"/"}>Load More</Link></div>
           </div>
         </div>
       </section>

@@ -9,7 +9,6 @@ import Footer from "../components/footer";
 import Reveal from "react-awesome-reveal";
 import { keyframes } from "@emotion/react";
 import { Link } from "react-router-dom";
-import Header from "../menu/header";
 
 const fadeInUp = keyframes`
   0% {
@@ -63,7 +62,6 @@ var mint_bg = {
 
 const Home = () => (
   <div style={bgImgStyle}>
-    <Header />
     <section style={bgImgStylesec1} className="jumbotron breadcumb no-bg h-vh pdd_8">
       <SliderMain />
     </section>
@@ -250,7 +248,7 @@ const Home = () => (
             </Link>
           </div>
           <div class="col-md-12 text-center mt-5">
-            <Link to={'/collection'} className="view_all_bdr">View All</Link>
+            <Link to={'/mintcollectionlive'} className="view_all_bdr">View All</Link>
           </div>
         </div>
       </div>
@@ -307,7 +305,7 @@ const Home = () => (
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2 className="text-center second_hd color-light mb-5">Recently Added
+              <h2 className="text-center second_hd color-light mb-5">Most recent items put on sale per<br /> Collection
               <div class="border_div"><span class="title_bottom_border"></span></div>
               </h2>
             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from '../components/footer';
 import { Link } from '@reach/router';
 import { createGlobalStyle } from 'styled-components';
-import Header from '../menu/header';
+
 
 var bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -23,7 +23,6 @@ const GlobalStyles = createGlobalStyle`
 
 const Helpcenter= () => (
 <div style={bgImgStyle}>
-<Header />
 <GlobalStyles/>
 
   <section className="jumbotron pdd_12 background" style={{backgroundImage: `url(${'./img/background/bg.jpg'})`}}>
