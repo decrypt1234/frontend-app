@@ -121,10 +121,16 @@ function CreateBrands() {
                    
                     
                     NotificationManager.success(brand.message,"",800)
+                    setTimeout(() => {
+                        window.location.href = "/createbrands";
+                      }, 1000);
                     
                 }catch(e){
                     console.log(e)
                     NotificationManager.error(e.message,"",800)
+                    setTimeout(() => {
+                        window.location.href = "/createbrands";
+                      }, 1000);
                 }
                
                 
@@ -156,7 +162,7 @@ function CreateBrands() {
                         <th>Description</th>
                     </tr>
                     </thead>
-                    {myBrand && myBrand !=='undefinedd'  && myBrand!==""? myBrand.map((data,index)=>(
+                    {myBrand && myBrand !='undefinedd'  && myBrand!=""? myBrand.map((data,index)=>(
                              <tbody>
                         
                              <tr>

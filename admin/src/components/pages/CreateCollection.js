@@ -252,10 +252,21 @@ function CreateCollection() {
                 
                 console.log("form data is---->",fd.value)
                 setLoading(true);
-                let collection=await createCollection(fd);
-                console.log("create Collection response is--->",collection)
-                setLoading(false);
-                NotificationManager.success("Collection Created Successfully");
+                try{
+                  let collection=await createCollection(fd);
+                  console.log("create Collection response is--->",collection)
+                  setLoading(false);
+                  NotificationManager.success(collection.message,"",800);
+                  setTimeout(() => {
+                    window.location.href = "/createcollection";
+                  }, 1000);
+                }catch(e){
+                  NotificationManager.error(e.message,"",800);
+                  setTimeout(() => {
+                    window.location.href = "/createcollection";
+                  }, 1000);
+                }
+               
               }
           }else{
             NotificationManager.error("Connect Yout Metamask","",800)                         
