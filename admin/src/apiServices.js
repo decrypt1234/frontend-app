@@ -701,7 +701,7 @@ export const GetMyCollectionsList = async (data) => {
       ?.includes("application/json");
     const datas = isJson && (await response.json());
     console.log("collection data---->",datas)
-    return datas.data.results;
+    return datas.data;
   } catch (err) {
     return err;
   }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NotificationManager } from "react-notifications";
 import Sidebar from "../components/Sidebar";
-import { getAllCollections } from "../../apiServices";
+import { GetMyCollectionsList } from "../../apiServices";
 import { useCookies } from "react-cookie";
 
 function CreateNFTs() {
@@ -15,6 +15,7 @@ function CreateNFTs() {
   const imageUploader = React.useRef(null);
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const [collections, setCollections] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
 
   const handleImageUpload = (e) => {
     const [file] = e.target.files;
@@ -70,21 +71,15 @@ function CreateNFTs() {
     const fetch = async () => {
       let reqBody = {
         page: 1,
-        limit: 12,
-        collectionID: "",
-        userID: "",
-        categoryID: "",
-        brandID: "",
-        ERCType: "",
-        searchText: "",
-        filterString: "",
+        limit: 20,
       };
-      let data = await getAllCollections(reqBody);
-      setCollections(data?.results[0]);
-      console.log("data", data?.results[0]);
+      let data = await GetMyCollectionsList(reqBody);
+      if (data && data.results.length > 0) setCollections(data?.results[0]);
+      setTotalCount(data?.count);
+      // console.log("data", data);
     };
     fetch();
-  });
+  }, []);
 
   return (
     <div className="wrapper">
@@ -315,8 +310,9 @@ function CreateNFTs() {
                   >
                     <option selected>Open this select menu</option>
                     {collections.length > 0
-                      ? collections.map(() => {
-                          return <option value="1">One</option>;
+                      ? collections.map((c, i) => {
+                          console.log("c", c);
+                          return <option value={c.name}>{c.name}</option>;
                         })
                       : ""}
                   </select>
