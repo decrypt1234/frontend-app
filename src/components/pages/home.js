@@ -80,7 +80,7 @@ const Home = () => (
           triggerOnce
         >
         <div className="row">
-          <div className="col-md-4 mb-xs-5 mb-md-0">
+          <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
             <div className="wallet_box">
               <div className="svg_icon">
                 <svg width="44" height="40" viewBox="0 0 44 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +91,7 @@ const Home = () => (
               <p className="textdes">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
             <div className="wallet_box">
               <div className="svg_icon">
                 <svg width="45" height="40" viewBox="0 0 45 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -102,7 +102,7 @@ const Home = () => (
               <p className="textdes">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
             <div className="wallet_box">
               <div className="svg_icon">
               <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +127,7 @@ const Home = () => (
               <div className="border_div"><span className="title_bottom_border"></span></div>
             </h2>
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
             <Link to={'/collectionwithcollection'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
@@ -156,7 +156,7 @@ const Home = () => (
             </div>
             </Link>
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
           <Link to={'/collectionwithcollection'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
@@ -198,7 +198,7 @@ const Home = () => (
             </div>
             </Link>
           </div>
-          <div className="col-md-4">
+          <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
           <Link to={'/collectionwithcollection'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
@@ -272,21 +272,21 @@ const Home = () => (
       <section className="pdd_8 about_learnmore">
         <div className="container">
           <div className="row">
-            <div className="col-md-10">
+            <div className="col-lg-10 col-md-12">
               <div className="row">
-                <div className="col">
+                <div className="col-lg-4 mb-4 mb-lg-0 mb-xl-0">
                   <div className="about_col">
                     <h3>The future of DigitalArms</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. A lectus sit tellus massa praesent porttitor mattis.</p>
                   </div>
                 </div>
-                <div className="col">
+                <div className="col-lg-4 mb-4 mb-lg-0 mb-xl-0">
                   <div className="about_col">
                     <h3>Pioneering digital firearms marketplace</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. A lectus sit tellus massa praesent porttitor mattis.</p>
                   </div>
                 </div>
-                <div className="col">
+                <div className="col-lg-4 mb-4 mb-lg-0 mb-xl-0">
                   <div className="about_col">
                     <h3>Designed for longevity</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. A lectus sit tellus massa praesent porttitor mattis.</p>
@@ -294,7 +294,7 @@ const Home = () => (
                 </div>
               </div>
             </div>
-            <div className="col-md-2 d-flex align-items-end">
+            <div className="col-lg-2 col-md-12 d-flex align-items-end mt-4 mt-lg-0 mt-xl-0">
                 <Link to="" className="border_btn title_color">Learn More</Link>
             </div>
           </div>

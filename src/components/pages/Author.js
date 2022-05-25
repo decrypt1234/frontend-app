@@ -4,7 +4,7 @@ import Footer from '../components/footer';
 import AuthorListing from '../components/AuthorListing';
 import DownloadSVG from '../SVG/DownloadSVG';
 import OffermadeSVG from '../SVG/OffermadeSVG';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthorCard } from '../../Data/dummyJSON';
 
 const bgImgStyle = {
@@ -72,11 +72,11 @@ function Author() {
           
           <h1 className="collection_title text-center">User Name <img alt='' src={'../img/author/check.png'} class="img-fluid" /></h1>
           <ul class="collection_social mb-4">
-            <li><a href="/"><i class="fa fa-facebook fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-twitter fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-linkedin fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-pinterest fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-rss fa-lg"></i></a></li>
+            <li><Link to={"/"}><i class="fa fa-facebook fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-twitter fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-linkedin fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-pinterest fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-rss fa-lg"></i></Link></li>
           </ul>
           <div className="coppycode text-center mb-4">
             <span className='d-inline-flex align-items-center'>
@@ -101,9 +101,9 @@ function Author() {
             <li><img alt='' src={'../img/author/icon3.svg'} class="img-fluid" /> Favourited</li>
             <li><img alt='' src={'../img/author/icon4.svg'} class="img-fluid" /> Activity</li>
             <li> 
-              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              <Link class="dropdown-toggle" to={""} role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <img alt='' src={'../img/author/icon5.svg'} class="img-fluid" /> Offers
-              </a>
+              </Link>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li><NavLink activeclassname="active-link" className="dropdown-item" to={"/"}><DownloadSVG /> Offer Received</NavLink></li>
                 <li><NavLink className="dropdown-item" to={"/"}><OffermadeSVG /> Offer Made</NavLink></li>

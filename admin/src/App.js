@@ -13,6 +13,8 @@ import Rightarrow from './components/SVG/rightarrow';
 import CreateBrands from './components/pages/CreateBrands';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';
+import CreateCategories from './components/pages/CreateCategories';
+
 
 import {NotificationContainer} from 'react-notifications';
 
@@ -59,6 +61,7 @@ function App() {
           <Route path='createbrands' element={ <CreateBrands /> } />
           <Route path='login' element={ <Login /> } />
           <Route path='register' element={ <Register /> } />
+          <Route path='createcategories' element={ <CreateCategories /> } />
         </Routes>
         <NotificationContainer/>
       </BrowserRouter>
