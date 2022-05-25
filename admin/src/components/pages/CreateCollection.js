@@ -32,6 +32,15 @@ function CreateCollection() {
   const [datetime2, setDatetime2] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [myCollections, setMyCollections] = useState([]);
+  const [ datetime3, setDatetime3 ] = useState('');
+  const [PaymentToken, setPaymentToken] = useState("");
+  
+
+  const [status, setStatus] = React.useState(0) // 0: no show, 1: show yes, 2: show no.
+
+    const radioHandler = (status) => {
+        setStatus(status);
+    };
 
   useEffect(() => {
     if (cookies.selected_account) setCurrentUser(cookies.selected_account);
@@ -66,6 +75,12 @@ function CreateCollection() {
     const dtt = evv.target["value"] + ":00Z";
     setDatetime2(dtt);
   }
+
+    function handleChange3(evv) {
+        if (!evv.target['validity'].valid) return;
+        const dttt= evv.target['value'] + ':00Z';
+        setDatetime3(dttt);
+      }
 
   const uploadedImage = React.useRef(null);
   const imageUploader = React.useRef(null);
@@ -132,6 +147,9 @@ function CreateCollection() {
       }
     }
   };
+  const MinimumbidCheck = (e) => {
+    let mini = e.target.value;
+  }
 
   const readReceipt = async (hash) => {
     let provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -182,6 +200,11 @@ function CreateCollection() {
       NotificationManager.error("Please Choose a Brand", "", 800);
       return false;
     }
+    if (PaymentToken === "" || PaymentToken === undefined) {
+      NotificationManager.error("Please Choose a Payment Token", "", 800);
+      return false;
+    }
+    
     if (symbol.trim() === "" || symbol === undefined) {
       NotificationManager.error("Symbol can't be empty", "", 800);
       return false;
@@ -593,6 +616,137 @@ function CreateCollection() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
+                </div>
+                <div className="col-md-12 mb-1 mt-3">
+                  <label class="radio-img">
+                    <input type="radio" name="release" checked={status === 1} onClick={(e) => radioHandler(1)} />
+                    <div class="image">
+                      <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                        width="64.000000pt" height="64.000000pt" viewBox="0 0 64.000000 64.000000"
+                        preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,64.000000) scale(0.100000,-0.100000)"
+                        fill="#000000" stroke="none">
+                        <path d="M345 621 c-16 -10 -101 -90 -187 -178 -131 -132 -158 -164 -158 -188
+                        0 -24 21 -50 113 -142 92 -92 118 -113 142 -113 24 0 57 28 193 163 90 89 170
+                        174 178 189 10 19 14 61 14 136 0 101 -2 110 -23 130 -21 20 -34 22 -133 22
+                        -89 0 -114 -3 -139 -19z m192 -83 c28 -26 30 -61 3 -88 -42 -42 -110 -14 -110
+                        46 0 58 63 83 107 42z"/>
+                        </g>
+                      </svg>
+                      <span className="font-20 font-600 text-dark">Fixed price</span>
+                    </div>
+                  </label>
+                  <label class="radio-img">
+                    <input type="radio" name="release" checked={status === 2} onClick={(e) => radioHandler(2)} />
+                    <div class="image">
+                      <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                        width="64.000000pt" height="64.000000pt" viewBox="0 0 64.000000 64.000000"
+                        preserveAspectRatio="xMidYMid meet">
+
+                        <g transform="translate(0.000000,64.000000) scale(0.100000,-0.100000)"
+                        fill="#000000" stroke="none">
+                        <path d="M335 550 c-11 -5 -62 -9 -112 -9 -55 -1 -93 -5 -93 -11 0 -6 29 -10
+                        68 -10 l67 -1 -24 -20 c-35 -29 -18 -35 21 -6 71 52 153 61 233 23 60 -28 77
+                        -46 106 -110 75 -171 -89 -349 -272 -295 -117 35 -182 180 -134 296 16 37 12
+                        59 -6 33 -19 -31 -31 -97 -26 -146 6 -62 24 -99 68 -142 l33 -32 -67 0 c-105
+                        0 -78 -18 36 -24 56 -3 121 -8 145 -12 128 -19 262 101 262 236 0 92 -80 202
+                        -166 228 -47 14 -110 15 -139 2z"/>
+                        <path d="M347 500 c-137 -43 -178 -209 -77 -310 68 -68 168 -74 246 -15 35 27
+                        67 87 61 113 -2 12 -9 4 -21 -23 -23 -54 -43 -74 -95 -97 -65 -30 -124 -18
+                        -177 35 -72 72 -69 173 5 240 93 84 235 41 272 -83 15 -50 31 -43 17 8 -21 77
+                        -79 125 -164 136 -21 3 -52 1 -67 -4z"/>
+                        <path d="M45 460 c3 -5 28 -10 55 -10 27 0 52 5 55 10 4 6 -17 10 -55 10 -38
+                        0 -59 -4 -55 -10z"/>
+                        <path d="M390 444 c0 -8 5 -12 10 -9 6 3 10 10 10 16 0 5 -4 9 -10 9 -5 0 -10
+                        -7 -10 -16z"/>
+                        <path d="M295 410 c3 -5 10 -10 16 -10 5 0 9 5 9 10 0 6 -7 10 -16 10 -8 0
+                        -12 -4 -9 -10z"/>
+                        <path d="M480 410 c0 -5 5 -10 10 -10 6 0 10 5 10 10 0 6 -4 10 -10 10 -5 0
+                        -10 -4 -10 -10z"/>
+                        <path d="M100 400 c0 -5 11 -10 25 -10 14 0 25 5 25 10 0 6 -11 10 -25 10 -14
+                        0 -25 -4 -25 -10z"/>
+                        <path d="M390 361 c0 -50 1 -51 30 -51 17 0 30 5 30 10 0 6 -9 10 -20 10 -16
+                        0 -20 7 -20 34 0 19 -4 38 -10 41 -6 4 -10 -13 -10 -44z"/>
+                        <path d="M5 350 c8 -13 105 -13 105 0 0 6 -25 10 -56 10 -34 0 -53 -4 -49 -10z"/>
+                        <path d="M260 320 c0 -5 5 -10 10 -10 6 0 10 5 10 10 0 6 -4 10 -10 10 -5 0
+                        -10 -4 -10 -10z"/>
+                        <path d="M520 320 c0 -5 5 -10 10 -10 6 0 10 5 10 10 0 6 -4 10 -10 10 -5 0
+                        -10 -4 -10 -10z"/>
+                        <path d="M5 290 c-4 -6 15 -10 49 -10 31 0 56 5 56 10 0 13 -97 13 -105 0z"/>
+                        <path d="M100 240 c0 -5 11 -10 25 -10 14 0 25 5 25 10 0 6 -11 10 -25 10 -14
+                        0 -25 -4 -25 -10z"/>
+                        <path d="M295 230 c-3 -5 1 -10 9 -10 9 0 16 5 16 10 0 6 -4 10 -9 10 -6 0
+                        -13 -4 -16 -10z"/>
+                        <path d="M480 230 c0 -5 5 -10 10 -10 6 0 10 5 10 10 0 6 -4 10 -10 10 -5 0
+                        -10 -4 -10 -10z"/>
+                        <path d="M390 190 c0 -5 5 -10 10 -10 6 0 10 5 10 10 0 6 -4 10 -10 10 -5 0
+                        -10 -4 -10 -10z"/>
+                        <path d="M45 180 c-4 -6 17 -10 55 -10 38 0 59 4 55 10 -3 6 -28 10 -55 10
+                        -27 0 -52 -4 -55 -10z"/>
+                        </g>
+                      </svg>
+                      <span className="font-20 font-600 text-dark">Timed auction</span></div>
+                    </label>
+                    {status === 1 && (
+                        <div className="col-md-12 mb-1">
+                          <label for="recipient-name" className="col-form-label">
+                            Price *
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="recipient-name"
+                            value={price}
+                            onChange={(e) => numberInputCheck(e)}
+                            onKeyPress={(e) => {
+                              if (!/^\d*\.?\d*$/.test(e.key)) e.preventDefault();
+                            }}
+                          />
+                        </div>
+                    )}
+                    {status === 2 && (
+                        <div className="row">
+                          <div className="col-md-6 mb-1">
+                            <label for="recipient-name" className="col-form-label">
+                              Minimum bid *
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="recipient-name"
+                              value=""
+                              onChange={(e) => MinimumbidCheck(e)}
+                            />
+                          </div>
+                          <div className="col-md-6 mb-1">
+                            <label for="recipient-name" className="col-form-label">
+                              Payment Token *
+                            </label>
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                              value={PaymentToken}
+                              onChange={(e) => setPaymentToken(e.target.value)}
+                            >
+                              <option selected>USDT</option>
+                              <option value="1">USDT One</option>
+                              <option value="2">USDT Two</option>
+                            </select>
+                          </div>
+                          <div className="col-md-6 mb-1">
+                            <label for="Expiration-name" className="col-form-label">
+                              Expiration date *
+                            </label>
+                            <input
+                              type="datetime-local"
+                              value={(datetime3 || "").toString().substring(0, 16)}
+                              onChange={handleChange3}
+                              className="form-control"
+                            />
+                          </div>
+                        </div>
+                    )}
                 </div>
               </form>
             </div>
