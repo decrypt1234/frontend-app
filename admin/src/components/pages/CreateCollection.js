@@ -1,4 +1,5 @@
-import React, { useState,useEffect,useCookies } from "react";
+import React, { useState,useEffect, } from "react";
+import { useCookies } from "react-cookie";
 import Sidebar from "../components/Sidebar";
 import { connect } from "react-redux";
 import { createCollection, exportInstance,GetMyCollectionsList } from "../../apiServices";
@@ -21,7 +22,7 @@ function CreateCollection() {
   const [price, setPrice] = useState();
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-  //const [cookies] = useCookies(["selected_account"]);
+ const [cookies, setCookie, removeCookie] = useCookies([]);
   const [preSaleStartTime, setPreSaleStartTime] = useState("");
   const [datetime2, setDatetime2] = useState("");
   const [currentUser, setCurrentUser] = useState("");
@@ -29,26 +30,31 @@ function CreateCollection() {
   
   
   
-  //useEffect(() => {
-  //  if (cookies.selected_account) setCurrentUser(cookies.selected_account);
-  //  // eslint-disable-next-line react-hooks/exhaustive-deps
-  //}, [cookies.selected_account]);
+  useEffect(() => {
+    if (cookies.selected_account) setCurrentUser(cookies.selected_account);
+    else NotificationManager.error("Connect Yout Metamask","",800)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("current user is---->",currentUser,cookies.selected_account)
+  }, [currentUser]);
 
   
   useEffect(() => {
-    const fetch = async () => {
-      let data={
-        page:1,
-        limit:12
-      }
-     
-    
-        let _myCollection = await GetMyCollectionsList(data);
-        setMyCollection(_myCollection);
-        console.log("my collection-fgasdf->",myCollections)
+    if(currentUser){
+      const fetch = async () => {
+        let data={
+          page:1,
+          limit:12
+        }
+        
       
-    };
-    fetch();
+          let _myCollection = await GetMyCollectionsList(data);
+          setMyCollection(_myCollection);
+          console.log("my collection-fgasdf->",myCollections)
+        
+      };
+      fetch();
+    }
+    
   }, [currentUser]);
   
   function handleChange(ev) {
@@ -198,6 +204,7 @@ function CreateCollection() {
         
         //handle collection creator
         const handleCollectionCreation = async () => {
+          if(cookies.selected_account){
             let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
             console.log("creator is---->",creator);
             console.log("create collection is called");
@@ -214,7 +221,7 @@ function CreateCollection() {
                     royalty,
                     contracts.USDT
                   ))
-                : (res1 = await creator.deployExtendedERC1155("www.image.com",1000,contracts.USDT));
+                : (res1 = await creator.deployExtendedERC1155(logoImg,royalty,contracts.USDT));
             } catch (e) {
               console.log(e);
             }
@@ -222,6 +229,12 @@ function CreateCollection() {
            res1 = await res1.wait();
            console.log("res1 is--->",res1)
             if (res1.status === 1) {
+              let type;
+              if(maxSupply>1){
+                type=1;
+              }else{
+                type=0;
+              }
                 let contractAddress = await readReceipt(hash);
                 console.log("contract address is--->",contractAddress)
                 var fd = new FormData();
@@ -235,14 +248,19 @@ function CreateCollection() {
                 fd.append("contractAddress", contractAddress);
                 fd.append("preSaleStartTime", preSaleStartTime);
                 fd.append("totalSupply", maxSupply);
-                fd.append("type", 0);
+                fd.append("type", type);
                 
-                console.log("form data is---->",fd)
+                console.log("form data is---->",fd.value)
                 setLoading(true);
-                await createCollection(fd);
+                let collection=await createCollection(fd);
+                console.log("create Collection response is--->",collection)
                 setLoading(false);
                 NotificationManager.success("Collection Created Successfully");
               }
+          }else{
+            NotificationManager.error("Connect Yout Metamask","",800)                         
+          }
+          
         }
         
         
@@ -284,7 +302,7 @@ function CreateCollection() {
                 <th>Brand</th>
               </tr>
             </thead>
-            {myCollections?myCollections.map((item,index)=>(
+            {myCollections && myCollections!=undefined && myCollections!=""?myCollections.map((item,index)=>(
               <tbody>
               <tr>
                 <td>
@@ -294,9 +312,9 @@ function CreateCollection() {
                 <td>
                 {item[index].description}
                 </td>
-                <td>$200</td>
+                <td>{item[index].royalty}</td>
                 <td>Date</td>
-                <td>24</td>
+                <td>{item[index].totalSupply}</td>
                 <td>$200</td>
                 <td>Zenjin Viperz</td>
                 <td>Hunter</td>
