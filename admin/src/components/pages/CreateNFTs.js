@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NotificationManager } from "react-notifications";
 import Sidebar from "../components/Sidebar";
-import { GetMyCollectionsList } from "../../apiServices";
+import { createNft, GetBrand, GetMyCollectionsList } from "../../apiServices";
 import { useCookies } from "react-cookie";
 
 function CreateNFTs() {
@@ -16,6 +16,7 @@ function CreateNFTs() {
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const [collections, setCollections] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [brands, setBrands] = useState([]);
 
   const handleImageUpload = (e) => {
     const [file] = e.target.files;
@@ -65,9 +66,26 @@ function CreateNFTs() {
   }, [currentUser]);
 
   const handleCreateNFT = async () => {
-    if (handleValidationCheck()) {
-      
-    }
+    
+    // if (handleValidationCheck()) {
+    var fd = new FormData();
+
+    fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
+    fd.append("values", JSON.stringify([{ hello: "neha" }]));
+    fd.append("creatorAddress", currentUser.toLowerCase());
+    fd.append("name", title);
+    fd.append("nftFile", nftImg);
+    fd.append("quantity", 1);
+    fd.append("collectionID", collection);
+    fd.append("description", description);
+    fd.append("tokenID", 1);
+    fd.append("type", 1);
+    fd.append("isMinted", 0);
+    fd.append("imageSize", "0");
+    fd.append("imageType", "0");
+    fd.append("imageDimension", "0");
+    await createNft(fd);
+    // }
   };
 
   useEffect(() => {
@@ -82,6 +100,10 @@ function CreateNFTs() {
       };
       let data = await GetMyCollectionsList(reqBody);
       if (data && data.results.length > 0) setCollections(data?.results[0]);
+
+      let _brands = await GetBrand();
+      console.log("brands", _brands);
+      setBrands(_brands);
       setTotalCount(data?.count);
       // console.log("data", data);
     };
@@ -247,20 +269,10 @@ function CreateNFTs() {
                         }}
                         className="img-fluid profile_circle_img"
                       />
-                      {/* <div class="overlat_btn"><button type="" class="img_edit_btn"><i class="fa fa-edit fa-lg"></i></button></div> */}
                     </div>
                   </div>
                 </div>
-                {/* <div className="mb-1 col-md-8">
-                            <div className="mb-1">
-                                <label for="recipient-name" className="col-form-label">Title *</label>
-                                <input type="text" className="form-control" id="recipient-name" />
-                            </div>
-                            <div className="mb-1">
-                                <label for="message-text" className="col-form-label">Description *</label>
-                                <textarea className="form-control" id="message-text" rows={4}></textarea>
-                            </div>
-                        </div> */}
+
                 <div className="col-md-12 mb-1">
                   <label for="recipient-name" className="col-form-label">
                     Title *
@@ -273,10 +285,7 @@ function CreateNFTs() {
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
-                {/* <div className="col-md-6 mb-1">
-                            <label for="recipient-name" className="col-form-label">Royalty *</label>
-                            <input type="text" className="form-control" id="recipient-name" />
-                        </div> */}
+
                 <div className="col-md-12 mb-1">
                   <label for="message-text" className="col-form-label">
                     Description *
@@ -289,22 +298,6 @@ function CreateNFTs() {
                   ></textarea>
                 </div>
 
-                {/* <div className="col-md-6 mb-1">
-                            <label for="recipient-name" className="col-form-label">Start Date *</label>
-                            <input type="datetime-local" value={(datetime || '').toString().substring(0, 16)} onChange={handleChange} className="form-control" />
-                        </div>
-                        <div className="col-md-6 mb-1">
-                            <label for="recipient-name" className="col-form-label">End Date *</label>
-                            <input type="datetime-local" value={(datetime2 || '').toString().substring(0, 16)} onChange={handleChange2} className="form-control" />
-                        </div>
-                        <div className="col-md-6 mb-1">
-                            <label for="recipient-name" className="col-form-label">Max Supply *</label>
-                            <input type="text" className="form-control" id="recipient-name" />
-                        </div>
-                        <div className="col-md-6 mb-1">
-                            <label for="recipient-name" className="col-form-label">Price *</label>
-                            <input type="text" className="form-control" id="recipient-name" />
-                        </div> */}
                 <div className="col-md-6 mb-1">
                   <label for="recipient-name" className="col-form-label">
                     Choose Collection *
@@ -333,28 +326,16 @@ function CreateNFTs() {
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
                   >
-                    <option selected value="1">
-                      One
-                    </option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-                <div className="col-md-6 mb-1">
-                  <label for="recipient-name" className="col-form-label">
-                    Sale Type *
-                  </label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    value={brand}
-                    onChange={(e) => setBrand(e.target.value)}
-                  >
-                    <option selected value="1">
-                      Fixed Sale
-                    </option>
-                    <option value="2">Timed Auction</option>
-                    <option value="3">Three</option>
+                    {console.log("brands--", brands)}
+                    {brands && brands.length > 0
+                      ? brands.map((b, i) => {
+                          return (
+                            <option selected value="1">
+                              {b.name}
+                            </option>
+                          );
+                        })
+                      : ""}
                   </select>
                 </div>
               </form>

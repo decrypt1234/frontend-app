@@ -965,7 +965,7 @@ export const createNft = async (data) => {
     // }
 
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + "/nft/create",
+      process.env.REACT_APP_API_BASE_URL + "/nft/createNFT",
       requestOptions
     );
     const isJson = response.headers
