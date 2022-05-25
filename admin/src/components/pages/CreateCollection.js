@@ -12,6 +12,7 @@ import degnrABI from "./../../config/abis/dgnr8.json";
 import { ethers } from "ethers";
 //import Loader from "../components/loader";
 import { NotificationManager } from "react-notifications";
+import { Item } from "semantic-ui-react";
 
 function CreateCollection() {
   const [files, setFiles] = useState([]);
@@ -30,7 +31,7 @@ function CreateCollection() {
   const [preSaleStartTime, setPreSaleStartTime] = useState("");
   const [datetime2, setDatetime2] = useState("");
   const [currentUser, setCurrentUser] = useState("");
-  const [myCollections, setMyCollections] = useState("");
+  const [myCollections, setMyCollections] = useState([]);
 
   useEffect(() => {
     if (cookies.selected_account) setCurrentUser(cookies.selected_account);
@@ -198,7 +199,6 @@ function CreateCollection() {
 
   //handle collection creator
 
-  //handle collection creator
   const handleCollectionCreation = async () => {
     if (cookies.selected_account) {
       let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
@@ -252,13 +252,23 @@ function CreateCollection() {
 
         console.log("form data is---->", fd.value);
         setLoading(true);
-        let collection = await createCollection(fd);
-        console.log("create Collection response is--->", collection);
-        setLoading(false);
-        NotificationManager.success("Collection Created Successfully");
+        try {
+          let collection = await createCollection(fd);
+          console.log("create Collection response is--->", collection);
+          setLoading(false);
+          NotificationManager.success(collection.message, "", 800);
+          setTimeout(() => {
+            window.location.href = "/createcollection";
+          }, 1000);
+        } catch (e) {
+          NotificationManager.error(e.message, "", 800);
+          setTimeout(() => {
+            window.location.href = "/createcollection";
+          }, 1000);
+        }
+      } else {
+        NotificationManager.error("Connect Yout Metamask", "", 800);
       }
-    } else {
-      NotificationManager.error("Connect Yout Metamask", "", 800);
     }
   };
 
@@ -301,22 +311,22 @@ function CreateCollection() {
                 <th>Brand</th>
               </tr>
             </thead>
-            {myCollections && myCollections != undefined && myCollections != ""
+            {myCollections && myCollections != undefined && myCollections != "" && myCollections.length>0
               ? myCollections.map((item, index) => (
                   <tbody>
                     <tr>
                       <td>
                         <img
-                          src={item[index].logoImage}
+                          src={item.logoImage}
                           className="profile_i"
                           alt=""
                         />
                       </td>
-                      <td>{item[index].name}</td>
-                      <td>{item[index].description}</td>
-                      <td>{item[index].royalty}</td>
+                      <td>{item.name}</td>
+                      <td>{item.description}</td>
+                      <td>{Item.royalty}</td>
                       <td>Date</td>
-                      <td>{item[index].totalSupply}</td>
+                      <td>{item.totalSupply}</td>
                       <td>$200</td>
                       <td>Zenjin Viperz</td>
                       <td>Hunter</td>
