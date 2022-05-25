@@ -136,7 +136,7 @@ function NFTDetails() {
                             <img src={'../img/favicon.png'} class="img-fluid" alt="" />22500 $HNTR<span>($307.25)</span>
                         </div>
                         <button type='button' className="yellow_btn mr-3">Buy Now</button>
-                        <button type='button' className='border_btn title_color'>Place a Bid</button> 
+                        <button type='button' className='border_btn title_color'>Bid / Offer</button> 
                     </div>
                 </div>
             </div>

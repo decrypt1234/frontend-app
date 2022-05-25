@@ -10,6 +10,9 @@ import Navbar from './components/Navbar';
 import CreateCollection from './components/pages/CreateCollection';
 import CreateNFTs from './components/pages/CreateNFTs';
 import Rightarrow from './components/SVG/rightarrow';
+import CreateBrands from './components/pages/CreateBrands';
+import Login from './components/pages/Login';
+import Register from './components/pages/Register';
 
 import {NotificationContainer} from 'react-notifications';
 
@@ -53,6 +56,9 @@ function App() {
           <Route path='performance' element={ <Performance /> } />
           <Route path='createcollection' element={ <CreateCollection />  } />
           <Route path='createnfts' element={ <CreateNFTs /> } />
+          <Route path='createbrands' element={ <CreateBrands /> } />
+          <Route path='login' element={ <Login /> } />
+          <Route path='register' element={ <Register /> } />
         </Routes>
         <NotificationContainer/>
       </BrowserRouter>

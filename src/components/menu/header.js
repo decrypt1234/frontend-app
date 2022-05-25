@@ -19,9 +19,9 @@ import "react-notifications/lib/notifications.css";
 import { useCookies } from "react-cookie";
 import AllNFTs from "../SVG/AllNFTs";
 import Soldierssvg from "../SVG/Soldierssvg";
-import HotListsvg from "../SVG/HotListsvg";
-import NFTrankingsvg from "../SVG/NFTrankingsvg";
-import LiveAuctonsvg from "../SVG/LiveAuctonsvg";
+// import HotListsvg from "../SVG/HotListsvg";
+// import NFTrankingsvg from "../SVG/NFTrankingsvg";
+// import LiveAuctonsvg from "../SVG/LiveAuctonsvg";
 import Firearmsvg from "../SVG/Firearmsvg";
 
 import { slowRefresh } from "./../../helpers/NotifyStatus";

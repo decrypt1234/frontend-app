@@ -68,7 +68,7 @@
     /* background: #7386D5; */
     color: #fff;
     transition: all 0.3s;
-    /* filter: drop-shadow(1.5px 2.598px 3.5px rgba(0,0,0,0.35)); */
+    filter: drop-shadow(1.5px 2.598px 3.5px rgba(0,0,0,0.35));
     background-image: linear-gradient(0deg, #394955 0%, #394955 29%, #0d171d 100%);
     height: calc(100vh - 72px);
 }
@@ -399,107 +399,96 @@ tbody td {vertical-align: middle;}
     height: 100%;
     padding: 20px;text-align: center;
 }
-
-
-/***** Popup modal *****/
-.popup-box {
-    position: fixed;
-    background: rgba(4, 4, 5, 0.9);
+.Lightmode .login_form {
+    width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 55px 55px 37px;
+    background: linear-gradient(180deg,#ef981d,#f9bf50);
+    border: 1px solid #ef981d;
+    margin: auto;
+}
+.Darkmode .login_form {
+    width: 500px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #313F4A 46.35%, #0D171E 100%);
+    border: 3px solid #394956;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 55px 55px 37px;
+    margin: auto;
+}
+.bg_img {
+    background-image: url("../public/images/register.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+}
+.Lightmode .bg_img:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
-    z-index: 999;
-  }
-  
-  .box {
-    position: relative;
-    width: fit-content;
-    top: 25%;
-    margin: 0 auto;
-    min-height: fit-content;
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    border: none;
-    overflow: auto;
-  }
-  
-  .close-icon {
-    content: "x";
-    position: fixed;
-    right: 1%;
-    top: 1%;
-    /* border-radius: 50%; */
-    line-height: 20px;
-    text-align: center;
-    /* border: 1px solid #999; */
-    font-size: 20px;
-    height: 40px;
-    width: 40px;
-    border: 1px solid transparent;
-    -webkit-box-align: center;
-    align-items: center;
-    cursor: pointer;
-    outline: none;
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    transition: all 0.12s ease-in-out 0s;
-    border-radius: 40px;
-    background-color: rgba(255, 255, 255, 0.08);
-    color: rgb(255, 255, 255);
-    transform-origin: center center;
-  }
-  .popup-content {
-    text-align: center;
-    font-style: normal;
-  }
-
-.switch_container h3{
-    font-size: 20px;
-    font-weight: 600;
+    background-color: rgba(255,255,255,.9);
 }
-/********** Switch Pop modal css ********/
-.switch_container .confirm_btn{
-    border: 2px solid mediumseagreen;
-      border-radius: 10px;
-      color: #fff;
-      background: #28a745;
-      transition: all .1s ease;
-  }
-  
-  
-  .switch_container .confirm_btn:hover{
-    color: #28a745;
-    background: #fff;
-    font-weight: bold;
-  }
-  
-  .switch_container .cancel_btn{
-    border: 2px solid;
-    border-radius: 10px;
-    color: #fff;
-    background: red;
-    transition: all .1s ease;
-  }
-  
-  .switch_container .cancel_btn:hover{
-    color: red;
-    background: #fff;
-    
-  }
-  
-  .switch_container .network_btn{
-    border: 2px solid;
-    border-radius: 10px;
-    color: #fff;
-    background: #007bff;
-    font-weight: bold;
-    transition: all .1s ease;
-  }
-  
-  .switch_container .network_btn:hover{
-    color: #007bff;
-    background: #fff
-  }
+.Darkmode .bg_img:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.7);
+}
+.login100-form-logo {
+    font-size: 60px;
+    color: #333;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 0 auto;
+}
+.login_btn {
+    padding: 10px 30px;
+    border:0;
+}
+.Darkmode .login_form .form-select, .Darkmode .login_form .form-control {
+    border: 2px solid #ffffff !important;
+    background-color: transparent !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    color: #888 !important;
+}
+.Darkmode .modal-content .form-control, .Darkmode .modal-content .form-select {
+    border: 1px solid #e5e5e5 !important;
+}

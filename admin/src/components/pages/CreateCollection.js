@@ -101,6 +101,34 @@ function CreateCollection() {
     }
   };
 
+  const numberInputCheck = (e) => {
+    const re = /[+-]?[0-9]+\.?[0-9]*/;
+    let val = e.target.value;
+    if (val === "" || re.test(val)) {
+      const numStr = String(val);
+      if (numStr.includes(".")) {
+        if (numStr.split(".")[1].length > 8) {
+        } else {
+          if (val.split(".").length > 2) {
+            val = val.replace(/\.+$/, "");
+          }
+          if (val.length === 2 && val !== "0.") {
+            val = Number(val);
+          }
+          setPrice(val);
+        }
+      } else {
+        if (val.split(".").length > 2) {
+          val = val.replace(/\.+$/, "");
+        }
+        if (val.length === 2 && val !== "0.") {
+          val = Number(val);
+        }
+        setPrice(val);
+      }
+    }
+  }
+
   const readReceipt = async (hash) => {
     let provider = new ethers.providers.Web3Provider(window.ethereum);
     console.log("provider is--->",provider)
@@ -110,110 +138,59 @@ function CreateCollection() {
   };
 
   const handleValidationCheck = () => {
-    // let collectionFields = {
-    //   title,
-    //   price,
-    //   symbol,
-    //   maxSupply,
-    //   sDate: datetime,
-    //   eDate: datetime2,
-    //   royalty,
-    //   description,
-    //   logoImg,
-    //   coverImg,
-    //   brand,
-    //   category,
-    // };
-
     if (logoImg === "" || logoImg === undefined) {
-      NotificationManager.error("Please Upload a Logo Image.", "", 1000);
+      NotificationManager.error("Please Upload a Logo Image", "", 800);
       return false;
     }
-    if (
-      coverImg === "" ||
-      coverImg === undefined
-    ) {
-      NotificationManager.error("Please Upload a Cover Image.");
+    if (coverImg === "" || coverImg === undefined) {
+      NotificationManager.error("Please Upload a Cover Imag", "",800);
       return false;
     }
-    if (
-      title === "" ||
-      title === undefined
-    ) {
-      NotificationManager.error("Please Enter a Title");
+    if (title.trim() === "" || title === undefined) {
+      NotificationManager.error("Please Enter a Title","",800);
       return false;
     }
-    if (title.trim()) {
-      NotificationManager.error("Space(s) not allowed in Title.");
+    if (royalty.trim() === "" || royalty === undefined) {
+      NotificationManager.error("Please Enter the value for Royalty","",800);
       return false;
     }
-    if (
-      royalty === "" ||
-      royalty === undefined
-    ) {
-      NotificationManager.error("Please Enter the value for Royalty.");
-      return false;
-    }
-    if (royalty.trim()) {
-      NotificationManager.error("Space(s) not allowed in Royalty.");
-      return false;
-    }
+<<<<<<< HEAD
     if (preSaleStartTime === "" || preSaleStartTime === undefined) {
       NotificationManager.error("Please Choose a Valid Start Date.");
+=======
+    if (datetime === "" || datetime === undefined) {
+      NotificationManager.error("Please Choose a Valid Start Date","",800);
+>>>>>>> b85ee01dafdec448e7f18444b6f7ad2a0c487646
       return false;
     }
     if (datetime2 === "" || datetime2 === undefined) {
-      NotificationManager.error("Please Choose a Valid End Date.");
+      NotificationManager.error("Please Choose a Valid End Date","",800);
       return false;
     }
-    if (
-      maxSupply === "" ||
-      maxSupply === undefined
-    ) {
-      NotificationManager.error("Please Enter Max Supply.");
+    if (maxSupply === "" || maxSupply === undefined) {
+      NotificationManager.error("Please Enter Max Supply","",800);
       return false;
     }
-    if (price === "" || price === undefined) {
-      NotificationManager.error("Please Enter a Price");
+    if (price.trim() === "" || price === undefined) {
+      NotificationManager.error("Please Enter a Price","",800);
       return false;
     }
-    if (price.trim()) {
-      NotificationManager.error("Space(s) not allowed in Price.");
-      return false;
-    }
-    if (
-      category === "" ||
-      category === undefined
-    ) {
-      NotificationManager.error("Please Choose a Category.");
+    if (category === "" || category === undefined) {
+      NotificationManager.error("Please Choose a Category","",800);
       return false;
     }
     if (brand === "" || brand === undefined) {
-      NotificationManager.error("Please Choose a Brand.");
+      NotificationManager.error("Please Choose a Brand","",800);
       return false;
     }
-    if (
-      symbol === "" ||
-      symbol === undefined
-    ) {
-      NotificationManager.error("Symbol can't be empty.");
+    if (symbol.trim() === "" || symbol === undefined) {
+      NotificationManager.error("Symbol can't be empty","",800);
       return false;
     }
-    if (symbol.trim()) {
-      NotificationManager.error("Space(s) not allowed in Symbol.");
-      return false;
-    }
-    if (
-      description === "" ||
-      description === undefined
-    ) {
+    if (description.trim() === "" || description === undefined) {
       NotificationManager.error(
-        "Please Enter a Description for your collection."
+        "Please Enter a Description For Your Collection","",800
       );
-      return false;
-    }
-    if (description.trim()) {
-      NotificationManager.error("Space(s) not allowed in Description.");
       return false;
     }
     return true;
@@ -525,7 +502,11 @@ function CreateCollection() {
                     className='form-control'
                     id='recipient-name'
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => numberInputCheck(e)}
+                    onKeyPress={(e) => {
+                      if (!(/^\d*\.?\d*$/.test(e.key)) )
+                        e.preventDefault();
+                    }}
                   />
                 </div>
                 <div className='col-md-6 mb-1'>
