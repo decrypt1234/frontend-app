@@ -57,9 +57,16 @@ function CreateNFTs() {
     return true;
   };
 
-  const handleCreateNFT = () => {
+  useEffect(() => {
+    if (cookies.selected_account) setCurrentUser(cookies.selected_account);
+    else NotificationManager.error("Connect Yout Wallet", "", 800);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("current user is---->", currentUser, cookies.selected_account);
+  }, [currentUser]);
+
+  const handleCreateNFT = async () => {
     if (handleValidationCheck()) {
-      // create NFT logic
+      
     }
   };
 
@@ -308,11 +315,10 @@ function CreateNFTs() {
                     value={collection}
                     onChange={(e) => setCollection(e.target.value)}
                   >
-                    <option selected>Open this select menu</option>
                     {collections.length > 0
                       ? collections.map((c, i) => {
                           console.log("c", c);
-                          return <option value={c.name}>{c.name}</option>;
+                          return <option value={c._id}>{c.name}</option>;
                         })
                       : ""}
                   </select>
@@ -327,9 +333,27 @@ function CreateNFTs() {
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
                   >
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
+                    <option selected value="1">
+                      One
+                    </option>
                     <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+                <div className="col-md-6 mb-1">
+                  <label for="recipient-name" className="col-form-label">
+                    Sale Type *
+                  </label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    value={brand}
+                    onChange={(e) => setBrand(e.target.value)}
+                  >
+                    <option selected value="1">
+                      Fixed Sale
+                    </option>
+                    <option value="2">Timed Auction</option>
                     <option value="3">Three</option>
                   </select>
                 </div>
