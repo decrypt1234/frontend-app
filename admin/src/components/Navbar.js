@@ -11,7 +11,7 @@ import {
   getProfile,
   Login,
   Logout,
-  Register,
+  adminRegister,
 } from "./../apiServices";
 import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
@@ -30,7 +30,7 @@ const onboard = Onboard({
       id: "0x13881",
       token: "MATIC",
       label: "Mumbai matic testnet",
-      rpcUrl: `https://rpc-mumbai.maticvigil.com/`,
+      rpcUrl: `https://rpc-mumbai.matic.today/`,
     },
     // {
     //   id: "0x1",
@@ -130,7 +130,7 @@ const Navbar = (props) => {
       });
       provider.on("chainChanged", (chains) => {
         console.log("chain changed", chains);
-        if (chains !== "0x4") {
+        if (chains !== "0x13881") {
           setIsChainSwitched(true);
         }
       });
@@ -147,7 +147,7 @@ const Navbar = (props) => {
     setIsAccountSwitched(false);
     const wallets = await onboard.connectWallet();
     console.log("wallet address--->", wallets[0]);
-    const success = await onboard.setChain({ chainId: "0x4" });
+    const success = await onboard.setChain({ chainId: "0x13881" });
     console.log("setChain method", success);
     const primaryWallet = wallets[0];
     setChainId(primaryWallet.chains[0].id);
@@ -163,7 +163,7 @@ const Navbar = (props) => {
         console.log("isUserExist", isUserExist);
         if (isUserExist.message === "User not found") {
           try {
-            const res = await Register(address);
+            const res = await adminRegister(address);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
               return;
@@ -190,8 +190,8 @@ const Navbar = (props) => {
           } catch (e) {
             NotificationManager.error(e);
             return;
-          }
-        } else {
+          }}
+         else {
           try {
             const res = await Login(address);
             console.log("Login API response", res);

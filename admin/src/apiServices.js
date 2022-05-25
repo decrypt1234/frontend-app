@@ -12,7 +12,46 @@ export const exportInstance = async (SCAddress, ABI) => {
   }
 };
 
-export const Register = async (account) => {
+// export const Register = async (account) => {
+//   const requestOptions = {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({
+//       walletAddress: account,
+//       role:"admin"
+//     }),
+//   };
+//   try {
+//     let response = await fetch(
+//       process.env.REACT_APP_API_BASE_URL + "/auth/Register",
+//       requestOptions
+//     );
+
+//     const isJson = response.headers
+//       .get("content-type")
+//       ?.includes("application/json");
+//     const data = isJson && (await response.json());
+
+//     // check for error response
+//     if (!response.ok) {
+//       // get error message from body or default to response status
+//       const error = (data && data.message) || response.status;
+//       return Promise.reject(error);
+//     }
+//     localStorage.setItem("Authorization", data.data.token);
+//     return data;
+//   } catch (error) {
+//     //   this.setState({ postId: data.id });
+
+//     // this.setState({ errorMessage: error.toString() });
+//     console.error("There was an error!", error);
+//   }
+// };
+
+
+// Admin Registeration
+
+export const adminRegister = async (account) => {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -23,7 +62,7 @@ export const Register = async (account) => {
   };
   try {
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + "/auth/Register",
+      process.env.REACT_APP_API_BASE_URL + "/auth/adminregister",
       requestOptions
     );
 
@@ -47,6 +86,7 @@ export const Register = async (account) => {
     console.error("There was an error!", error);
   }
 };
+
 
 export const Login = async (account) => {
   const requestOptions = {
@@ -80,6 +120,42 @@ export const Login = async (account) => {
     console.error("There was an error!", error);
   }
 };
+
+
+// Admin Login
+
+// export const adminLogin = async (account) => {
+//   const requestOptions = {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({
+//       walletAddress: account,
+//     }),
+//   };
+//   try {
+//     let response = await fetch(
+//       process.env.REACT_APP_API_BASE_URL + "/auth/adminlogin",
+//       requestOptions
+//     );
+
+//     const isJson = response.headers
+//       .get("content-type")
+//       ?.includes("application/json");
+//     const data = isJson && (await response.json());
+//     // check for error response
+//     if (!response.ok) {
+//       // get error message from body or default to response status
+//       const error = (data && data.message) || response.status;
+//       return Promise.reject(error);
+//     }
+//     localStorage.setItem("Authorization", data.data.token);
+//     return data;
+//     //   this.setState({ postId: data.id });
+//   } catch (error) {
+//     // this.setState({ errorMessage: error.toString() });
+//     console.error("There was an error!", error);
+//   }
+// };
 
 export const Logout = async () => {
   const requestOptions = {
@@ -315,6 +391,7 @@ export const getNFTList = async () => {
 };
 
 export const createCollection = async (data) => {
+  console.log("data of collection is--->",data)
   const requestOptions = {
     method: "POST",
     headers: {
@@ -548,6 +625,7 @@ export const GetCollectionsByAddress = async (data) => {
       .get("content-type")
       ?.includes("application/json");
     const datas = isJson && (await response.json());
+    console.log("collection is in api---->",datas)
     return datas.data;
   } catch (err) {
     return err;
@@ -603,6 +681,7 @@ export const GetMyNftList = async (data) => {
 };
 
 export const GetMyCollectionsList = async (data) => {
+  
   const requestOptions = {
     method: "POST",
     headers: {
@@ -614,14 +693,15 @@ export const GetMyCollectionsList = async (data) => {
 
   try {
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + "/nft/myCollectionList",
+      process.env.REACT_APP_API_BASE_URL + "/nft/myCollections",
       requestOptions
     );
     const isJson = response.headers
       .get("content-type")
       ?.includes("application/json");
     const datas = isJson && (await response.json());
-    return datas.data;
+    console.log("collection data---->",datas)
+    return datas.data.results;
   } catch (err) {
     return err;
   }
@@ -808,6 +888,67 @@ export const GetOrdersByNftId = async (data) => {
     return err;
   }
 };
+
+
+//Create Brand
+
+export const addBrand = async (data) => {
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+    },
+    body: data,
+  };
+  try {
+   
+    // for (var value of data.values()) {
+    //   console.log(value);
+    // }
+
+    let response = await fetch(
+      process.env.REACT_APP_API_BASE_URL + "/utils/addBrand",
+      requestOptions
+    );
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+    const datas = isJson && (await response.json());
+
+    return datas;
+  } catch (err) {
+    return err;
+  }
+};
+
+//CREATE BRAND ENDS
+
+
+//GET BRAND
+export const GetBrand = async (id) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+    },
+  };
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_API_BASE_URL + "/utils/getAllBrand",
+      requestOptions
+    );
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+    const datas = isJson && (await response.json());
+    console.log("brand data is---->",datas)
+    if (datas.data) return datas.data;
+    return [];
+  } catch (err) {
+    return err;
+  }
+}
 
 export const createNft = async (data) => {
   const requestOptions = {

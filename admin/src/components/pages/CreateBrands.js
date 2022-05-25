@@ -1,8 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import { NotificationManager } from 'react-notifications';
 import Sidebar from '../components/Sidebar';
+import { useCookies } from "react-cookie";
+
+import { addBrand,GetBrand } from "../../apiServices";
 
 function CreateBrands() {
-
+    const [logoImg, setLogoImg] = useState();
+    const [coverImg, setCoverImg] = useState();
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [currentUser, setCurrentUser] = useState("");
+  const [myBrand,setMyBrand]=useState("")
+  const [cookies, setCookie, removeCookie] = useCookies([]);
+  
+  
+  
+  useEffect(() => {
+    if (cookies.selected_account) setCurrentUser(cookies.selected_account);
+    else NotificationManager.error("Connect Yout Metamask","",800)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("current user is---->",currentUser,cookies.selected_account)
+  }, [currentUser]);
+    
+    
+    useEffect(() => {
+        if(currentUser){
+          const fetch = async () => {
+            let data={
+              page:1,
+              limit:12
+            }
+            
+          
+              let _myBrand = await GetBrand();
+              setMyBrand(_myBrand);
+              console.log("my collection-fgasdf->",myBrand)
+            
+          };
+          fetch();
+        }
+        
+      }, [currentUser]);
 
         const uploadedImage = React.useRef(null);
         const imageUploader = React.useRef(null);
@@ -17,7 +56,11 @@ function CreateBrands() {
                 current.src = e.target.result;
             };
             reader.readAsDataURL(file);
+            if (e.target.files && e.target.files[0]) {
+                setLogoImg(e.target.files[0]);
+              }
             }
+        
         };
 
         const uploadedImage2 = React.useRef(null);
@@ -33,8 +76,69 @@ function CreateBrands() {
                 current.src = e.target.result;
             };
             reader.readAsDataURL(file);
+            if (e.target.files && e.target.files[0]) {
+                setCoverImg(e.target.files[0]);
+              }
             }
         };
+
+
+        const handleValidationCheck = () =>{
+            if(logoImg === "" || logoImg === undefined)
+            {
+                NotificationManager.error("Please Upload a Logo Image","",800);
+                return false;
+            }
+            if(coverImg === "" || coverImg === undefined)
+            {
+                NotificationManager.error("Please Upload a Cover Image","",800);
+                return false;
+            }
+            if(title.trim() === "" || title === undefined)
+            {
+                NotificationManager.error("Please Enter a Title","",800);
+                return false;
+            }
+            if(description.trim() === "" || description === undefined)
+            {
+                NotificationManager.error("Please Enter a Description","",800);
+                return false;
+            }
+        }
+
+        const handleCreateBrand = async() => {
+            if(handleValidationCheck()==false){
+                return;
+                
+            }else{
+                var fd = new FormData();
+                fd.append("name", title);
+                fd.append("description", description);
+                fd.append("logoImage", logoImg);
+                fd.append("coverImage", coverImg);
+                try{
+                    let brand= await addBrand(fd)
+                   
+                    
+                    NotificationManager.success(brand.message,"",800)
+                    setTimeout(() => {
+                        window.location.href = "/createbrands";
+                      }, 1000);
+                    
+                }catch(e){
+                    console.log(e)
+                    NotificationManager.error(e.message,"",800)
+                    setTimeout(() => {
+                        window.location.href = "/createbrands";
+                      }, 1000);
+                }
+               
+                
+                
+                
+               
+            }
+        }
 
         
   return (
@@ -58,23 +162,18 @@ function CreateBrands() {
                         <th>Description</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td><img src='../images/user.jpg' className="profile_i" alt='' /></td>
-                        <td>Cat has Guns</td>
-                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    </tr>
-                    <tr>
-                        <td><img src='../images/user.jpg' className="profile_i" alt='' /></td>
-                        <td>Cat has Guns</td>
-                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    </tr>
-                    <tr>
-                        <td><img src='../images/user.jpg' className="profile_i" alt='' /></td>
-                        <td>Cat has Guns</td>
-                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    </tr>
-                    </tbody>
+                    {myBrand && myBrand !='undefinedd'  && myBrand!=""? myBrand.map((data,index)=>(
+                             <tbody>
+                        
+                             <tr>
+                                 <td><img src={data.logoImage} className="profile_i" alt='' /></td>
+                                 <td>{data.name}</td>
+                                 <td>{data.description}</td>
+                             </tr>
+                             
+                             </tbody>
+                            )):"There Is No Brand"}
+                   
                 </table>
             </div>
         </div>
@@ -82,7 +181,7 @@ function CreateBrands() {
             <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                 <div className="modal-header">
-                    <h5 className="modal-title text-yellow font-24 font-600" id="exampleModalLabel">Create New Collection</h5>
+                    <h5 className="modal-title text-yellow font-24 font-600" id="exampleModalLabel">Create New Brand</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
@@ -167,16 +266,16 @@ function CreateBrands() {
                         </div>
                         <div className="col-md-12 mb-1">
                             <label for="recipient-name" className="col-form-label">Title *</label>
-                            <input type="text" className="form-control" id="recipient-name" />
+                            <input type="text" className="form-control" id="recipient-name" value={title} onChange={(e) => setTitle(e.target.value)}/>
                         </div>
                         <div className="col-md-12 mb-1">
                             <label for="message-text" className="col-form-label">Description *</label>
-                            <textarea className="form-control" id="message-text"></textarea>
+                            <textarea className="form-control" id="message-text" value={description} onChange={(e) => setDescription(e.target.value)} ></textarea>
                         </div>
                     </form>
                 </div>
                 <div className="modal-footer justify-content-center">
-                    <button type="button" className="btn btn-admin text-light">Create Collection</button>
+                    <button type="button" className="btn btn-admin text-light" onClick={handleCreateBrand}>Create Brand</button>
                 </div>
                 </div>
             </div>
