@@ -950,6 +950,67 @@ export const GetBrand = async (id) => {
   }
 }
 
+//Create Categories
+
+export const addCategory = async (data) => {
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+    },
+    body: data,
+  };
+  try {
+   
+    // for (var value of data.values()) {
+    //   console.log(value);
+    // }
+
+    let response = await fetch(
+      process.env.REACT_APP_API_BASE_URL + "/utils/addCategory",
+      requestOptions
+    );
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+    const datas = isJson && (await response.json());
+
+    return datas;
+  } catch (err) {
+    return err;
+  }
+};
+
+//CREATE catagories ENDS
+
+
+//GET Category
+export const getAllCategory = async (id) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+    },
+  };
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_API_BASE_URL + "/utils/getAllCategory",
+      requestOptions
+    );
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+    const datas = isJson && (await response.json());
+    console.log("category data is---->",datas)
+    if (datas.data) return datas.data;
+    return [];
+  } catch (err) {
+    return err;
+  }
+}
+
+
 export const createNft = async (data) => {
   const requestOptions = {
     method: "POST",

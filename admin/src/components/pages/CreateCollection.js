@@ -21,7 +21,7 @@ function CreateCollection() {
   const [title, setTitle] = useState("MJ");
   const [symbol, setSymbol] = useState("MJ");
   const [description, setDescription] = useState("mj collection");
-  const [royalty, setRoyalty] = useState(1000);
+  const [royalty, setRoyalty] = useState(10);
   const [loading, setLoading] = useState(false);
   const [maxSupply, setMaxSupply] = useState(1);
   const [price, setPrice] = useState();
@@ -154,7 +154,7 @@ function CreateCollection() {
       NotificationManager.error("Please Enter a Title", "", 800);
       return false;
     }
-    if (royalty.trim() === "" || royalty === undefined) {
+    if (royalty === "" || royalty === undefined) {
       NotificationManager.error("Please Enter the value for Royalty", "", 800);
       return false;
     }
@@ -170,7 +170,8 @@ function CreateCollection() {
       NotificationManager.error("Please Enter Max Supply", "", 800);
       return false;
     }
-    if (price.trim() === "" || price === undefined) {
+   
+    if (price === "" || price === undefined) {
       NotificationManager.error("Please Enter a Price", "", 800);
       return false;
     }
@@ -207,70 +208,92 @@ function CreateCollection() {
       console.log("contracts usdt address", contracts.USDT);
 
       let res1;
-      try {
-        setLoading(true);
-        maxSupply == 1
-          ? (res1 = await creator.deployExtendedERC721(
-              title,
-              symbol,
-              logoImg,
-              royalty,
-              contracts.USDT
-            ))
-          : (res1 = await creator.deployExtendedERC1155(
-              logoImg,
-              royalty,
-              contracts.USDT
-            ));
-      } catch (e) {
-        console.log(e);
-      }
-      let hash = res1;
-      res1 = await res1.wait();
-      console.log("res1 is--->", res1);
-      if (res1.status === 1) {
-        let type;
-        if (maxSupply > 1) {
-          type = 1;
-        } else {
-          type = 0;
-        }
-        let contractAddress = await readReceipt(hash);
-        console.log("contract address is--->", contractAddress);
-        var fd = new FormData();
-        fd.append("name", title);
-        fd.append("description", description);
-        fd.append("logoImage", logoImg);
-        fd.append("coverImage", coverImg);
-        fd.append("categoryID", "62878304ee30230742fcab07");
-        fd.append("brandID", "628788089b97d717f190d9aa");
-        //fd.append("chainID", chain);
-        fd.append("contractAddress", contractAddress);
-        fd.append("preSaleStartTime", preSaleStartTime);
-        fd.append("totalSupply", maxSupply);
-        fd.append("type", type);
-        fd.append("price", price);
-        fd.append("royalty", royalty);
-
-        console.log("form data is---->", fd.value);
-        setLoading(true);
+      if(handleValidationCheck()){
         try {
-          let collection = await createCollection(fd);
-          console.log("create Collection response is--->", collection);
-          setLoading(false);
-          NotificationManager.success(collection.message, "", 800);
-          setTimeout(() => {
-            window.location.href = "/createcollection";
-          }, 1000);
+          setLoading(true);
+          maxSupply == 1
+            ? (res1 = await creator.deployExtendedERC721(
+                title,
+                symbol,
+                "www.uri.com",
+                royalty*100,
+                contracts.USDT
+              ))
+            : (res1 = await creator.deployExtendedERC1155(
+              "www.uri.com",
+                royalty*100,
+                contracts.USDT
+              ));
+              
         } catch (e) {
-          NotificationManager.error(e.message, "", 800);
+          console.log(e);
+          NotificationManager.error(e.message,"",1500)
           setTimeout(() => {
             window.location.href = "/createcollection";
           }, 1000);
         }
-      } else {
-        NotificationManager.error("Connect Yout Metamask", "", 800);
+        let hash = res1;
+        res1 = await res1.wait();
+        console.log("res1 is--->", res1);
+        if (res1.status === 1) {
+          let type;
+          if (maxSupply > 1) {
+            type = 1;
+          } else {
+            type = 0;
+          }
+          let contractAddress = await readReceipt(hash);
+          console.log("contract address is--->", contractAddress);
+          var fd = new FormData();
+          fd.append("name", title);
+          fd.append("description", description);
+          fd.append("logoImage", logoImg);
+          fd.append("coverImage", coverImg);
+          fd.append("categoryID", "62878304ee30230742fcab07");
+          fd.append("brandID", "628788089b97d717f190d9aa");
+          //fd.append("chainID", chain);
+          fd.append("contractAddress", contractAddress);
+          fd.append("preSaleStartTime", preSaleStartTime);
+          fd.append("totalSupply", maxSupply);
+          fd.append("type", type);
+          fd.append("price", price);
+          fd.append("royalty", royalty);
+  
+          console.log("form data is---->", fd.value);
+          setLoading(true);
+          try {
+            let collection = await createCollection(fd);
+            console.log("create Collection response is--->", collection);
+            setLoading(false);
+            if(collection=="Collection created"){
+              NotificationManager.success("collection created successfully","",1800)
+              setTimeout(() => {
+                window.location.href = "/createcollection";
+              }, 1000);
+              
+            }else{
+              NotificationManager.error(collection,"",1800)
+              console.log("category message",collection)
+              setTimeout(() => {
+                window.location.href = "/createcollection";
+              }, 1000);
+            }
+          } catch (e) {
+            NotificationManager.error(e.message, "", 1800);
+            setTimeout(() => {
+              window.location.href = "/createcollection";
+            }, 1000);
+          }
+        } else {
+          NotificationManager.error("Something went wrong", "", 1800);
+          setTimeout(() => {
+            window.location.href = "/createcollection";
+          }, 1000);
+        }
       }
+     
+    }else{
+      NotificationManager.error("Connect Yout Metamask", "", 800);
     }
   };
 

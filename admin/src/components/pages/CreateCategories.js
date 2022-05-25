@@ -1,13 +1,41 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { NotificationManager } from "react-notifications";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 import Deletesvg from "../SVG/deletesvg";
+import {addCategory,getAllCategory} from "../../apiServices";
+
+import {useCookies} from "react-cookie";
+
+
 
 function CreateCategories() {
   const [catImg, setCatImg] = useState();
   const [CategorieName, setCategorieName] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [myCategory,setMyCategory]=useState("")
+const [currentUser, setCurrentUser] = useState("");
+  
+  useEffect(() => {
+    if (cookies.selected_account) setCurrentUser(cookies.selected_account);
+    else NotificationManager.error("Connect Yout Metamask", "", 800);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("current user is---->", currentUser, cookies.selected_account);
+  }, [currentUser]);
+    
+  useEffect(() => {
+    if(currentUser) {
+        const fetch=async () => {
+          
+            let _myBrand=await getAllCategory();
+            setMyCategory(_myBrand);
+            console.log("my collection-fgasdf->",myCategory)
 
+        };
+        fetch();
+    }
+
+},[currentUser]);
   const uploadedImage = React.useRef(null);
   const imageUploader = React.useRef(null);
 
@@ -41,11 +69,44 @@ function CreateCategories() {
     return true;
   };
 
-  const handleCreateCategorie = () => {
-    if(handleValidationCheck())
-    {
-       // create NFT logic
-    }
+  const handleCreateCategorie = async() => {
+    if(handleValidationCheck()==false){
+      return;
+      
+  }else{
+      var fd = new FormData();
+      fd.append("name", CategorieName);
+     
+      fd.append("image", catImg);
+    
+      try{
+          let catagories= await addCategory(fd)
+         
+          if(catagories.message=="Category created"){
+            NotificationManager.success("Category created successfully","",800)
+           
+          }else{
+            NotificationManager.error(catagories.message,"",800)
+           
+          }
+         
+          setTimeout(() => {
+              window.location.href = "/createcategories";
+            }, 1000);
+          
+      }catch(e){
+          console.log(e)
+          NotificationManager.error(e.message,"",800)
+          setTimeout(() => {
+              window.location.href = "/createcategories";
+            }, 1000);
+      }
+     
+      
+      
+      
+     
+  }
   };
 
   return (
@@ -61,7 +122,7 @@ function CreateCategories() {
             type='button'
             data-bs-toggle='modal'
             data-bs-target='#NftModal'>
-            + Add NFTs
+            + Add Catagories
           </button>
         </div>
         <div className='adminbody table-widget text-light box-background'>
@@ -80,41 +141,23 @@ function CreateCategories() {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td><img src='../images/user.jpg' className='profile_i' alt='' /></td>
-                    <td>
-                    Categorie Name
-                    </td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <Link to={"/"} class="btn btn-danger"><Deletesvg /></Link>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src='../images/user.jpg' className='profile_i' alt='' /></td>
-                    <td>
-                    Categorie Name
-                    </td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <Link to={"/"} class="btn btn-danger"><Deletesvg /></Link>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src='../images/user.jpg' className='profile_i' alt='' /></td>
-                    <td>
-                    Categorie Name
-                    </td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <Link to={"/"} class="btn btn-danger"><Deletesvg /></Link>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
+            {myCategory&&myCategory!='undefinedd'&&myCategory!="" && myCategory.length>0? myCategory.map((data,index) => (
+                             <tbody>
+                             <tr>
+                                 <td><img src={data.image} className='profile_i' alt='' /></td>
+                                 <td>
+                                 {data.name}
+                                 </td>
+                                 <td>
+                                     <div class="btn-group btn-group-sm">
+                                         <Link to={"/"} class="btn btn-danger"><Deletesvg /></Link>
+                                     </div>
+                                 </td>
+                             </tr>
+                             
+                         </tbody>
+                        )):"There Is No Category"}
+           
           </table>
         </div>
       </div>
