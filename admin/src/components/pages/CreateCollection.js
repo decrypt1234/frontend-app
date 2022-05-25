@@ -249,6 +249,8 @@ function CreateCollection() {
         fd.append("preSaleStartTime", preSaleStartTime);
         fd.append("totalSupply", maxSupply);
         fd.append("type", type);
+        fd.append("price", price);
+        fd.append("royalty", royalty);
 
         console.log("form data is---->", fd.value);
         setLoading(true);
