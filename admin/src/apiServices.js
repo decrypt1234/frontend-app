@@ -416,7 +416,7 @@ export const createCollection = async (data) => {
 
 export const getAllCollections = async () => {
   const requestOptions = {
-    method: "GET",
+    method: "POST",
   };
   try {
     let response = await fetch(
