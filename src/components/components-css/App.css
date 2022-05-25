@@ -1124,6 +1124,7 @@ header#myHeader {
   padding: 40px;
   transition: 2s ease;
   -webkit-transition: 2s ease;
+  height: 100%;
 }
 .wallet_box:hover {
   background: linear-gradient(120.91deg, #ef981d 1.08%, #f5aa3e 100.06%);
@@ -1329,11 +1330,9 @@ button.slick-arrow.slick-next {
   box-shadow: 2px 2px 4px rgb(0 0 0 / 25%);
   border-radius: 60px;
   padding: 5px 15px;
-  margin-bottom: 10px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-left: 10px;
   width: 100%;
 }
 .author_list_section {
@@ -3740,4 +3739,64 @@ a:hover {
 }
 .auther_cart .dropdown-menu li .dropdown-item svg {
   fill: #ef981d;
+}
+.filter {
+  background: #0D171E;
+  border: 1px solid #EF981D;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+    gap: 30px;
+}
+.drop_down_tlt {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #FFFFFF;
+  display: block;
+  position: relative;
+  margin-bottom: 10px;
+}
+.drop_down_tlt svg {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.filtercol ul {padding: 0px;}
+.filtercol {
+  width: 25%;
+}
+/* .collection_slide:hover {
+  box-shadow: rgb(255 255 255 / 25%) 0px 0px 16px 0px;
+  transition: all 0.1s ease 0s;
+} */
+.img-fluid {width: 100%;}
+
+@media screen and (max-width:992px) {
+  .textdes {font-size: 16px;}
+  .wallet_box h4, .mint_text h4, .category_sec h5 {font-size: 20px;line-height: 26px;}
+  .second_hd {font-size: 38px;line-height: 50px;}
+  .mint_date span {font-size: 38px;line-height: 30px;}
+  .mint_date {font-size: 20px;}
+  .auther_img {width: 60px;height: 60px;}
+  .author_list_box:before {font-size: 18px;line-height: 24px;}
+  .about_col h3 {font-size: 24px;line-height: initial;}
+}
+
+@media screen and (max-width:768px) {
+  .pdd_8 {padding: 50px 0px;}
+  .main-title {font-size: 30px;}
+.lead {font-size: 16px;line-height: 26px;}
+.hunter-market {font-size: 22px;line-height: 24px;}
+.btn-banner {font-size: 18px;line-height: initial;padding: 10px 40px;}
+.wallet_box {padding: 30px;}
+.svg_icon {padding: 15px;}
+.second_hd {font-size: 28px;line-height: initial;}
+.mint_date span {font-size: 28px;line-height: 20px;}
+.mint_date {font-size: 16px;}
+.second_hd {padding: 0px 10px;}
+.wallet_box h4, .mint_text h4, .category_sec h5 {font-size: 18px;line-height: initial;}
 }
