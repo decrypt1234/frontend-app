@@ -1,12 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { NotificationManager } from 'react-notifications';
 import Sidebar from '../components/Sidebar';
+import { useCookies } from "react-cookie";
+
+import { addBrand,GetBrand } from "../../apiServices";
 
 function CreateBrands() {
     const [logoImg, setLogoImg] = useState();
     const [coverImg, setCoverImg] = useState();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [currentUser, setCurrentUser] = useState("");
+  const [myBrand,setMyBrand]=useState("")
+  const [cookies, setCookie, removeCookie] = useCookies([]);
+  
+  
+  
+  useEffect(() => {
+    if (cookies.selected_account) setCurrentUser(cookies.selected_account);
+    else NotificationManager.error("Connect Yout Metamask","",800)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("current user is---->",currentUser,cookies.selected_account)
+  }, [currentUser]);
+    
+    
+    useEffect(() => {
+        if(currentUser){
+          const fetch = async () => {
+            let data={
+              page:1,
+              limit:12
+            }
+            
+          
+              let _myBrand = await GetBrand();
+              setMyBrand(_myBrand);
+              console.log("my collection-fgasdf->",myBrand)
+            
+          };
+          fetch();
+        }
+        
+      }, [currentUser]);
 
         const uploadedImage = React.useRef(null);
         const imageUploader = React.useRef(null);
@@ -71,9 +106,31 @@ function CreateBrands() {
             }
         }
 
-        const handleCreateBrand = () => {
-            if(handleValidationCheck()){
-                //create brand logic
+        const handleCreateBrand = async() => {
+            if(handleValidationCheck()==false){
+                return;
+                
+            }else{
+                var fd = new FormData();
+                fd.append("name", title);
+                fd.append("description", description);
+                fd.append("logoImage", logoImg);
+                fd.append("coverImage", coverImg);
+                try{
+                    let brand= await addBrand(fd)
+                   
+                    
+                    NotificationManager.success(brand.message,"",800)
+                    
+                }catch(e){
+                    console.log(e)
+                    NotificationManager.error(e.message,"",800)
+                }
+               
+                
+                
+                
+               
             }
         }
 
@@ -99,23 +156,18 @@ function CreateBrands() {
                         <th>Description</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td><img src='../images/user.jpg' className="profile_i" alt='' /></td>
-                        <td>Cat has Guns</td>
-                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    </tr>
-                    <tr>
-                        <td><img src='../images/user.jpg' className="profile_i" alt='' /></td>
-                        <td>Cat has Guns</td>
-                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    </tr>
-                    <tr>
-                        <td><img src='../images/user.jpg' className="profile_i" alt='' /></td>
-                        <td>Cat has Guns</td>
-                        <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
-                    </tr>
-                    </tbody>
+                    {myBrand && myBrand !=='undefinedd'  && myBrand!==""? myBrand.map((data,index)=>(
+                             <tbody>
+                        
+                             <tr>
+                                 <td><img src={data.logoImage} className="profile_i" alt='' /></td>
+                                 <td>{data.name}</td>
+                                 <td>{data.description}</td>
+                             </tr>
+                             
+                             </tbody>
+                            )):"There Is No Brand"}
+                   
                 </table>
             </div>
         </div>
@@ -123,7 +175,7 @@ function CreateBrands() {
             <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                 <div className="modal-header">
-                    <h5 className="modal-title text-yellow font-24 font-600" id="exampleModalLabel">Create New Collection</h5>
+                    <h5 className="modal-title text-yellow font-24 font-600" id="exampleModalLabel">Create New Brand</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
