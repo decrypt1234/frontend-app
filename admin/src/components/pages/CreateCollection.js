@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import {
   createCollection,
   exportInstance,
+  getAllCategory,
+  GetBrand,
   GetMyCollectionsList,
 } from "../../apiServices";
 import contracts from "../../config/contracts";
@@ -31,6 +33,8 @@ function CreateCollection() {
   const [preSaleStartTime, setPreSaleStartTime] = useState("");
   const [datetime2, setDatetime2] = useState("");
   const [currentUser, setCurrentUser] = useState("");
+  const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
   const [myCollections, setMyCollections] = useState([]);
 
   useEffect(() => {
@@ -50,6 +54,12 @@ function CreateCollection() {
 
         let data = await GetMyCollectionsList(reqBody);
         if (data && data.results.length > 0) setMyCollections(data?.results[0]);
+
+        let _brands = await GetBrand()
+        console.log("_brands", _brands)
+
+        let _cat = await getAllCategory()
+        console.log("_cat", _cat)
       };
       fetch();
     }
@@ -208,7 +218,53 @@ function CreateCollection() {
       console.log("contracts usdt address", contracts.USDT);
 
       let res1;
-      if(handleValidationCheck()){
+      try {
+        setLoading(true);
+        maxSupply == 1
+          ? (res1 = await creator.deployExtendedERC721(
+              title,
+              symbol,
+              logoImg,
+              royalty,
+              contracts.USDT
+            ))
+          : (res1 = await creator.deployExtendedERC1155(
+              logoImg,
+              royalty,
+              contracts.USDT
+            ));
+      } catch (e) {
+        console.log(e);
+      }
+      let hash = res1;
+      res1 = await res1.wait();
+      console.log("res1 is--->", res1);
+      if (res1.status === 1) {
+        let type;
+        if (maxSupply > 1) {
+          type = 1;
+        } else {
+          type = 0;
+        }
+        let contractAddress = await readReceipt(hash);
+        console.log("contract address is--->", contractAddress);
+        var fd = new FormData();
+        fd.append("name", title);
+        fd.append("description", description);
+        fd.append("logoImage", logoImg);
+        fd.append("symbol", symbol);
+        fd.append("price", price);
+        fd.append("coverImage", coverImg);
+        fd.append("categoryID", "62878304ee30230742fcab07");
+        fd.append("brandID", "628788089b97d717f190d9aa");
+        //fd.append("chainID", chain);
+        fd.append("contractAddress", contractAddress);
+        fd.append("preSaleStartTime", preSaleStartTime);
+        fd.append("totalSupply", maxSupply);
+        fd.append("type", type);
+
+        console.log("form data is---->", fd.value);
+        setLoading(true);
         try {
           setLoading(true);
           maxSupply == 1
@@ -336,7 +392,10 @@ function CreateCollection() {
                 <th>Brand</th>
               </tr>
             </thead>
-            {myCollections && myCollections != undefined && myCollections != "" && myCollections.length>0
+            {myCollections &&
+            myCollections != undefined &&
+            myCollections != "" &&
+            myCollections.length > 0
               ? myCollections.map((item, index) => (
                   <tbody>
                     <tr>
