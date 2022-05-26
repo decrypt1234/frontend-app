@@ -3,6 +3,8 @@ import { NotificationManager } from "react-notifications";
 import Sidebar from "../components/Sidebar";
 import {
   createNft,
+  createOrder,
+  getAllCollections,
   GetBrand,
   GetMyCollectionsList,
   getNFTList,
@@ -11,6 +13,8 @@ import { useCookies } from "react-cookie";
 import extendedERC721Abi from "./../../config/abis/extendedERC721.json";
 import { exportInstance } from "../../apiServices";
 import contracts from "./../../config/contracts";
+import { getSignature } from "./../../helpers/getterFunctions";
+import { GENERAL_TIMESTAMP } from "../../helpers/constants";
 
 function CreateNFTs() {
   const [nftImg, setNftImg] = useState();
@@ -25,6 +29,7 @@ function CreateNFTs() {
   const [collections, setCollections] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [nfts, setNfts] = useState([]);
+  const [quantity, setQuantity] = useState(1);
 
   const handleImageUpload = (e) => {
     const [file] = e.target.files;
@@ -97,52 +102,127 @@ function CreateNFTs() {
 
   const handleCreateNFT = async () => {
     if (handleValidationCheck()) {
+      let salt = Math.round(Math.random() * 10000000);
       var fd = new FormData();
-
-      fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
-      fd.append("levels", JSON.stringify([]));
-      fd.append("creatorAddress", currentUser.toLowerCase());
-      fd.append("name", title);
-      fd.append("nftFile", nftImg);
-      fd.append("quantity", 1);
-      fd.append("collectionID", collection);
-      fd.append("description", description);
-      fd.append("tokenID", 1);
-      fd.append("type", 1);
-      fd.append("isMinted", 0);
-      fd.append("imageSize", "0");
-      fd.append("imageType", "0");
-      fd.append("imageDimension", "0");
-      await createNft(fd);
-      const NFTcontract = await exportInstance(
-        "0x0886dec339f51604f67554c6aac7bd4eb2ebaf46",
-        extendedERC721Abi.abi
-      );
-      let approval = await NFTcontract.isApprovedForAll(
-        currentUser,
-        contracts.MARKETPLACE
-      );
-      let approvalRes;
-      let options = {
-        from: currentUser,
-        gasLimit: 9000000,
-        value: 0,
+      let createRes;
+      let collectionDetail;
+      let NFTcontract;
+      let reqBody = {
+        page: 1,
+        limit: 12,
+        collectionID: collection,
+        userID: "",
+        categoryID: "",
+        brandID: "",
+        ERCType: "",
+        searchText: "",
+        filterString: "",
+        isHotCollection: "",
+        isMinted: "",
       };
-      if (!approval) {
-        approvalRes = await NFTcontract.setApprovalForAll(
-          contracts.MARKETPLACE,
-          true,
-          options
-        );
-        approvalRes = await approvalRes.wait();
-        if (approvalRes.status === 0) {
-          NotificationManager.error("Transaction failed", "", 800);
-          return;
-        }
-
-        NotificationManager.success("Approved", "", 800);
+      try {
+        collectionDetail = await getAllCollections(reqBody);
+        console.log("collectionDetail", collectionDetail);
+        collectionDetail = collectionDetail?.results[0][0];
+        console.log("collectionDetail11", collectionDetail);
+        fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
+        fd.append("levels", JSON.stringify([]));
+        fd.append("creatorAddress", currentUser.toLowerCase());
+        fd.append("name", title);
+        fd.append("nftFile", nftImg);
+        fd.append("quantity", quantity);
+        fd.append("collectionID", collection);
+        fd.append("description", description);
+        fd.append("tokenID", collectionDetail.nextID);
+        fd.append("type", collectionDetail.type);
+        fd.append("isMinted", 0);
+        fd.append("imageSize", "0");
+        fd.append("imageType", "0");
+        fd.append("imageDimension", "0");
+        console.log("field values--->", fd.values);
+        createRes = await createNft(fd);
+      } catch (e) {
+        console.log("e", e);
+        return;
       }
-      console.log("NFTcontract", NFTcontract);
+      try {
+        NFTcontract = await exportInstance(
+          "0xa056f9c1770620a889c3c4e56e0ddcb239534c8c",
+          extendedERC721Abi.abi
+        );
+        let approval = await NFTcontract.isApprovedForAll(
+          currentUser,
+          contracts.MARKETPLACE
+        );
+        let approvalRes;
+        let options = {
+          from: currentUser,
+          gasLimit: 9000000,
+          value: 0,
+        };
+        if (!approval) {
+          approvalRes = await NFTcontract.setApprovalForAll(
+            contracts.MARKETPLACE,
+            true,
+            options
+          );
+          approvalRes = await approvalRes.wait();
+          if (approvalRes.status === 0) {
+            NotificationManager.error("Transaction failed", "", 800);
+            return;
+          }
+
+          NotificationManager.success("Approved", "", 800);
+        }
+      } catch (e) {
+        console.log("e", e);
+        return;
+      }
+
+      let sellerOrder = [
+        currentUser.toLowerCase(),
+        collectionDetail.contractAddress,
+        collectionDetail.nextID,
+        quantity,
+        collectionDetail.type,
+        contracts.USDT,
+        collectionDetail.price.$numberDecimal,
+        GENERAL_TIMESTAMP,
+        [],
+        [],
+        salt,
+      ];
+
+      console.log("currentUser, ...sellerOrder", currentUser, ...sellerOrder);
+      try {
+        let signature = await getSignature(currentUser, ...sellerOrder);
+        let reqParams = {
+          nftId: createRes.data._id,
+          tokenAddress: contracts.USDT,
+          collection: collectionDetail.contractAddress,
+          price: collectionDetail.price.$numberDecimal,
+          quantity: quantity,
+          saleType: 0,
+          deadline: GENERAL_TIMESTAMP,
+          signature: signature,
+          tokenId: collectionDetail.nextID,
+          // auctionEndDate: _auctionEndDate,
+          salt: salt,
+        };
+
+        let res1 = await createOrder(reqParams);
+        NotificationManager.success("NFT created successfully", "", 800);
+        console.log("NFTcontract", NFTcontract);
+        setTimeout(() => {
+          window.location.href = "/createcollection";
+        }, 1000);
+      } catch (e) {
+        console.log("e", e);
+        setTimeout(() => {
+          window.location.href = "/createcollection";
+        }, 1000);
+        return;
+      }
     }
   };
 
@@ -198,6 +278,7 @@ function CreateNFTs() {
               </tr>
             </thead>
             <tbody>
+              <br></br>
               {console.log("nfts", nfts)}
               {nfts && nfts.length > 0
                 ? nfts.map((n, i) => {
@@ -211,7 +292,7 @@ function CreateNFTs() {
                       </tr>
                     );
                   })
-                : ""}
+                : "No NFTs Found"}
             </tbody>
           </table>
         </div>
@@ -297,6 +378,19 @@ function CreateNFTs() {
                     id="recipient-name"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                  />
+                </div>
+
+                <div className="col-md-12 mb-1">
+                  <label for="recipient-name" className="col-form-label">
+                    Quantity *
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="recipient-name"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
                   />
                 </div>
 

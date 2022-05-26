@@ -1,5 +1,3 @@
-
-
 // import {
 //   exportInstance,
 //   GetCollectionsByAddress,
@@ -11,20 +9,102 @@
 //   GetNftDetails,
 //   getOrderDetails,
 // } from "../apiServices";
-// import { ethers } from "ethers";
-// import contracts from "../config/contracts";
+import { ethers } from "ethers";
+import contracts from "../config/contracts";
 // import erc20Abi from "./../config/abis/erc20.json";
 // import erc721Abi from "./../config/abis/simpleERC721.json";
 // import erc1155Abi from "./../config/abis/simpleERC1155.json";
 // import { fetchBidNft } from "../apiServices";
 // import { GENERAL_DATE, GENERAL_TIMESTAMP } from "./constants";
-// import NotificationManager from "react-notifications/lib/NotificationManager";
+import NotificationManager from "react-notifications/lib/NotificationManager";
 
 // const ipfsAPI = require("ipfs-api");
 // const ipfs = ipfsAPI("ipfs.infura.io", "5001", {
 //   protocol: "https",
 //   auth: "21w11zfV67PHKlkAEYAZWoj2tsg:f2b73c626c9f1df9f698828420fa8439",
 // });
+
+const toTypedOrder = (
+  account,
+  tokenAddress,
+  id,
+  quantity,
+  listingType,
+  paymentTokenAddress,
+  valueToPay,
+  deadline,
+  bundleTokens,
+  bundleTokensQuantity,
+  salt
+) => {
+  const domain = {
+    chainId: process.env.REACT_APP_CHAIN_ID,
+    name: "Decrypt Marketplace",
+    verifyingContract: contracts.MARKETPLACE,
+    version: "1",
+  };
+
+  const types = {
+    Order: [
+      { name: "user", type: "address" },
+      { name: "tokenAddress", type: "address" },
+      { name: "tokenId", type: "uint256" },
+      { name: "quantity", type: "uint256" },
+      { name: "listingType", type: "uint256" },
+      { name: "paymentToken", type: "address" },
+      { name: "value", type: "uint256" },
+      { name: "deadline", type: "uint256" },
+      { name: "bundleTokens", type: "uint256[]" },
+      { name: "bundleTokensQuantity", type: "uint256[]" },
+      { name: "salt", type: "uint256" },
+    ],
+  };
+
+  const value = {
+    user: account,
+    tokenAddress: tokenAddress,
+    tokenId: id,
+    quantity: quantity,
+    listingType: listingType,
+    paymentToken: paymentTokenAddress,
+    value: valueToPay,
+    deadline: deadline,
+    bundleTokens: bundleTokens,
+    bundleTokensQuantity: bundleTokensQuantity,
+    salt: salt,
+  };
+
+  return { domain, types, value };
+};
+
+export const getSignature = async (signer, ...args) => {
+  try {
+    console.log("111");
+    const order = toTypedOrder(...args);
+    console.log("order is---->", order);
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    console.log("222");
+    const signer1 = provider.getSigner();
+    console.log("333");
+    const signedTypedHash = await signer1._signTypedData(
+      order.domain,
+      order.types,
+      order.value
+    );
+    console.log("444");
+    const sig = ethers.utils.splitSignature(signedTypedHash);
+    console.log("555");
+
+    return [sig.v, sig.r, sig.s];
+  } catch (e) {
+    if (e.code === 4001) {
+      NotificationManager.error("User denied ");
+      return false;
+    }
+    console.log("error in api", e);
+    return false;
+  }
+};
 
 // export const isEmpty = (obj) => {
 //   return Object.keys(obj).length === 0;
@@ -221,88 +301,6 @@
 //   counts.push(res2.length);
 //   counts.push(res1.length);
 //   return counts;
-// };
-
-// const toTypedOrder = (
-//   account,
-//   tokenAddress,
-//   id,
-//   quantity,
-//   listingType,
-//   paymentTokenAddress,
-//   valueToPay,
-//   deadline,
-//   bundleTokens,
-//   bundleTokensQuantity,
-//   salt
-// ) => {
-//   const domain = {
-//     chainId: process.env.REACT_APP_CHAIN_ID,
-//     name: "Decrypt Marketplace",
-//     verifyingContract: contracts.MARKETPLACE,
-//     version: "1",
-//   };
-
-//   const types = {
-//     Order: [
-//       { name: "user", type: "address" },
-//       { name: "tokenAddress", type: "address" },
-//       { name: "tokenId", type: "uint256" },
-//       { name: "quantity", type: "uint256" },
-//       { name: "listingType", type: "uint256" },
-//       { name: "paymentToken", type: "address" },
-//       { name: "value", type: "uint256" },
-//       { name: "deadline", type: "uint256" },
-//       { name: "bundleTokens", type: "uint256[]" },
-//       { name: "bundleTokensQuantity", type: "uint256[]" },
-//       { name: "salt", type: "uint256" },
-//     ],
-//   };
-
-//   const value = {
-//     user: account,
-//     tokenAddress: tokenAddress,
-//     tokenId: id,
-//     quantity: quantity,
-//     listingType: listingType,
-//     paymentToken: paymentTokenAddress,
-//     value: valueToPay,
-//     deadline: deadline,
-//     bundleTokens: bundleTokens,
-//     bundleTokensQuantity: bundleTokensQuantity,
-//     salt: salt,
-//   };
-
-//   return { domain, types, value };
-// };
-
-// export const getSignature = async (signer, ...args) => {
-//   try {
-//     console.log("111");
-//     const order = toTypedOrder(...args);
-//     console.log("order is---->", order);
-//     let provider = new ethers.providers.Web3Provider(window.ethereum);
-//     console.log("222");
-//     const signer1 = provider.getSigner();
-//     console.log("333");
-//     const signedTypedHash = await signer1._signTypedData(
-//       order.domain,
-//       order.types,
-//       order.value
-//     );
-//     console.log("444");
-//     const sig = ethers.utils.splitSignature(signedTypedHash);
-//     console.log("555");
-
-//     return [sig.v, sig.r, sig.s];
-//   } catch (e) {
-//     if (e.code === 4001) {
-//       NotificationManager.error("User denied ");
-//       return false;
-//     }
-//     console.log("error in api", e);
-//     return false;
-//   }
 // };
 
 // export const getNextId = async (collection) => {

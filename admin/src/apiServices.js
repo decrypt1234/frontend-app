@@ -293,9 +293,13 @@ export const createCollection = async (data) => {
   }
 };
 
-export const getAllCollections = async () => {
+export const getAllCollections = async (data) => {
   const requestOptions = {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   };
   try {
     let response = await fetch(
@@ -469,6 +473,35 @@ export const getAllCategory = async (id) => {
     console.log("category data is---->", datas);
     if (datas.data) return datas.data;
     return [];
+  } catch (err) {
+    return err;
+  }
+};
+
+export const createOrder = async (data) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    console.log("put on marketplace");
+
+    let response = await fetch(
+      process.env.REACT_APP_API_BASE_URL + "/order/createOrder",
+      requestOptions
+    );
+
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+    const datas = isJson && (await response.json());
+
+    return datas;
   } catch (err) {
     return err;
   }
@@ -1018,35 +1051,6 @@ export const getAllCategory = async (id) => {
 //       ?.includes("application/json");
 //     const datas = isJson && (await response.json());
 //     return datas.data;
-//   } catch (err) {
-//     return err;
-//   }
-// };
-
-// export const createOrder = async (data) => {
-//   const requestOptions = {
-//     method: "POST",
-//     headers: {
-//       Authorization: localStorage.getItem("Authorization"),
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   };
-
-//   try {
-//     console.log("put on marketplace");
-
-//     let response = await fetch(
-//       process.env.REACT_APP_API_BASE_URL + "/order/createOrder",
-//       requestOptions
-//     );
-
-//     const isJson = response.headers
-//       .get("content-type")
-//       ?.includes("application/json");
-//     const datas = isJson && (await response.json());
-
-//     return datas;
 //   } catch (err) {
 //     return err;
 //   }

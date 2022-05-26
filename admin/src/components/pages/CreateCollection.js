@@ -33,9 +33,10 @@ function CreateCollection() {
   const [preSaleStartTime, setPreSaleStartTime] = useState("");
   const [datetime2, setDatetime2] = useState("");
   const [currentUser, setCurrentUser] = useState("");
-  const [categories, setCategories] = useState([])
-  const [brands, setBrands] = useState([])
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [myCollections, setMyCollections] = useState([]);
+  const [nftType, setNftType] = useState("1");
 
   useEffect(() => {
     if (cookies.selected_account) setCurrentUser(cookies.selected_account);
@@ -54,16 +55,23 @@ function CreateCollection() {
 
         let data = await GetMyCollectionsList(reqBody);
         if (data && data.results.length > 0) setMyCollections(data?.results[0]);
-
-        let _brands = await GetBrand()
-        console.log("_brands", _brands)
-
-        let _cat = await getAllCategory()
-        console.log("_cat", _cat)
       };
       fetch();
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      let _brands = await GetBrand();
+      console.log("_brands", _brands);
+      setBrands(_brands);
+
+      let _cat = await getAllCategory();
+      setCategories(_cat);
+      console.log("_cat", _cat);
+    };
+    fetch();
+  }, []);
 
   function handleChange(ev) {
     if (!ev.target["validity"].valid) return;
@@ -152,6 +160,9 @@ function CreateCollection() {
   };
 
   const handleValidationCheck = () => {
+    if (!currentUser) {
+      return false;
+    }
     if (logoImg === "" || logoImg === undefined) {
       NotificationManager.error("Please Upload a Logo Image", "", 800);
       return false;
@@ -180,7 +191,7 @@ function CreateCollection() {
       NotificationManager.error("Please Enter Max Supply", "", 800);
       return false;
     }
-   
+
     if (price === "" || price === undefined) {
       NotificationManager.error("Please Enter a Price", "", 800);
       return false;
@@ -211,145 +222,100 @@ function CreateCollection() {
   //handle collection creator
 
   const handleCollectionCreation = async () => {
-    if (cookies.selected_account) {
+    if (handleValidationCheck()) {
+      console.log("category", category);
       let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
       console.log("creator is---->", creator);
       console.log("create collection is called");
       console.log("contracts usdt address", contracts.USDT);
 
       let res1;
+
+      setLoading(true);
       try {
         setLoading(true);
-        maxSupply == 1
+        nftType == "1"
           ? (res1 = await creator.deployExtendedERC721(
               title,
               symbol,
-              logoImg,
-              royalty,
+              "www.uri.com",
+              royalty * 100,
               contracts.USDT
             ))
           : (res1 = await creator.deployExtendedERC1155(
-              logoImg,
-              royalty,
+              "www.uri.com",
+              royalty * 100,
               contracts.USDT
             ));
       } catch (e) {
         console.log(e);
+        NotificationManager.error(e.message, "", 1500);
+        setTimeout(() => {
+          window.location.href = "/createcollection";
+        }, 1000);
       }
       let hash = res1;
       res1 = await res1.wait();
       console.log("res1 is--->", res1);
       if (res1.status === 1) {
         let type;
-        if (maxSupply > 1) {
+        if (nftType == "1") {
           type = 1;
         } else {
-          type = 0;
+          type = 2;
         }
         let contractAddress = await readReceipt(hash);
         console.log("contract address is--->", contractAddress);
         var fd = new FormData();
         fd.append("name", title);
+        fd.append("symbol", symbol);
         fd.append("description", description);
         fd.append("logoImage", logoImg);
-        fd.append("symbol", symbol);
-        fd.append("price", price);
         fd.append("coverImage", coverImg);
-        fd.append("categoryID", "62878304ee30230742fcab07");
-        fd.append("brandID", "628788089b97d717f190d9aa");
+        fd.append("categoryID", category);
+        fd.append("brandID", brand);
         //fd.append("chainID", chain);
         fd.append("contractAddress", contractAddress);
         fd.append("preSaleStartTime", preSaleStartTime);
         fd.append("totalSupply", maxSupply);
         fd.append("type", type);
+        fd.append("price", price);
+        fd.append("royalty", royalty);
 
         console.log("form data is---->", fd.value);
         setLoading(true);
         try {
-          setLoading(true);
-          maxSupply == 1
-            ? (res1 = await creator.deployExtendedERC721(
-                title,
-                symbol,
-                "www.uri.com",
-                royalty*100,
-                contracts.USDT
-              ))
-            : (res1 = await creator.deployExtendedERC1155(
-              "www.uri.com",
-                royalty*100,
-                contracts.USDT
-              ));
-              
-        } catch (e) {
-          console.log(e);
-          NotificationManager.error(e.message,"",1500)
-          setTimeout(() => {
-            window.location.href = "/createcollection";
-          }, 1000);
-        }
-        let hash = res1;
-        res1 = await res1.wait();
-        console.log("res1 is--->", res1);
-        if (res1.status === 1) {
-          let type;
-          if (maxSupply > 1) {
-            type = 1;
+          let collection = await createCollection(fd);
+          console.log("create Collection response is--->", collection);
+          setLoading(false);
+          if (collection == "Collection created") {
+            NotificationManager.success(
+              "collection created successfully",
+              "",
+              1800
+            );
+            setTimeout(() => {
+              window.location.href = "/createcollection";
+            }, 1000);
           } else {
-            type = 0;
-          }
-          let contractAddress = await readReceipt(hash);
-          console.log("contract address is--->", contractAddress);
-          var fd = new FormData();
-          fd.append("name", title);
-          fd.append("description", description);
-          fd.append("logoImage", logoImg);
-          fd.append("coverImage", coverImg);
-          fd.append("categoryID", "62878304ee30230742fcab07");
-          fd.append("brandID", "628788089b97d717f190d9aa");
-          //fd.append("chainID", chain);
-          fd.append("contractAddress", contractAddress);
-          fd.append("preSaleStartTime", preSaleStartTime);
-          fd.append("totalSupply", maxSupply);
-          fd.append("type", type);
-          fd.append("price", price);
-          fd.append("royalty", royalty);
-  
-          console.log("form data is---->", fd.value);
-          setLoading(true);
-          try {
-            let collection = await createCollection(fd);
-            console.log("create Collection response is--->", collection);
-            setLoading(false);
-            if(collection=="Collection created"){
-              NotificationManager.success("collection created successfully","",1800)
-              setTimeout(() => {
-                window.location.href = "/createcollection";
-              }, 1000);
-              
-            }else{
-              NotificationManager.error(collection,"",1800)
-              console.log("category message",collection)
-              setTimeout(() => {
-                window.location.href = "/createcollection";
-              }, 1000);
-            }
-          } catch (e) {
-            NotificationManager.error(e.message, "", 1800);
+            NotificationManager.error(collection, "", 1800);
+            console.log("category message", collection);
             setTimeout(() => {
               window.location.href = "/createcollection";
             }, 1000);
           }
-        } else {
-          NotificationManager.error("Something went wrong", "", 1800);
+        } catch (e) {
+          NotificationManager.error(e.message, "", 1800);
           setTimeout(() => {
             window.location.href = "/createcollection";
           }, 1000);
         }
+      } else {
+        NotificationManager.error("Something went wrong", "", 1800);
+        setTimeout(() => {
+          window.location.href = "/createcollection";
+        }, 1000);
       }
-     
-    }else{
-      NotificationManager.error("Connect Yout Metamask", "", 800);
     }
   };
 
@@ -380,9 +346,11 @@ function CreateCollection() {
           </p>
           <table className="table table-hover text-light">
             <thead>
+              <br></br>
               <tr>
                 <th>Customer</th>
                 <th>Title</th>
+                <th>Symbol</th>
                 <th>Description</th>
                 <th>Royalty</th>
                 <th>Start Date</th>
@@ -407,17 +375,18 @@ function CreateCollection() {
                         />
                       </td>
                       <td>{item.name}</td>
+                      <td>{item.symbol}</td>
                       <td>{item.description}</td>
-                      <td>{Item.royalty}</td>
-                      <td>Date</td>
+                      <td>{item.royalityPercentage}</td>
+                      <td>{item.preSaleStartTime}</td>
                       <td>{item.totalSupply}</td>
-                      <td>$200</td>
-                      <td>Zenjin Viperz</td>
-                      <td>Hunter</td>
+                      <td>{item.price.$numberDecimal}</td>
+                      <td>{item.categoryID?.name}</td>
+                      <td>{item.brandID?.name}</td>
                     </tr>
                   </tbody>
                 ))
-              : "no collection"}
+              : "No Collections Found"}
           </table>
         </div>
       </div>
@@ -634,9 +603,11 @@ function CreateCollection() {
                     onChange={(e) => setCategory(e.target.value)}
                   >
                     <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    {categories && categories.length > 0
+                      ? categories.map((c, i) => {
+                          return <option value={c._id}>{c.name}</option>;
+                        })
+                      : ""}
                   </select>
                 </div>
                 <div className="col-md-6 mb-1">
@@ -650,9 +621,12 @@ function CreateCollection() {
                     onChange={(e) => setBrand(e.target.value)}
                   >
                     <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    {console.log("brands--", brands)}
+                    {brands && brands.length > 0
+                      ? brands.map((b, i) => {
+                          return <option value={b._id}>{b.name}</option>;
+                        })
+                      : ""}
                   </select>
                 </div>
                 <div className="col-md-12 mb-1">
@@ -677,6 +651,22 @@ function CreateCollection() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
+                </div>
+
+                <div className="col-md-6 mb-1">
+                  <label for="recipient-name" className="col-form-label">
+                    NFT Type *
+                  </label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    value={nftType}
+                    onChange={(e) => setNftType(e.target.value)}
+                  >
+                    <option selected>Open this select menu</option>
+                    <option value="1">Single</option>;
+                    <option value="2">Multiple</option>;
+                  </select>
                 </div>
               </form>
             </div>
