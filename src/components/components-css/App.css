@@ -3769,11 +3769,7 @@ a:hover {
 .filtercol {
   width: 25%;
 }
-/* .collection_slide:hover {
-  box-shadow: rgb(255 255 255 / 25%) 0px 0px 16px 0px;
-  transition: all 0.1s ease 0s;
-} */
-.img-fluid {width: 100%;}
+
 
 @media screen and (max-width:992px) {
   .textdes {font-size: 16px;}
