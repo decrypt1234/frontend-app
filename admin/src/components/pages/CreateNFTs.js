@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { NotificationManager } from "react-notifications";
 import Sidebar from "../components/Sidebar";
-import { createNft, GetBrand, GetMyCollectionsList } from "../../apiServices";
+import {
+  createNft,
+  GetBrand,
+  GetMyCollectionsList,
+  getNFTList,
+} from "../../apiServices";
 import { useCookies } from "react-cookie";
+import extendedERC721Abi from "./../../config/abis/extendedERC721.json";
+import { exportInstance } from "../../apiServices";
+import contracts from "./../../config/contracts";
 
 function CreateNFTs() {
   const [nftImg, setNftImg] = useState();
@@ -16,7 +24,7 @@ function CreateNFTs() {
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const [collections, setCollections] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
-  const [brands, setBrands] = useState([]);
+  const [nfts, setNfts] = useState([]);
 
   const handleImageUpload = (e) => {
     const [file] = e.target.files;
@@ -34,7 +42,7 @@ function CreateNFTs() {
     }
   };
 
-  const handleValidationCheck = () => {
+  const handleValidationCheck = async () => {
     if (nftImg === "" || nftImg === undefined) {
       NotificationManager.error("Please Upload an Image", "", 800);
       return false;
@@ -62,12 +70,37 @@ function CreateNFTs() {
     console.log("current user is---->", currentUser, cookies.selected_account);
   }, [currentUser]);
 
+  useEffect(() => {
+    const fetch = async () => {
+      let reqBody = {
+        page: 1,
+        limit: 12,
+        nftID: "",
+        collectionID: "",
+        userID: "",
+        categoryID: "",
+        brandID: "",
+        ERCType: "",
+        searchText: "",
+        filterString: "",
+        isMinted: "",
+      };
+      let res = await getNFTList(reqBody);
+      if (res && res.results.length > 0) {
+        setNfts(res.results[0]);
+        setTotalCount(res.count);
+      }
+      console.log("Ress", res);
+    };
+    fetch();
+  }, []);
+
   const handleCreateNFT = async () => {
     if (handleValidationCheck()) {
       var fd = new FormData();
 
       fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
-      fd.append("levels", JSON.stringify([{ hello: "neha" }]));
+      fd.append("levels", JSON.stringify([]));
       fd.append("creatorAddress", currentUser.toLowerCase());
       fd.append("name", title);
       fd.append("nftFile", nftImg);
@@ -81,6 +114,35 @@ function CreateNFTs() {
       fd.append("imageType", "0");
       fd.append("imageDimension", "0");
       await createNft(fd);
+      const NFTcontract = await exportInstance(
+        "0x0886dec339f51604f67554c6aac7bd4eb2ebaf46",
+        extendedERC721Abi.abi
+      );
+      let approval = await NFTcontract.isApprovedForAll(
+        currentUser,
+        contracts.MARKETPLACE
+      );
+      let approvalRes;
+      let options = {
+        from: currentUser,
+        gasLimit: 9000000,
+        value: 0,
+      };
+      if (!approval) {
+        approvalRes = await NFTcontract.setApprovalForAll(
+          contracts.MARKETPLACE,
+          true,
+          options
+        );
+        approvalRes = await approvalRes.wait();
+        if (approvalRes.status === 0) {
+          NotificationManager.error("Transaction failed", "", 800);
+          return;
+        }
+
+        NotificationManager.success("Approved", "", 800);
+      }
+      console.log("NFTcontract", NFTcontract);
     }
   };
 
@@ -96,10 +158,6 @@ function CreateNFTs() {
       };
       let data = await GetMyCollectionsList(reqBody);
       if (data && data.results.length > 0) setCollections(data?.results[0]);
-
-      let _brands = await GetBrand();
-      console.log("brands", _brands);
-      setBrands(_brands);
       setTotalCount(data?.count);
       // console.log("data", data);
     };
@@ -124,7 +182,7 @@ function CreateNFTs() {
           </button>
         </div>
         <div className="adminbody table-widget text-light box-background">
-          <h5 className="admintitle font-600 font-24 text-yellow">Example</h5>
+          <h5 className="admintitle font-600 font-24 text-yellow">NFTs</h5>
           <p className="admindescription">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
@@ -134,66 +192,26 @@ function CreateNFTs() {
           <table class="table table-hover text-light">
             <thead>
               <tr>
-                <th>Customer</th>
+                <th>NFT Image</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Royalty</th>
-                <th>Start Date</th>
-                <th>Max Supply</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Brand</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <img src="../images/user.jpg" className="profile_i" alt="" />
-                </td>
-                <td>Cat has Guns</td>
-                <td>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </td>
-                <td>$200</td>
-                <td>Date</td>
-                <td>24</td>
-                <td>$200</td>
-                <td>Zenjin Viperz</td>
-                <td>Hunter</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="../images/user.jpg" className="profile_i" alt="" />
-                </td>
-                <td>Cat has Guns</td>
-                <td>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </td>
-                <td>$200</td>
-                <td>Date</td>
-                <td>24</td>
-                <td>$200</td>
-                <td>Zenjin Viperz</td>
-                <td>Hunter</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src="../images/user.jpg" className="profile_i" alt="" />
-                </td>
-                <td>Cat has Guns</td>
-                <td>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </td>
-                <td>$200</td>
-                <td>Date</td>
-                <td>24</td>
-                <td>$200</td>
-                <td>Zenjin Viperz</td>
-                <td>Hunter</td>
-              </tr>
+              {console.log("nfts", nfts)}
+              {nfts && nfts.length > 0
+                ? nfts.map((n, i) => {
+                    return (
+                      <tr>
+                        <td>
+                          <img src={n.image} className="profile_i" alt="" />
+                        </td>
+                        <td>{n.name}</td>
+                        <td>{n.description}</td>
+                      </tr>
+                    );
+                  })
+                : ""}
             </tbody>
           </table>
         </div>
