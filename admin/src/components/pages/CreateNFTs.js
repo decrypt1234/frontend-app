@@ -3,6 +3,7 @@ import { NotificationManager } from "react-notifications";
 import Sidebar from "../components/Sidebar";
 import {
   createNft,
+  createOrder,
   GetBrand,
   GetMyCollectionsList,
   getNFTList,
@@ -11,6 +12,7 @@ import { useCookies } from "react-cookie";
 import extendedERC721Abi from "./../../config/abis/extendedERC721.json";
 import { exportInstance } from "../../apiServices";
 import contracts from "./../../config/contracts";
+import { getSignature } from "./../../helpers/getterFunctions";
 
 function CreateNFTs() {
   const [nftImg, setNftImg] = useState();
@@ -113,7 +115,7 @@ function CreateNFTs() {
       fd.append("imageSize", "0");
       fd.append("imageType", "0");
       fd.append("imageDimension", "0");
-      await createNft(fd);
+      let res = await createNft(fd);
       const NFTcontract = await exportInstance(
         "0x0886dec339f51604f67554c6aac7bd4eb2ebaf46",
         extendedERC721Abi.abi
@@ -142,6 +144,36 @@ function CreateNFTs() {
 
         NotificationManager.success("Approved", "", 800);
       }
+
+      let sellerOrder = [
+        currentUser.toLowerCase(),
+        "0x0886dec339f51604f67554c6aac7bd4eb2ebaf46",
+        1,
+        1,
+        0,
+        contracts.USDT,
+        1,
+        122334,
+        [],
+        [],
+        123,
+      ];
+      let signature = await getSignature(currentUser, ...sellerOrder);
+      let reqParams = {
+        nftId: res.data._id,
+        tokenAddress: contracts.USDT,
+        collection: "0x7d69ea94f1b140560f7ff378ee750bcc1083fc95",
+        price: 1,
+        quantity: 1,
+        saleType: 1,
+        deadline: 122334,
+        signature: signature,
+        tokenId: 1,
+        // auctionEndDate: _auctionEndDate,
+        salt: 123,
+      };
+
+      let res1 = await createOrder(reqParams);
       console.log("NFTcontract", NFTcontract);
     }
   };
