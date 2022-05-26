@@ -110,6 +110,8 @@ const onboard = Onboard({
   },
 });
 
+let locked;
+
 const Header = function () {
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const [provider, setProvider] = useState(null);
@@ -126,17 +128,26 @@ const Header = function () {
   }, []);
 
   const refreshState = () => {
+    removeCookie("selected_account", { path: "/" });
+    removeCookie("chain_id", { path: "/" });
+    removeCookie("balance", { path: "/" });
+    localStorage.clear();
     setAccount("");
     setChainId("");
     setProvider(null);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log("provider in useEffect", provider);
     if (provider) {
       provider.on("accountsChanged", (accounts) => {
-        console.log("account switched!!", accounts[0]);
-        if (account) setIsAccountSwitched(true);
+        console.log("account switched!!", accounts[0], "account", account);
+        if (account && accounts[0] !== undefined) {
+          setIsAccountSwitched(true);
+        }
+        if (accounts[0] === undefined) {
+          refreshState();
+        }
       });
       provider.on("chainChanged", (chains) => {
         console.log("chain changed", chains);
@@ -154,8 +165,8 @@ const Header = function () {
   };
 
   useEffect(() => {
-    if (!userDetails || !userDetails?.username) getUserProfile();
-  }, [userDetails]);
+    if (account && !userDetails) getUserProfile();
+  }, [account, userDetails?.username]);
 
   const connectWallet = async () => {
     setIsAccountSwitched(false);
@@ -171,7 +182,6 @@ const Header = function () {
     setChainId(primaryWallet.chains[0].id);
     console.log("provider", primaryWallet.provider);
     setProvider(primaryWallet.provider);
-    console.log("provider", provider);
 
     try {
       const address = wallets[0].accounts[0].address;
@@ -228,7 +238,7 @@ const Header = function () {
               refreshState();
               return;
             } else {
-              NotificationManager.success(res.message);
+              NotificationManager.success(res.message, "", 800);
               setAccount(primaryWallet.accounts[0].address);
               setCookie("selected_account", address, { path: "/" });
               setCookie(
@@ -258,16 +268,13 @@ const Header = function () {
   };
 
   const disconnectWallet = async () => {
-    removeCookie("selected_account", { path: "/" });
-    removeCookie("chain_id", { path: "/" });
-    removeCookie("balance", { path: "/" });
-
-    const [primaryWallet] = await onboard.state.get().wallets;
-    if (!primaryWallet) return;
-    await onboard.disconnectWallet({ label: primaryWallet.label });
+    
+    // const [primaryWallet] = await onboard.state.get().wallets;
+    // if (!primaryWallet) return;
+    await onboard.disconnectWallet({ label: "Metamask" });
     await Logout(cookies["selected_account"]);
     refreshState();
-    NotificationManager.success("User Logged out Successfully.");
+    NotificationManager.success("User Logged out Successfully", "", 800);
     slowRefresh(1000);
   };
 
@@ -283,7 +290,6 @@ const Header = function () {
     setChainId(primaryWallet.chains[0].id);
     console.log("provider", primaryWallet.provider);
     setProvider(primaryWallet.provider);
-    console.log("provider", provider);
 
     try {
       const address = wallets[0].accounts[0].address;
