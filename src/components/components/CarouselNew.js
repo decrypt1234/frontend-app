@@ -114,7 +114,7 @@ function ItemsList() {
         } 
         {putOnSaleItems?.length !== 0 ? 
         <div className='items_slide last_slide'>
-          <Link to={'/'} className='view_slide align-items-center justify-content-center d-flex'>View All</Link>
+          <Link to={'/marketplace'} className='view_slide align-items-center justify-content-center d-flex'>View All</Link>
         </div> : ""}
       </Slider>
     </div>

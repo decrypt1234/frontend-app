@@ -314,7 +314,7 @@ const Home = () => (
             <CarouselNew />
           </div>
           <div class="col-md-12 text-center mt-5">
-            <Link to={'/mintcollectionlive'} className="view_all_bdr">View All</Link>
+            <Link to={'/marketplace'} className="view_all_bdr">View All</Link>
           </div>
         </div>
       </section>
@@ -334,7 +334,7 @@ const Home = () => (
         </div>
       </section>
 
-    <section className="category_sec pdd_8">
+    {/* <section className="category_sec pdd_8">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -347,7 +347,7 @@ const Home = () => (
         </div>
           <Category />
       </div>
-    </section>
+    </section> */}
 
     <Footer />
   </div>
