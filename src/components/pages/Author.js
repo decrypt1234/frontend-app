@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../components/footer';
 // import Relatedcollection from '../components/Relatedcollection';
 import AuthorListing from '../components/AuthorListing';
@@ -29,6 +29,10 @@ var bgImgarrow = {
 };
 
 function Author() {
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  },[]);
 
   const gridtwo =()=>{
     setgrid("col-md-6 mb-4");

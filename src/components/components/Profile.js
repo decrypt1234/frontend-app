@@ -319,7 +319,7 @@ function Profile() {
               }}>Save</button>
               {/*<button type="submit" class="yellow_btn yellow_dark">Save</button>*/}
             </div>
-            <small className='small_info'>If no changes made the button will not glow</small>
+        
           </form>
         </div>
         <div className="col-lg-6 col-md-4 order-md-0 order-sm-1">

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import Footer from "../components/footer";
 import { Link } from 'react-router-dom';
+import { getAllMPCollections } from '../../helpers/getterFunctions';
 import { marketPlaceCollection } from '../../Data/dummyJSON';
 
 var register_bg = {
@@ -20,6 +21,19 @@ var bgImgStyle = {
 };
 
 function Marketplacecollection() {
+    console.log("window location",window.location.pathname)
+     
+  const [allCollections, setAllCollections] = useState([]);
+  useEffect(async() => {
+    try{
+      const res = await getAllMPCollections({page: 1, limit: 12});
+      console.log("result of getALLCollections helper fn--->",res);
+      setAllCollections(res);
+    }
+   catch(e){
+     console.log("Error in fetching all collections list",e);
+   }
+  },[])
   return (
     <div>
       <section className='register_hd pdd_12' style={register_bg}>
@@ -63,23 +77,28 @@ function Marketplacecollection() {
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div className="row">
-                        {marketPlaceCollection.map(card =>(
-                            <div className="col-lg-4 col-md-6 mb-5">
-                            <Link to={'/collection'} >
-                                <div className='collection_slide'>
-                                    <img className="img-fluid" src={card.img} alt="" />
-                                    <div className='collection_text'>
-                                        <div className='coll_profileimg'>
-                                        <img alt='' className='profile_img' src={'../img/collections/profile1.png'} />
-                                        <img alt='' className='check_img' src={'../img/collections/check.png'} />
-                                        </div>
-                                        <h4 className='collname'>{card.heading}</h4>
-                                        <p>ERC-73</p>
-                                    </div>
-                                </div>
-                                </Link>
-                            </div>                        
-                        ))}
+                        
+                       
+            {allCollections.map(card =>(
+                 <div className="col-lg-4 col-md-6 mb-5">
+                 <Link to={'/collection'} >
+                     <div className='collection_slide'>
+                         <img className="img-fluid" src={card.logoImg} alt="" />
+                         <div className='collection_text'>
+                             <div className='coll_profileimg'>
+                             <img alt='' className='profile_img' src={card.coverImg} />
+                             <img alt='' className='check_img' src={'../img/collections/check.png'} />
+                             </div>
+                             <h4 className='collname'>{card.name}</h4>
+                             <p>{card.desc}</p>
+                         </div>
+                     </div>
+                     </Link>
+                 </div>
+            
+            ))};
+                
+                        
                         <div class="col-md-12 text-center mt-0 mt-lg-5 mt-xl-5 mt-md-5"><a class="view_all_bdr" href="/">Load More</a></div>
                     </div>
                 </div>

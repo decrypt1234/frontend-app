@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from '../components/footer';
 import FirearmsCollection from '../components/FirearmsCollection';
 import NFTlisting from '../components/NFTlisting';
@@ -19,6 +19,11 @@ var bgImgStyle = {
   };
 
 function NFTDetails() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, []);
+
   return (
     <div>
       <section style={bgImgStyle} className="pdd_8">

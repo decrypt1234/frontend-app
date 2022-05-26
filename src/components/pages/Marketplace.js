@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 // import { Card } from 'react-bootstrap';
 import Footer from "../components/footer";
 import Marketplacecart from "../components/Marketplacecart";
@@ -28,6 +28,10 @@ var bgImgarrow = {
 
 function Marketplace() {
 
+
+useEffect(() => {
+  window.scrollTo(0, 0)
+}, []);
   const gridtwo =()=>{
     setgrid("col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4");
     document.getElementById("gridtwo").classList.add("active");

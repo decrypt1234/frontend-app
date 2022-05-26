@@ -3697,7 +3697,7 @@ a:hover {
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
   height: 100%;
-    width: 100%;
+  width: 100%;
 }
 .last_slide:hover {
   background: linear-gradient(120.91deg, #ef981d 1.08%, #f5aa3e 100.06%);
@@ -3781,68 +3781,6 @@ a:hover {
 .filtercol ul {padding: 0px;}
 .filtercol {
   width: 25%;
-}
-/* .collection_slide:hover {
-  box-shadow: rgb(255 255 255 / 25%) 0px 0px 16px 0px;
-  transition: all 0.1s ease 0s;
-} */
-/* .img-fluid {width: 100%;} */
-.Most-recent button.slick-arrow.slick-next {
-  right: -45px;
-}
-.Most-recent button.slick-arrow.slick-prev {
-  left: -45px;
-}
-.profile_me {
-  position: relative;
-}
-.usersidebar ul {padding-left: 0px;}
-
-@media screen and (max-width:1600px) {
-.main-title {font-size: 45px;line-height: initial;}
-.about_col h3 {font-size: 26px;line-height: 34px;}
-.about_col p {font-size: 15px;line-height: 20px;}
-  .second_hd {font-size: 38px;line-height: 49px;  }
-  .auther_info h6 {font-size: 18px;}
-  .auther_info p {font-size: 16px;}
-  .auther_img {width: 75px;height: 75px;}
-  .items_profileimg span {font-size: 14px;}
-  .profile_left .profile_img {width: 55px;height: 55px;}
-  .collection_banner {height: 270px;}
-}
-@media screen and (max-width:1440px) {
-  .main-title {font-size: 38px;}
-  .lead {font-size: 18px;line-height: 26px;}
-  .btn-banner {font-size: 20px;line-height: 25px;padding: 10px 45px;}
-  .textdes {font-size: 16px;}
-  .wallet_box h4, .mint_text h4, .category_sec h5 {font-size: 20px;line-height: 25px;}
-  .svg_icon svg {width: 30px;height: 30px;}
-  .svg_icon {padding: 10px;}
-  .register_hd h1,
-  .h1 {font-size: 52px;line-height: 58px;}
-  .hlp-btn {padding: 8px 50px;font-size: 16px;}
-  .feature-box {padding: 30px;}
-  .feature-box p {font-size: 16px;}
-  .feature-box p {margin-bottom: 0px;}
-  .font_24 {font-size: 20px;}
-  form.help_form {height: 45px;}
-  form.help_form input, form.help_form input:hover, form.help_form input:focus {font-size: 18px;padding: 8px 20px;}
-  button#btn-submit {font-size: 30px;padding: 0px 15px;}
-  .collection_title {font-size: 38px;}
-  .collection_pick {width: 150px;height: 150px;margin-top: -75px;}
-  .tab_btn li button {font-size: 20px;line-height: 25px;}
-  .nft_details h1 {font-size: 38px;line-height: initial;}
-  .price_div {font-size: 26px;line-height: initial;}
-  .profile_h1,
-  .amount h5 {font-size: 26px;}
-  .mintevent h4 {font-size: 38px;}
-}
-@media screen and (max-width:1023px) {
-.event_slider .slick-slide.slick-active.slick-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 }
 
 @media screen and (max-width:992px) {
@@ -3953,3 +3891,55 @@ i.fa.fa-bars {color: #fff;}
   font-size: 18px;
   color: #FFFFFF;
 }
+
+
+.switch_container .confirm_btn{
+  border: 2px solid  #1d8aef;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #1d8aef;
+  color: #fff;
+  transition: all .1s ease-in-out;
+}
+
+.switch_container .confirm_btn:hover{
+  color: #1d8aef;
+  background: #fff;
+}
+
+
+.switch_container .cancel_btn{
+  border: 2px solid  #ff0000;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #ff0000;
+  color: #fff;
+  transition: all .1s ease-in-out;
+}
+
+
+.switch_container .cancel_btn:hover{
+  color: #ff0000;
+  background: #fff;
+}
+
+.switch_container .network_btn{
+  border: 2px solid  #1d8aef;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #1d8aef;
+  color: #fff;
+  transition: all .1s ease-in-out;
+}
+
+.switch_container .network_btn:hover{
+  color: #1d8aef;
+  background: #fff;
+}
+
+
+.coverImg_cont img{
+  height: 33vh;
+  width: 100%;
+ object-fit: cover;
+} 

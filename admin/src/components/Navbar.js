@@ -63,10 +63,10 @@ const onboard = Onboard({
       rpcUrl: "https://matic-mainnet.chainstacklabs.com",
     },
     {
-      id: "0xfa",
-      token: "FTM",
-      label: "Fantom Mainnet",
-      rpcUrl: "https://rpc.ftm.tools/",
+      id: "0x61",
+      token: "BNB",
+      label: "Binance Testnet",
+      rpcUrl: "https://data-seed-prebsc-2-s2.binance.org:8545/",
     },
   ],
   appMetadata: {
@@ -130,7 +130,7 @@ const Navbar = (props) => {
       });
       provider.on("chainChanged", (chains) => {
         console.log("chain changed", chains);
-        if (chains !== "0x13881") {
+        if (chains !== process.env.REACT_APP_CHAIN_ID) {
           setIsChainSwitched(true);
         }
       });
@@ -147,7 +147,9 @@ const Navbar = (props) => {
     setIsAccountSwitched(false);
     const wallets = await onboard.connectWallet();
     console.log("wallet address--->", wallets[0]);
-    const success = await onboard.setChain({ chainId: "0x13881" });
+    const success = await onboard.setChain({
+      chainId: process.env.REACT_APP_CHAIN_ID,
+    });
     console.log("setChain method", success);
     const primaryWallet = wallets[0];
     setChainId(primaryWallet.chains[0].id);
@@ -190,8 +192,8 @@ const Navbar = (props) => {
           } catch (e) {
             NotificationManager.error(e);
             return;
-          }}
-         else {
+          }
+        } else {
           try {
             const res = await Login(address);
             console.log("Login API response", res);
@@ -249,27 +251,29 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className='admin-navbar d-flex w-100'>
+    <div className="admin-navbar d-flex w-100">
       {isAccountSwitched ? (
         <PopupModal
           content={
-            <div className='switch_container'>
+            <div className="switch_container">
               <h3>Account Switched</h3>
-              <p className='my-4 mr-2'>
+              <p className="my-4 mr-2">
                 Please logout from the current account if you would like to
                 switch the account?
               </p>
-              <div className='d-flex justify-content-between align-items-center'>
+              <div className="d-flex justify-content-between align-items-center">
                 <button
-                  className='btn confirm_btn'
+                  className="btn confirm_btn"
                   onClick={() => {
                     disconnectWallet();
-                  }}>
+                  }}
+                >
                   Logout
                 </button>
                 <button
-                  className='btn cancel_btn'
-                  onClick={() => setIsAccountSwitched(false)}>
+                  className="btn cancel_btn"
+                  onClick={() => setIsAccountSwitched(false)}
+                >
                   Cancel
                 </button>
               </div>
@@ -283,18 +287,21 @@ const Navbar = (props) => {
       {isChainSwitched ? (
         <PopupModal
           content={
-            <div className='switch_container'>
+            <div className="switch_container">
               <h3>Chain Switched</h3>
-              <p className='my-4 mr-2'>
+              <p className="my-4 mr-2">
                 Please Switch to Rinkeby Testnet Network
               </p>
-              <div className='d-flex justify-content-center align-items-center'>
+              <div className="d-flex justify-content-center align-items-center">
                 <button
-                  className='btn network_btn'
+                  className="btn network_btn"
                   onClick={async () => {
-                    await onboard.setChain({ chainId: "0x4" });
+                    await onboard.setChain({
+                      chainId: process.env.REACT_APP_CHAIN_ID,
+                    });
                     setIsChainSwitched(false);
-                  }}>
+                  }}
+                >
                   Switch Network
                 </button>
               </div>
@@ -305,30 +312,31 @@ const Navbar = (props) => {
       ) : (
         ""
       )}
-      <div className='profile_box text-light me-auto d-flex align-items-center text-uppercase montserrat font-400'>
-        <div className='profile_img'>
-          <img src={"../images/user.jpg"} alt='' className='img-fluid' />
+      <div className="profile_box text-light me-auto d-flex align-items-center text-uppercase montserrat font-400">
+        <div className="profile_img">
+          <img src={"../images/user.jpg"} alt="" className="img-fluid" />
         </div>
         {props.model} Decryptblock
       </div>
-      <ul className='p-0 m-0'>
-        <li className='text-light'>
-          <div className='position-relative'>
+      <ul className="p-0 m-0">
+        <li className="text-light">
+          <div className="position-relative">
             <Message />
-            <span className='badge badge-danger navbar-badge text-dark'>3</span>
+            <span className="badge badge-danger navbar-badge text-dark">3</span>
           </div>
         </li>
-        <li className='text-light'>
-          <div className='position-relative'>
+        <li className="text-light">
+          <div className="position-relative">
             <Notification />
-            <span className='badge badge-danger navbar-badge text-dark'>3</span>
+            <span className="badge badge-danger navbar-badge text-dark">3</span>
           </div>
         </li>
         <li>
           <Link
             to={"/"}
-            className='round-btn montserrat text-light text-decoration-none'
-            onClick={!account ? connectWallet : disconnectWallet}>
+            className="round-btn montserrat text-light text-decoration-none"
+            onClick={!account ? connectWallet : disconnectWallet}
+          >
             {!account ? (
               "Connect Wallet"
             ) : (

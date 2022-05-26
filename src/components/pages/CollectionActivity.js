@@ -1,6 +1,5 @@
 import React from 'react';
 import Footer from '../components/footer';
-import Header from '../menu/header';
 import { NavLink } from 'react-router-dom';
 import ItemSVG from "../SVG/ItemSVG"
 import ActivitySVG from "../SVG/ActivitySVG"
