@@ -15,7 +15,7 @@ const footer= () => (
                         <div className="menu-widget widget">
                             <h5 className='mb-4'>Marketplace</h5>
                             <ul>
-                                <li><Link to="/marketplace">All NFTs</Link></li>
+                                <li><Link to="/NFTDetails">All NFTs</Link></li>
                                 <li><Link to="/marketplacecollection">Firearms</Link></li>
                                 <li><Link to="/marketplacecollection">Soldiers</Link></li>
                                 <li><Link to="/marketplacecollection">Hot List</Link></li>

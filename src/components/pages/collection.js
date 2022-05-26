@@ -29,6 +29,11 @@ var bgImgarrow = {
 };
 
 function Collection() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
   const gridtwo = () => {
     console.log("red");
     setgrid("col-md-6 mb-4");

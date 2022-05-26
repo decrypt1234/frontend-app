@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from '../components/footer';
 import Minttab from '../components/Minttab';
 import Mintlivetab from '../components/MintLivetab';
@@ -20,6 +20,10 @@ var bgImgStyle = {
 };
 
 function MintCollectionLive() {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, []);
+    
   return (
     <div style={bgImgStyle}>
         <section className='register_hd pdd_12' style={register_bg}>

@@ -20,6 +20,7 @@ var bgImgStyle = {
 };
 
 function Marketplacecollection() {
+    console.log("window location",window.location.pathname)
      
   const [allCollections, setAllCollections] = useState([]);
   useEffect(async() => {
