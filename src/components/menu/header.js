@@ -110,6 +110,8 @@ const onboard = Onboard({
   },
 });
 
+let locked;
+
 const Header = function () {
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const [provider, setProvider] = useState(null);
@@ -119,34 +121,42 @@ const Header = function () {
   const [isChainSwitched, setIsChainSwitched] = useState(false);
   const [userDetails, setUserDetails] = useState();
 
-  
-
   useEffect(() => {
     if (cookies["selected_account"]) {
       setAccount(cookies["selected_account"]);
-    } else refreshState();
+    }
   }, []);
 
   const refreshState = () => {
+    removeCookie("selected_account", { path: "/" });
+    removeCookie("chain_id", { path: "/" });
+    removeCookie("balance", { path: "/" });
+    localStorage.clear();
     setAccount("");
     setChainId("");
     setProvider(null);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log("provider in useEffect", provider);
     if (provider) {
       provider.on("accountsChanged", (accounts) => {
-        console.log("account switched!!", accounts[0]);
-        // if(account)
-        setIsAccountSwitched(true);
+        console.log("account switched!!", accounts[0], "account", account);
+        if (account && accounts[0] !== undefined) {
+          setIsAccountSwitched(true);
+        }
+        if (accounts[0] === undefined) {
+          refreshState();
+        }
       });
       provider.on("chainChanged", (chains) => {
         console.log("chain changed", chains);
-        if (chains !== "0x4") setIsChainSwitched(true);
+        if (chains !== process.env.REACT_APP_CHAIN_ID) {
+          setIsChainSwitched(true);
+        }
       });
     }
-  }, [provider]);
+  }, [provider, account, chainId]);
 
   const getUserProfile = async () => {
     const profile = await getProfile();
@@ -155,21 +165,23 @@ const Header = function () {
   };
 
   useEffect(() => {
-    getUserProfile();
-  },[userDetails])
+    if (account && !userDetails) getUserProfile();
+  }, [account, userDetails?.username]);
 
   const connectWallet = async () => {
     setIsAccountSwitched(false);
     const wallets = await onboard.connectWallet();
     console.log("wallet address--->", wallets[0]);
-    const success = await onboard.setChain({ chainId: "0x4" });
+    console.log("process.env", process.env.REACT_APP_CHAIN_ID);
+    const success = await onboard.setChain({
+      chainId: process.env.REACT_APP_CHAIN_ID,
+    });
     console.log("setChain method", success);
     const primaryWallet = wallets[0];
 
     setChainId(primaryWallet.chains[0].id);
     console.log("provider", primaryWallet.provider);
     setProvider(primaryWallet.provider);
-    console.log("provider", provider);
 
     try {
       const address = wallets[0].accounts[0].address;
@@ -226,7 +238,7 @@ const Header = function () {
               refreshState();
               return;
             } else {
-              NotificationManager.success(res.message);
+              NotificationManager.success(res.message, "", 800);
               setAccount(primaryWallet.accounts[0].address);
               setCookie("selected_account", address, { path: "/" });
               setCookie(
@@ -256,30 +268,28 @@ const Header = function () {
   };
 
   const disconnectWallet = async () => {
-    removeCookie("selected_account", { path: "/" });
-    removeCookie("chain_id", { path: "/" });
-    removeCookie("balance", { path: "/" });
-
+    
     // const [primaryWallet] = await onboard.state.get().wallets;
     // if (!primaryWallet) return;
     await onboard.disconnectWallet({ label: "Metamask" });
     await Logout(cookies["selected_account"]);
     refreshState();
-    NotificationManager.success("User Logged out Successfully.");
+    NotificationManager.success("User Logged out Successfully", "", 800);
     slowRefresh(1000);
   };
 
   const onLogin = async () => {
     const wallets = await onboard.connectWallet();
     console.log("wallet address--->", wallets[0]);
-    const success = await onboard.setChain({ chainId: "0x4" });
+    const success = await onboard.setChain({
+      chainId: process.env.REACT_APP_CHAIN_ID,
+    });
     console.log("setChain method", success);
     const primaryWallet = wallets[0];
 
     setChainId(primaryWallet.chains[0].id);
     console.log("provider", primaryWallet.provider);
     setProvider(primaryWallet.provider);
-    console.log("provider", provider);
 
     try {
       const address = wallets[0].accounts[0].address;
@@ -379,7 +389,9 @@ const Header = function () {
                 <button
                   className='btn network_btn'
                   onClick={async () => {
-                    await onboard.setChain({ chainId: "0x4" });
+                    await onboard.setChain({
+                      chainId: process.env.REACT_APP_CHAIN_ID,
+                    });
                     setIsChainSwitched(false);
                   }}>
                   Switch Network
@@ -473,7 +485,7 @@ const Header = function () {
                 </ul>
               </li>
               <li className='nav-item'>
-                <NavLink className='nav-link' to={"/collection"}>
+                <NavLink className='nav-link' to={"/marketplacecollection"}>
                   Collections
                 </NavLink>
               </li>

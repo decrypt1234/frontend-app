@@ -102,7 +102,7 @@ export const Logout = async () => {
 };
 
 export const getProfile = async () => {
-  console.log("get profile is called")
+  console.log("get profile is called");
   const response = await fetch(
     process.env.REACT_APP_API_BASE_URL + "/user/Profile",
     {
@@ -113,7 +113,7 @@ export const getProfile = async () => {
     .get("content-type")
     ?.includes("application/json");
   const data = isJson && (await response.json());
-  console.log("data is----->",data)
+  console.log("data is----->", data);
   return data;
 };
 
@@ -146,7 +146,7 @@ export const checkuseraddress = async (account) => {
 };
 
 export const updateProfile = async (data) => {
-  console.log("data in api iis------>",data)
+  console.log("data in api iis------>", data);
   let formData = new FormData();
 
   formData.append("userName", data.uname ? data.uname : "");
@@ -157,8 +157,8 @@ export const updateProfile = async (data) => {
   formData.append("email", data.email ? data.email : "");
   //formData.append("sWalletAddress", account);
   formData.append("userProfile", data.profilePic ? data.profilePic : "");
-   
-  console.log("form data is---->",formData)
+
+  console.log("form data is---->", formData);
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -283,30 +283,21 @@ export const getUsersCollections = async () => {
   }
 };
 
-export const getNFTList = async () => {
-  // let searchData = {
-  //   length: 9,
-  //   start: 0,
-  //   eType: ["All"],
-  //   sTextsearch: "",
-  //   sSellingType: "",
-  //   sSortingType: "Recently Added",
-  //   sFrom: 0,
-  //   sTo: 0,
-  //   sGenre: [],
-  // };
+export const getNFTList = async (data) => {
   const requestOptions = {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify(data),
   };
 
   try {
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + "/nft/getAllNfts",
+      process.env.REACT_APP_API_BASE_URL + "/nft/viewNFTs",
       requestOptions
     );
+
     const isJson = response.headers
       .get("content-type")
       ?.includes("application/json");
@@ -340,9 +331,11 @@ export const createCollection = async (data) => {
   }
 };
 
-export const getAllCollections = async () => {
+export const getAllCollections = async (data) => {
   const requestOptions = {
-    method: "GET",
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
   };
   try {
     let response = await fetch(
