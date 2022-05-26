@@ -1,5 +1,3 @@
-
-
 // import {
 //   exportInstance,
 //   GetCollectionsByAddress,
@@ -506,14 +504,12 @@
 //   return maxDate;
 // };
 
-
-import { getAllCollections, getNFTList } from "../apiServices";
+import { getAllCollections, GetAllUserDetails, getNFTList } from "../apiServices";
 
 export const getAllMPCollections = async (req) => {
- 
-let data = [];
-let formattedData = [];
-  try{
+  let data = [];
+  let formattedData = [];
+  try {
     let reqBody = {
       page: req.page,
       limit: req.limit,
@@ -527,112 +523,134 @@ let formattedData = [];
       isMinted: "",
       isHotCollection: "",
     };
-    
-  
+
     data = await getAllCollections(reqBody);
     console.log("get all collections--->", data);
-   
+  } catch (e) {
+    console.log("Error in getCollections API--->", e);
   }
-   catch(e){
-console.log("Error in getCollections API--->", e)
-   }
-   let arr = [];
-   if (data && data.results && data.results.length > 0)
-   arr = data.results[0];
- else return [];
-   arr ? arr.map((coll, key) => {
-    formattedData[key] = {
-     logoImg: coll.logoImage,
-     coverImg: coll.coverImage,
-     name: coll.name,
-     desc : coll.description
-    }
-   }) : (formattedData[0] = {});
-   return formattedData;
-}
-
+  let arr = [];
+  if (data && data.results && data.results.length > 0) arr = data.results[0];
+  else return [];
+  arr
+    ? arr.map((coll, key) => {
+        formattedData[key] = {
+          logoImg: coll.logoImage,
+          coverImg: coll.coverImage,
+          name: coll.name,
+          desc: coll.description,
+        };
+      })
+    : (formattedData[0] = {});
+  return formattedData;
+};
 
 export const getAllNFTs = async (req) => {
- 
   let data = [];
   let formattedData = [];
-    try{
-      let reqBody = {
-        page: req.page,
-        limit: req.limit,
-        nftID: "",
-        collectionID: "",
-        userID: "",
-        categoryID: "",
-        brandID: "",
-        ERCType: "",
-        searchText:"",
-        isMinted: ""
-      };
-      
-    
-      data = await getNFTList(reqBody);
-      console.log("get all collections--->", data);
-     
-    }
-     catch(e){
-  console.log("Error in getCollections API--->", e)
-     }
-     let arr = [];
-     if (data && data.results && data.results.length > 0)
-     arr = data.results[0];
-   else return [];
-     arr ? arr.map((nft, key) => {
-      formattedData[key] = {
-       image: nft.image,
-       name: nft.name,
-       desc : nft.description,
-       like : nft.user_likes?.length === undefined ? 0 : nft.user_likes?.length
-      }
-     }) : (formattedData[0] = {});
-     return formattedData;
-}
+  try {
+    let reqBody = {
+      page: req.page,
+      limit: req.limit,
+      nftID: "",
+      collectionID: "",
+      userID: "",
+      categoryID: "",
+      brandID: "",
+      ERCType: "",
+      searchText: "",
+      isMinted: "",
+    };
 
+    data = await getNFTList(reqBody);
+    console.log("get all collections--->", data);
+  } catch (e) {
+    console.log("Error in getCollections API--->", e);
+  }
+  let arr = [];
+  if (data && data.results && data.results.length > 0) arr = data.results[0];
+  else return [];
+  arr
+    ? arr.map((nft, key) => {
+        formattedData[key] = {
+          image: nft.image,
+          name: nft.name,
+          desc: nft.description,
+          like:
+            nft.user_likes?.length === undefined ? 0 : nft.user_likes?.length,
+        };
+      })
+    : (formattedData[0] = {});
+  return formattedData;
+};
 
 export const getHotCollections = async (req) => {
- 
   let data = [];
   let formattedData = [];
-    try{
-      let reqBody = {
-        page: req.page,
-        limit: req.limit,
-        collectionID: "",
-        userID: "",
-        categoryID: "",
-        brandID: "",
-        ERCType: "",
-        searchText: "",
-        filterString: "",
-        isMinted: "",
-        isHotCollection: req.isHotCollection,
-      };
-      
-    
-      data = await getAllCollections(reqBody);
-      console.log("get all collections--->", data);
-     
-    }
-     catch(e){
-  console.log("Error in getCollections API--->", e)
-     }
-     let arr = [];
-     if (data && data.results && data.results.length > 0)
-     arr = data.results[0];
-   else return [];
-     arr ? arr.map((coll, key) => {
-      formattedData[key] = {
-       logoImg: coll.logoImage,
-       coverImg: coll.coverImage,
-       name: coll.name,
-       desc : coll.description
-      }
-     }) : (formattedData[0] = {});
-     return formattedData;
+  try {
+    let reqBody = {
+      page: req.page,
+      limit: req.limit,
+      collectionID: "",
+      userID: "",
+      categoryID: "",
+      brandID: "",
+      ERCType: "",
+      searchText: "",
+      filterString: "",
+      isMinted: "",
+      isHotCollection: req.isHotCollection,
+    };
+
+    data = await getAllCollections(reqBody);
+    console.log("get all collections--->", data);
+  } catch (e) {
+    console.log("Error in getCollections API--->", e);
   }
-  
+  let arr = [];
+  if (data && data.results && data.results.length > 0) arr = data.results[0];
+  else return [];
+  arr
+    ? arr.map((coll, key) => {
+        formattedData[key] = {
+          logoImg: coll.logoImage,
+          coverImg: coll.coverImage,
+          name: coll.name,
+          desc: coll.description,
+        };
+      })
+    : (formattedData[0] = {});
+  return formattedData;
+};
+
+export const getAuthors = async () => {
+  let data = [];
+  let formattedData = [];
+  try{
+    let reqBody = {
+      page: 1,
+      limit: 12,
+      searchText: ""
+    }
+    data = await GetAllUserDetails(reqBody);
+    console.log("get all collections--->", data);
+  }
+  catch(e){
+    console.log("Error in getAllUserDetails API--->", e);
+  }
+  let arr = [];
+  if (data && data.results && data.results.length > 0) arr = data.results[0];
+  else return [];
+  arr
+    ? arr.map((author, key) => {
+        formattedData[key] = {
+          profile: author.profileIcon,
+          name: author.username
+         
+        };
+      })
+    : (formattedData[0] = {});
+  return formattedData;
+};
+
+

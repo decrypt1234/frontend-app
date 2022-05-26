@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from "../components/footer";
 import Marketplacecart from "../components/Marketplacecart";
 
@@ -23,6 +23,11 @@ var bgImgarrow = {
 };
 
 function Marketplace() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
   return (
     <div>
         <section className='register_hd pdd_12' style={register_bg}>

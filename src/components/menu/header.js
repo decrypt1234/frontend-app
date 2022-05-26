@@ -120,17 +120,25 @@ const Header = function () {
   const [isAccountSwitched, setIsAccountSwitched] = useState(false);
   const [isChainSwitched, setIsChainSwitched] = useState(false);
   const [userDetails, setUserDetails] = useState();
+  
 
   useEffect(() => {
     if (cookies["selected_account"]) {
       setAccount(cookies["selected_account"]);
+      
     }
+
+    // if(cookies["provider"])
+    // {
+    //   setProvider(cookies["provider"]);
+    // }
   }, []);
 
   const refreshState = () => {
     removeCookie("selected_account", { path: "/" });
     removeCookie("chain_id", { path: "/" });
     removeCookie("balance", { path: "/" });
+    // removeCookie("provider", { path : "/"});
     localStorage.clear();
     setAccount("");
     setChainId("");
@@ -142,7 +150,7 @@ const Header = function () {
     if (provider) {
       provider.on("accountsChanged", (accounts) => {
         console.log("account switched!!", accounts[0], "account", account);
-        if (account && accounts[0] !== undefined) {
+        if (account && accounts[0] !== undefined && account !== cookies["selected_account"]) {
           setIsAccountSwitched(true);
         }
         if (accounts[0] === undefined) {
@@ -178,7 +186,7 @@ const Header = function () {
     });
     console.log("setChain method", success);
     const primaryWallet = wallets[0];
-
+    
     setChainId(primaryWallet.chains[0].id);
     console.log("provider", primaryWallet.provider);
     setProvider(primaryWallet.provider);
@@ -215,6 +223,7 @@ const Header = function () {
               setCookie("balance", wallets[0].accounts[0].balance, {
                 path: "/",
               });
+              
               getUserProfile();
               return;
             }
@@ -239,6 +248,7 @@ const Header = function () {
               return;
             } else {
               NotificationManager.success(res.message, "", 800);
+             
               setAccount(primaryWallet.accounts[0].address);
               setCookie("selected_account", address, { path: "/" });
               setCookie(
@@ -445,13 +455,13 @@ const Header = function () {
                 </NavLink>
                 <ul className="sub_menu">
                   <li>
-                    <NavLink to={"/AllNFTs"} className="sub-items">
+                    <NavLink to={"/marketplace"} className='sub-items'>
                       <AllNFTs />
                       All NFTs
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to={"/Firearms"} className="sub-items">
+                    <NavLink to={"/marketplaceCollection"} className='sub-items'>
                       <Firearmsvg />
                       Firearms
                     </NavLink>
@@ -493,8 +503,8 @@ const Header = function () {
                   Collections
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/Resources" tabindex="-1">
+              <li className='nav-item'>
+                <NavLink className='nav-link' to='/helpcenter' tabindex='-1'>
                   Resources
                   <ul className="sub_menu">
                     <li>

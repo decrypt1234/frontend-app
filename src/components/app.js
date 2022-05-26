@@ -1,4 +1,4 @@
-import React  from "react";
+import React ,{ useEffect } from "react";
 // import ScrollToTopBtn from "./menu/ScrollToTop";
 // import Header from "./menu/header";
 import Home from "./pages/home";
@@ -52,6 +52,7 @@ import {NotificationContainer} from 'react-notifications';
 const App = (props) => {
 // console.log("DUMMY_COLLECTIONS", DUMMY_COLLECTIONS)
 
+  
   return (
     <Router>
       <Header />
@@ -60,7 +61,7 @@ const App = (props) => {
         <Route exact path="/author" element={<Author />} />
         <Route exact path="/login" element={<Login/>} />
         <Route path="/register" element={<Register />} />
-        <Route path="/marketplacecollection" element={<Marketplacecollection />} />
+        <Route path="/marketplaceCollection" element={<Marketplacecollection />} />
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/NFTdetails" element={<NFTDetails />} />
         <Route path="/updateProfile" element={<UpdateProfile />} />
