@@ -5,7 +5,7 @@ const AuthorList = () => {
   return (
     <div>
       <div className="row author_list_section">
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
           <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt=""/>
@@ -16,7 +16,7 @@ const AuthorList = () => {
           </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
         <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt="" />
@@ -27,7 +27,7 @@ const AuthorList = () => {
           </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
         <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt="" />
@@ -38,7 +38,7 @@ const AuthorList = () => {
           </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
         <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt=""/>
@@ -49,7 +49,7 @@ const AuthorList = () => {
           </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
         <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt=""/>
@@ -60,7 +60,7 @@ const AuthorList = () => {
           </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
         <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt="" />
@@ -71,7 +71,7 @@ const AuthorList = () => {
           </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
         <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt="" />
@@ -82,7 +82,7 @@ const AuthorList = () => {
           </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
         <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt="" />
@@ -93,7 +93,7 @@ const AuthorList = () => {
           </div>
           </Link>
         </div>
-        <div className="col-md-4">
+        <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
         <Link to={'/author'}>
           <div className="author_list_box">
             <img src={'../img/top-seller/seller-img.png'} className="auther_img" alt="" />

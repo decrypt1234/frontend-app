@@ -1,6 +1,5 @@
 import React from 'react';
 import Footer from "../components/footer";
-import Marketplacecart from "../components/Marketplacecart";
 import { Link } from 'react-router-dom';
 import { marketPlaceCollection } from '../../Data/dummyJSON';
 

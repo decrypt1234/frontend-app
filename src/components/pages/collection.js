@@ -5,6 +5,7 @@ import ItemSVG from "../SVG/ItemSVG";
 import ActivitySVG from "../SVG/ActivitySVG";
 import { Link, NavLink } from 'react-router-dom';
 import { CollectionCard } from '../../Data/dummyJSON';
+import Dropdown from '../SVG/dropdown';
 
 
 const bgImgStyle = {
@@ -52,11 +53,11 @@ function Collection() {
           </div>
           <h1 className="collection_title text-center">Barrett Firarms</h1>
           <ul class="collection_social mb-4">
-            <li><a href="/"><i class="fa fa-facebook fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-twitter fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-linkedin fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-pinterest fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-rss fa-lg"></i></a></li>
+            <li><Link to={"/"}><i class="fa fa-facebook fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-twitter fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-linkedin fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-pinterest fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-rss fa-lg"></i></Link></li>
           </ul>
           <div className="coppycode text-center">
             <span><img alt='' src={'../img/favicon.png'} class="img-fluid" /> 0xa1ahjkfga...19cda 
@@ -126,7 +127,86 @@ function Collection() {
                 {/* </div> */}
                 <button type="button" className="filter_btn">Adv.Filter</button>
               </div>
-              
+              <div className="filter">
+                <div className="filtercol">
+                <form>
+                  <ul>
+                    <span className="drop_down_tlt">Status <Dropdown /></span>
+                    <li>
+                      <Link to={"/"} className="">Buy Now</Link>
+                      <Link to={"/"} className="">On Auction</Link>
+                    </li>
+                    <li>
+                      <Link to={"/"} className="">Now</Link>
+                      <Link to={"/"} className="">Offers</Link>
+                    </li>
+                  </ul>
+                  <ul>
+                    <span className="drop_down_tlt">Price <Dropdown /></span>
+                    <li>
+                      <select class="form-select" aria-label="Default select example">
+                        <option selected>$ Australian Dollar (AUD)</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </li>
+                    <li>
+                      <div class="">
+                        <input type="number" class="form-control" id="exampleInputPassword1" value="min" />
+                        to
+                        <input type="number" class="form-control" id="exampleInputPassword1" value="max" />
+                      </div>
+                    </li>
+                    <li>
+                    <button type="submit" class="btn btn-primary">Apply</button>
+                    </li>
+                  </ul>
+                  </form>
+                </div>
+                <div className="filtercol">
+                  <form>
+                    <ul>
+                      <span className="drop_down_tlt">Collections <Dropdown /></span>
+                      <li>
+                        <input type="text" placeholder="Search.." />
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+                <div className="filtercol">
+                  <ul>
+                    <span className="drop_down_tlt">Categories <Dropdown /></span>
+                    <li>
+                      Firearms
+                    </li>
+                    <li>Soldiers</li>
+                    <li>Hot List</li>
+                    <li>NFT Ranking</li>
+                    <li>Live Auctions</li>
+                  </ul>
+                </div>
+                <div className="filtercol">
+                  <ul>
+                    <span className="drop_down_tlt">On Sale In <Dropdown /></span>
+                    <li>
+                      <input type="text" placeholder="Search.." />
+                    </li>
+                    <li>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something" checked />
+                        <label class="form-check-label">$HNTR</label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something" />
+                        <label class="form-check-label" for="check2">BUSD</label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>

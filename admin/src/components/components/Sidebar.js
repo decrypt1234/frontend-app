@@ -46,6 +46,11 @@ function Sidebar() {
                     </NavLink>
                 </li>
                 <li>
+                    <NavLink to={'/createcategories'} className="text-decoration-none text-light">
+                        <Performancesvg /> Create Categories
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink to={'/performance'} className="text-decoration-none text-light">
                         <Performancesvg /> Performance
                     </NavLink>
