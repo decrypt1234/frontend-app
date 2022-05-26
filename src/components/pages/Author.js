@@ -6,6 +6,8 @@ import DownloadSVG from '../SVG/DownloadSVG';
 import OffermadeSVG from '../SVG/OffermadeSVG';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthorCard } from '../../Data/dummyJSON';
+import Threegrid from '../SVG/Threegrid';
+import Twogrid from '../SVG/Twogrid';
 
 const bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -29,12 +31,14 @@ var bgImgarrow = {
 function Author() {
 
   const gridtwo =()=>{
-    console.log("red");
     setgrid("col-md-6 mb-4");
+    document.getElementById("gridtwo").classList.add("active");
+    document.getElementById("gridthree").classList.remove("active");
   }
   const gridthree =()=>{
-    console.log("red");
     setgrid("col-md-4 mb-4");
+    document.getElementById("gridthree").classList.add("active");
+    document.getElementById("gridtwo").classList.remove("active");
   }
 
   const [grid, setgrid] = useState("col-md-3 mb-4");
@@ -71,13 +75,7 @@ function Author() {
           </div> */}
           
           <h1 className="collection_title text-center">User Name <img alt='' src={'../img/author/check.png'} class="img-fluid" /></h1>
-          <ul class="collection_social mb-4">
-            <li><Link to={"/"}><i class="fa fa-facebook fa-lg"></i></Link></li>
-            <li><Link to={"/"}><i class="fa fa-twitter fa-lg"></i></Link></li>
-            <li><Link to={"/"}><i class="fa fa-linkedin fa-lg"></i></Link></li>
-            <li><Link to={"/"}><i class="fa fa-pinterest fa-lg"></i></Link></li>
-            <li><Link to={"/"}><i class="fa fa-rss fa-lg"></i></Link></li>
-          </ul>
+
           <div className="coppycode text-center mb-4">
             <span className='d-inline-flex align-items-center'>
             <svg className="copysvg" width="13" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -95,15 +93,31 @@ function Author() {
             <h6>Joined March 2022</h6>
           </div>
           
-          <ul className="auther_cart">
-            <li className="active"><img alt='' src={'../img/author/icon1.svg'} class="img-fluid" /> Collected 45</li>
-            <li><img alt='' src={'../img/author/icon2.svg'} class="img-fluid" /> Created</li>
-            <li><img alt='' src={'../img/author/icon3.svg'} class="img-fluid" /> Favourited</li>
-            <li><img alt='' src={'../img/author/icon4.svg'} class="img-fluid" /> Activity</li>
+          <ul className="auther_cart nav" role="tablist">
+            <li>
+              <button data-bs-toggle="pill" data-bs-target="#pills-Owned" type="button" role="tab" aria-controls="pills-Owned" aria-selected="true" className='active'>
+                <img alt='' src={'../img/author/icon1.svg'} class="img-fluid" /> Owned 45
+              </button>  
+            </li>
+            <li>
+              <button data-bs-toggle="pill" data-bs-target="#pills-Sale" type="button" role="tab" aria-controls="pills-Sale" aria-selected="true">
+                On Sale
+              </button>
+            </li>
+            <li>
+              <button data-bs-toggle="pill" data-bs-target="#pills-Favourited" type="button" role="tab" aria-controls="pills-Favourited" aria-selected="true">
+                <img alt='' src={'../img/author/icon3.svg'} class="img-fluid" /> Favourited 2
+              </button>
+            </li>
+            <li>
+              <button data-bs-toggle="pill" data-bs-target="#pills-Activity" type="button" role="tab" aria-controls="pills-Activity" aria-selected="true">
+                <img alt='' src={'../img/author/icon4.svg'} class="img-fluid" /> Activity
+              </button>  
+            </li>
             <li> 
-              <Link class="dropdown-toggle" to={""} role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              <button type="button" class="dropdown-toggle" to={""} role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 <img alt='' src={'../img/author/icon5.svg'} class="img-fluid" /> Offers
-              </Link>
+              </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li><NavLink activeclassname="active-link" className="dropdown-item" to={"/"}><DownloadSVG /> Offer Received</NavLink></li>
                 <li><NavLink className="dropdown-item" to={"/"}><OffermadeSVG /> Offer Made</NavLink></li>
@@ -131,11 +145,11 @@ function Author() {
                   <option value="3">$6000</option>
                 </select>
                 {/* <div className="market_div"> */}
-                  <div className="market_grid"  onClick={gridtwo}>
-                    <img alt='' src={'../img/twogrid.png'} class="img-fluid" />
+                  <div id="gridtwo" className="market_grid" onClick={gridtwo}>
+                    <Twogrid />
                   </div>
-                  <div className="market_grid"  onClick={gridthree}>
-                    <img alt='' src={'../img/threegrid.png'} class="img-fluid" />
+                  <div id="gridthree" className="market_grid" onClick={gridthree}>
+                    <Threegrid />
                   </div>
                 {/* </div> */}
                 <button type="button" className="filter_btn">Adv.Filter</button>
@@ -147,13 +161,47 @@ function Author() {
       </section>
       <section className="collection_list mb-5 pb-5">
         <div className="container">
-          <div className='row'>
-            {AuthorCard.map(card =>(
-            <div className={grid}  key={card.id}>
-              <AuthorListing  image={card.img} submenu={card.Subheading} heading={card.Heading} price={card.price} date={card.Date}
-                button={card.Slug} link={card.Like} />
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-Owned" role="tabpanel" aria-labelledby="pills-Owned-tab">
+              <div className='row'>
+                {AuthorCard.map(card =>(
+                <div className={grid}  key={card.id}>
+                  <AuthorListing  image={card.img} submenu={card.Subheading} heading={card.Heading} price={card.price} date={card.Date}
+                    button={card.Slug} link={card.Like} />
+                </div>
+                ))}
+              </div>
             </div>
-            ))}
+            <div class="tab-pane fade" id="pills-Sale" role="tabpanel" aria-labelledby="pills-Sale-tab">
+              <div className='row'>
+                {AuthorCard.map(card =>(
+                <div className={grid}  key={card.id}>
+                  <AuthorListing  image={card.img} submenu={card.Subheading} heading={card.Heading} price={card.price} date={card.Date}
+                    button={card.Slug} link={card.Like} />
+                </div>
+                ))}
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-Favourited" role="tabpanel" aria-labelledby="pills-Favourited-tab">
+              <div className='row'>
+                {AuthorCard.map(card =>(
+                <div className={grid}  key={card.id}>
+                  <AuthorListing  image={card.img} submenu={card.Subheading} heading={card.Heading} price={card.price} date={card.Date}
+                    button={card.Slug} link={card.Like} />
+                </div>
+                ))}
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-Activity" role="tabpanel" aria-labelledby="pills-Activity-tab">
+              <div className='row'>
+                {AuthorCard.map(card =>(
+                <div className={grid}  key={card.id}>
+                  <AuthorListing  image={card.img} submenu={card.Subheading} heading={card.Heading} price={card.price} date={card.Date}
+                    button={card.Slug} link={card.Like} />
+                </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

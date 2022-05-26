@@ -1708,7 +1708,7 @@ label {
   height: 190px;
   width: 100%;
   object-fit: cover;
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
   background: #0d171e;
 }
 .tab_btn {
@@ -1784,7 +1784,7 @@ label {
   width: 17%;
 }
 .market_grid {
-  border: 1px solid #d3d3d3;
+  border: 1px solid #8F8F8F;
   height: 45px;
   width: 45px;
   text-align: center;
@@ -1796,9 +1796,18 @@ label {
   background-color: #27353f;
   cursor: pointer;
 }
-.market_grid img {
-  width: 20px;
+.market_grid svg {
+  fill: #8F8F8F;
 }
+.market_grid.active {
+  border: 1px solid #fff;
+}
+.market_grid.active svg {
+  fill: #fff;
+}
+/* .market_grid img {
+  width: 20px;
+} */
 button.filter_btn {
   background: #ef981d;
   font-family: "Montserrat";
@@ -1809,7 +1818,7 @@ button.filter_btn {
   border: 1px solid #ef981d;
   color: #fff;
   height: 45px;
-  border-radius: 5px;
+  border-radius: 40px;
   width: 10%;
 }
 .market_div {
@@ -2256,7 +2265,6 @@ button.filter_btn {
 }
 .item_active .active {
   background: #ef981d;
-  border-radius: 10px;
   padding: 12px 35px;
   border: 0;
   font-family: "Montserrat";
@@ -2277,7 +2285,7 @@ button.filter_btn {
   background: #0d171e;
   border: 1px solid #ef981d;
   box-sizing: border-box;
-  border-radius: 10px;
+  border-radius: 40px;
   font-family: "Montserrat";
   font-weight: 600;
   font-size: 18px;
@@ -2437,17 +2445,20 @@ button.img_edit_btn {
   list-style: none;
   text-align: center;
   margin-bottom: 50px;
+  justify-content: center;
 }
 .auther_cart li,
-.auther_cart li a {
+.auther_cart li button {
   font-family: "Montserrat";
   font-weight: 600;
   font-size: 24px;
   color: #ffffff;
   display: inline-block;
   padding: 15px 20px;
+  background: transparent;
+    border: 0px;
 }
-.auther_cart li.active {
+.auther_cart li button.active {
   border-bottom: 2px solid #ef981d;
 }
 .auther_cart .dropdown-menu li {
@@ -2476,9 +2487,9 @@ button.img_edit_btn {
 .auther_pick:hover .overlat_btn {
   display: flex;
 }
-.img_edit_btn {
+.auther_cart .dropdown-toggle::after {
+  position: relative;
 }
-
 /* Collection Action page */
 .action_select_form {
   border: 1px solid #d3d3d3;
@@ -3483,6 +3494,7 @@ button#btn-submit {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  border-radius: 10px 10px 0px 0px;
 }
 .mint_date {
   background: #0d171e;
@@ -3721,6 +3733,7 @@ a:hover {
   font-size: 18px !important;
   text-align: center;
   padding: 10px 20px;
+  color: #fff;
 }
 .auther_cart .dropdown-menu li .dropdown-item:hover,
 .auther_cart .dropdown-menu li .dropdown-item.active {
@@ -3773,7 +3786,64 @@ a:hover {
   box-shadow: rgb(255 255 255 / 25%) 0px 0px 16px 0px;
   transition: all 0.1s ease 0s;
 } */
-.img-fluid {width: 100%;}
+/* .img-fluid {width: 100%;} */
+.Most-recent button.slick-arrow.slick-next {
+  right: -45px;
+}
+.Most-recent button.slick-arrow.slick-prev {
+  left: -45px;
+}
+.profile_me {
+  position: relative;
+}
+.usersidebar ul {padding-left: 0px;}
+
+@media screen and (max-width:1600px) {
+.main-title {font-size: 45px;line-height: initial;}
+.about_col h3 {font-size: 26px;line-height: 34px;}
+.about_col p {font-size: 15px;line-height: 20px;}
+  .second_hd {font-size: 38px;line-height: 49px;  }
+  .auther_info h6 {font-size: 18px;}
+  .auther_info p {font-size: 16px;}
+  .auther_img {width: 75px;height: 75px;}
+  .items_profileimg span {font-size: 14px;}
+  .profile_left .profile_img {width: 55px;height: 55px;}
+  .collection_banner {height: 270px;}
+}
+@media screen and (max-width:1440px) {
+  .main-title {font-size: 38px;}
+  .lead {font-size: 18px;line-height: 26px;}
+  .btn-banner {font-size: 20px;line-height: 25px;padding: 10px 45px;}
+  .textdes {font-size: 16px;}
+  .wallet_box h4, .mint_text h4, .category_sec h5 {font-size: 20px;line-height: 25px;}
+  .svg_icon svg {width: 30px;height: 30px;}
+  .svg_icon {padding: 10px;}
+  .register_hd h1,
+  .h1 {font-size: 52px;line-height: 58px;}
+  .hlp-btn {padding: 8px 50px;font-size: 16px;}
+  .feature-box {padding: 30px;}
+  .feature-box p {font-size: 16px;}
+  .feature-box p {margin-bottom: 0px;}
+  .font_24 {font-size: 20px;}
+  form.help_form {height: 45px;}
+  form.help_form input, form.help_form input:hover, form.help_form input:focus {font-size: 18px;padding: 8px 20px;}
+  button#btn-submit {font-size: 30px;padding: 0px 15px;}
+  .collection_title {font-size: 38px;}
+  .collection_pick {width: 150px;height: 150px;margin-top: -75px;}
+  .tab_btn li button {font-size: 20px;line-height: 25px;}
+  .nft_details h1 {font-size: 38px;line-height: initial;}
+  .price_div {font-size: 26px;line-height: initial;}
+  .profile_h1,
+  .amount h5 {font-size: 26px;}
+  .mintevent h4 {font-size: 38px;}
+}
+@media screen and (max-width:1023px) {
+.event_slider .slick-slide.slick-active.slick-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+}
 
 @media screen and (max-width:992px) {
   .textdes {font-size: 16px;}
@@ -3784,6 +3854,57 @@ a:hover {
   .auther_img {width: 60px;height: 60px;}
   .author_list_box:before {font-size: 18px;line-height: 24px;}
   .about_col h3 {font-size: 24px;line-height: initial;}
+  .register_hd h1,
+  .h1 {font-size: 42px;line-height: 48px;}
+  .market_search_form {flex-wrap: wrap;justify-content: center;}
+  .marketplace_form {width: 320px;margin-bottom: 10px;margin-right: 10px;}
+  .market_select_form {width: 170px;margin-bottom: 10px;margin-right: 10px;}
+  .market_grid {margin-right: 10px;}
+  button.filter_btn {width: auto;padding: 8px 20px;}
+  .promoted_div h4 {font-size: 30px;margin-bottom: 20px !important;}
+  .promoted_div p {font-size: 16px;}
+  .collection_status li {width: 50%;}
+.collection_status li:nth-child(2) {border-right: 1px solid #aaa;}
+.collection_status li h4 {font-size: 28px;margin-bottom: 0px;}
+.collection_banner {height: 170px;}
+.navbar-toggler {border: 1px solid #fffbfb;}
+i.fa.fa-bars {color: #fff;}
+.navbar-nav li.nav-item {margin: 5px 12px;}
+.navbar_form {max-width: 400px;margin: auto;}
+.navbar-brand img {width: 200px;}
+.navbar-collapse {margin-top: 20px;}
+.title_36 {font-size: 26px;}
+.width_45 {max-width: 100%;}
+.nft_details h1 {font-size: 28px;line-height: initial;}
+.price_div {font-size: 20px;line-height: initial;}
+.nft_details p {font-size: 16px;line-height: 20px;}
+.nft_detailnumber li {font-size: 18px;line-height: initial;}
+.nft_detailnumber li span {height: 30px;width: 30px;line-height: 30px;font-size: 16px;}
+.nft_list th, .nft_list h6,
+.nft_list td, .nft_list li {font-size: 15px;}
+.nft_info h3 {font-size: 20px;line-height: initial;}
+}
+@media screen and (max-width:991px) {
+  .small_btn {margin-right: 0px;margin-bottom: 10px;}
+  .usersidebar {padding: 50px 0px;border-right: 0px solid #4e6476;}
+.profile_area {padding-left: 0px;}
+.profile_area.pdd_8 {padding-top: 0px;}
+.profile_h1 {font-size: 20px;}
+.notification_list p, .profile_p, .notification_bottom p {font-size: 16px;}
+.notification_list h6, .notification_bottom h6 {font-size: 18px;}
+.profile_images li {width: 100%;}
+.mintevent h4 {font-size: 28px;}
+.mintprice {font-size: 18px;line-height: initial;}
+.connect_wallet_btn {font-size: 17px;padding: 6px 20px;}
+.mint_btn button {
+  padding: 10px 20px;
+  font-size: 20px;width: 100%;
+}
+.start_btn {
+  font-size: 20px;
+  padding: 8px 30px;
+}
+.start_btn span {font-size: 20px;line-height: initial;}
 }
 
 @media screen and (max-width:768px) {
@@ -3799,4 +3920,36 @@ a:hover {
 .mint_date {font-size: 16px;}
 .second_hd {padding: 0px 10px;}
 .wallet_box h4, .mint_text h4, .category_sec h5 {font-size: 18px;line-height: initial;}
+.register_hd h1,
+.h1 {font-size: 32px;line-height: 38px;}
+.font_24 {font-size: 16px;font-weight: 400;}
+.pdd_12 {padding: 80px 0px;}
+.collection_title {font-size: 28px;}
+.coppycode span {padding: 8px 15px;font-size: 15px;}
+.nftdetails button.slick-arrow.slick-prev {left: 0px;}
+.nftdetails button.slick-arrow.slick-next {right: 0px;}
+.notification_table {width: 100%;}
+.notification_table tr td {width: 100%;}
+}
+@media screen and (max-width:767px) {
+  .marketplace_form {width: 100%;}
+  .market_select_form {width: 47%;}
+  .feature-box {padding: 20px 10px;}
+  .action_select_form {width: 100%;margin-bottom: 10px;}
+  
+  
+}
+@media screen and (max-width:600px) {
+  .marketplace_form {width: 100%;}
+  .market_select_form {width: 100%;}
+  .collection_status li {width: 100%;}
+  .collection_status li {border-right: 1px solid #aaa;border-bottom: 1px solid #aaa;border-top: 1px solid #aaa;}
+  .item_active a {margin-bottom:10px;width: 100%;margin-right:0px;}
+  .nft_info h3 {font-size: 18px;line-height: initial;}
+}
+.search_qt {
+  font-family: 'Montserrat';
+  font-weight: 400;
+  font-size: 18px;
+  color: #FFFFFF;
 }

@@ -91,8 +91,7 @@ const footer= () => (
                                 <li><Link to=""><i className="fa fa-facebook fa-lg"></i></Link></li>
                                 <li><Link to=""><i className="fa fa-twitter fa-lg"></i></Link></li>
                                 <li><Link to=""><i className="fa fa-linkedin fa-lg"></i></Link></li>
-                                <li><Link to=""><i className="fa fa-pinterest fa-lg"></i></Link></li>
-                                <li><Link to=""><i className="fa fa-rss fa-lg"></i></Link></li>
+                                <li><Link to=""><i className="fa fa-gamepad fa-lg"></i></Link></li>
                             </ul>
                         </div>
                     </div>

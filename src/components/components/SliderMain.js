@@ -28,7 +28,7 @@ const fadeIn = keyframes`
 const SliderMain = () => (
   <div className="container banner-container">
     <div className="row align-items-center">
-      <div className="col-md-6">
+      <div className="col-lg-6">
         <div className="spacer-single"></div>
         <Reveal
           className="onStep"
@@ -78,7 +78,7 @@ const SliderMain = () => (
           <div className="mb-sm-30"></div>
         </Reveal>
       </div>
-      <div className="col-md-6 xs-hide mt-5 mt-md-0">
+      <div className="col-lg-6 xs-hide mt-5 mt-lg-0">
         <Reveal
           className="onStep"
           keyframes={fadeIn}

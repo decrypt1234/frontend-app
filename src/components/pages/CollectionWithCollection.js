@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 import { CollectionCard } from '../../Data/dummyJSON';
 import ItemSVG from '../SVG/ItemSVG';
 import ActivitySVG from '../SVG/ActivitySVG';
+import Threegrid from '../SVG/Threegrid';
+import Twogrid from '../SVG/Twogrid';
 
 
 const bgImgStyle = {
@@ -31,12 +33,14 @@ function CollectionWithCollection() {
 
 
   const gridtwo =()=>{
-    console.log("red");
     setgrid("col-md-6 mb-4");
+    document.getElementById("gridtwo").classList.add("active");
+    document.getElementById("gridthree").classList.remove("active");
   }
   const gridthree =()=>{
-    console.log("red");
     setgrid("col-md-4 mb-4");
+    document.getElementById("gridthree").classList.add("active");
+    document.getElementById("gridtwo").classList.remove("active");
   }
 
   const [grid, setgrid] = useState("col-md-3 mb-4");
@@ -61,7 +65,6 @@ function CollectionWithCollection() {
             <li><a href="/"><i class="fa fa-twitter fa-lg"></i></a></li>
             <li><a href="/"><i class="fa fa-linkedin fa-lg"></i></a></li>
             <li><a href="/"><i class="fa fa-pinterest fa-lg"></i></a></li>
-            <li><a href="/"><i class="fa fa-rss fa-lg"></i></a></li>
           </ul>
           <div className="coppycode text-center">
             <span><img alt='' src={'../img/favicon.png'} class="img-fluid" /> 0xa1ahjkfga...19cda 
@@ -110,8 +113,8 @@ function CollectionWithCollection() {
           </div>
 
           <div className="row">
-            <div className="col-lg-12">
-              <div className="market_search_form mb-5">
+            <div className="col-lg-12  mb-5">
+              <div className="market_search_form">
                 <form class="d-flex marketplace_form">
                   <input class=" me-2" type="search" placeholder="Search item here..." aria-label="Search" />
                   <button class="market_btn" type="submit"><img src="../img/search.svg" alt="" /></button>
@@ -129,15 +132,16 @@ function CollectionWithCollection() {
                   <option value="3">$6000</option>
                 </select>
                 {/* <div className="market_div"> */}
-                  <div className="market_grid" onClick={gridtwo}>
-                    <img alt='' src={'../img/twogrid.png'} class="img-fluid" />
+                  <div id="gridtwo" className="market_grid" onClick={gridtwo}>
+                    <Twogrid />
                   </div>
-                  <div className="market_grid" onClick={gridthree}>
-                    <img alt='' src={'../img/threegrid.png'} class="img-fluid" />
+                  <div id="gridthree" className="market_grid" onClick={gridthree}>
+                    <Threegrid />
                   </div>
                 {/* </div> */}
                 <button type="button" className="filter_btn">Adv.Filter</button>
               </div>
+              <div className="search_qt mt-3">10,000 items</div>
               
             </div>
           </div>

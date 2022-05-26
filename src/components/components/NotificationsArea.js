@@ -96,8 +96,8 @@ function NotificationsArea() {
         </tr>
       </table>
       <div className='mt-5'>
-          <button type="submit" class="yellow_btn mr-3">Save</button>
-          <button type="submit" class="yellow_btn yellow_dark">Save</button>
+          <button type="submit" class="yellow_btn mr-3 mb-3">Save</button>
+          <button type="submit" class="yellow_btn yellow_dark mb-3">Save</button>
       </div>
       <small className='small_info'>If no changes made the button will not glow</small>
     </div>

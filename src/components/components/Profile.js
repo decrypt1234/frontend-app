@@ -256,9 +256,9 @@ function Profile() {
   },[])
   return (
     <div className="profile_area pdd_8">
-      <h1 className='profile_h1'>Profile Settings</h1>
+      <h1 className='profile_h1 mb-3'>Profile Settings</h1>
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-lg-6 col-md-8 order-md-0 order-sm-2">
           <form action="/action_page.php">
             <div class="mb-3 mt-3">
               <label HTMLfor="user" class="form-label">Username</label>
@@ -322,7 +322,7 @@ function Profile() {
             <small className='small_info'>If no changes made the button will not glow</small>
           </form>
         </div>
-        <div className="col-md-6">
+        <div className="col-lg-6 col-md-4 order-md-0 order-sm-1">
           <ul className="profile_images">
             <li>
               <h4>Profile Image </h4>

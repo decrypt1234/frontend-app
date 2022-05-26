@@ -66,16 +66,13 @@ function ItemsList() {
                 <img alt='' className='profile_img' src={'../img/items/item_profile.png'} />
                 <img alt='' className='icheck_img' src={'../img/collections/check.png'} />
               </div>
-              <div className='profile_right'>
-                <span>514d 18h 42m 39s</span>
-              </div>
             </div>
           <img alt='' src={'../img/items/item1.png'} class="img-fluid items_img" />
           <div className='items_text'>
             <div className='items_info'>
               <div className='items_left'>
-                <h3 className=''>Name Last Name</h3>
-                <p>ERC-73</p>
+                <h3 className=''>Forgotten Forest</h3>
+                <p>1500 HNTR</p>
               </div>
               <div className='items_right justify-content-end d-flex'>
                 <span> 
@@ -86,7 +83,7 @@ function ItemsList() {
                 </span>
               </div>
             </div>
-            <Link to={'#'} className='border_btn width-100 title_color'>Place bids</Link>
+            <Link to={'#'} className='border_btn width-100 title_color'>Buy</Link>
           </div>
         </div>
         <div className='items_slide'>
@@ -94,17 +91,14 @@ function ItemsList() {
               <div className='profile_left'>
                 <img alt='' className='profile_img' src={'../img/items/item_profile.png'} />
                 <img alt='' className='icheck_img' src={'../img/collections/check.png'} />
-              </div>
-              <div className='profile_right'>
-                <span>514d 18h 42m 39s</span>
               </div>
             </div>
           <img alt='' src={'../img/items/item2.png'} class="img-fluid items_img" />
           <div className='items_text'>
             <div className='items_info'>
               <div className='items_left'>
-                <h3 className=''>Name Last Name</h3>
-                <p>ERC-73</p>
+                <h3 className=''>Forgotten Forest</h3>
+                <p>1500 HNTR</p>
               </div>
               <div className='items_right justify-content-end d-flex'>
                 <span> 
@@ -115,7 +109,7 @@ function ItemsList() {
                 </span>
               </div>
             </div>
-            <Link to={'#'} className='border_btn width-100 title_color'>Place bids</Link>
+            <Link to={'#'} className='border_btn width-100 title_color'>Buy</Link>
           </div>
         </div>
         <div className='items_slide'>
@@ -123,17 +117,14 @@ function ItemsList() {
               <div className='profile_left'>
                 <img alt='' className='profile_img' src={'../img/items/item_profile.png'} />
                 <img alt='' className='icheck_img' src={'../img/collections/check.png'} />
-              </div>
-              <div className='profile_right'>
-                <span>514d 18h 42m 39s</span>
               </div>
             </div>
           <img alt='' src={'../img/items/item3.png'} class="img-fluid items_img" />
           <div className='items_text'>
             <div className='items_info'>
               <div className='items_left'>
-                <h3 className=''>Name Last Name</h3>
-                <p>ERC-73</p>
+                <h3 className=''>Forgotten Forest</h3>
+                <p>1500 HNTR</p>
               </div>
               <div className='items_right justify-content-end d-flex'>
                 <span> 
@@ -144,7 +135,7 @@ function ItemsList() {
                 </span>
               </div>
             </div>
-            <Link to={'#'} className='border_btn width-100 title_color'>Place bids</Link>
+            <Link to={'#'} className='border_btn width-100 title_color'>Buy</Link>
           </div>
         </div>
         <div className='items_slide'>
@@ -152,17 +143,14 @@ function ItemsList() {
               <div className='profile_left'>
                 <img alt='' className='profile_img' src={'../img/items/item_profile.png'} />
                 <img alt='' className='icheck_img' src={'../img/collections/check.png'} />
-              </div>
-              <div className='profile_right'>
-                <span>514d 18h 42m 39s</span>
               </div>
             </div>
           <img alt='' src={'../img/items/item4.png'} class="img-fluid items_img" />
           <div className='items_text'>
             <div className='items_info'>
               <div className='items_left'>
-                <h3 className=''>Name Last Name</h3>
-                <p>ERC-73</p>
+                <h3 className=''>Forgotten Forest</h3>
+                <p>1500 HNTR</p>
               </div>
               <div className='items_right justify-content-end d-flex'>
                 <span> 
@@ -173,7 +161,7 @@ function ItemsList() {
                 </span>
               </div>
             </div>
-            <Link to={'#'} className='border_btn width-100 title_color'>Place bids</Link>
+            <Link to={'#'} className='border_btn width-100 title_color'>Buy</Link>
           </div>
         </div>
         <div className='items_slide'>
@@ -181,17 +169,14 @@ function ItemsList() {
               <div className='profile_left'>
                 <img alt='' className='profile_img' src={'../img/items/item_profile.png'} />
                 <img alt='' className='icheck_img' src={'../img/collections/check.png'} />
-              </div>
-              <div className='profile_right'>
-                <span>514d 18h 42m 39s</span>
               </div>
             </div>
           <img alt='' src={'../img/items/item1.png'} class="img-fluid items_img" />
           <div className='items_text'>
             <div className='items_info'>
               <div className='items_left'>
-                <h3 className=''>Name Last Name</h3>
-                <p>ERC-73</p>
+                <h3 className=''>Forgotten Forest</h3>
+                <p>1500 HNTR</p>
               </div>
               <div className='items_right justify-content-end d-flex'>
                 <span> 
@@ -202,7 +187,7 @@ function ItemsList() {
                 </span>
               </div>
             </div>
-            <Link to={'#'} className='border_btn width-100 title_color'>Place bids</Link>
+            <Link to={'#'} className='border_btn width-100 title_color'>Buy</Link>
           </div>
         </div>
         <div className='items_slide'>
@@ -211,16 +196,13 @@ function ItemsList() {
                 <img alt='' className='profile_img' src={'../img/items/item_profile.png'} />
                 <img alt='' className='icheck_img' src={'../img/collections/check.png'} />
               </div>
-              <div className='profile_right'>
-                <span>514d 18h 42m 39s</span>
-              </div>
             </div>
           <img alt='' src={'../img/items/item2.png'} class="img-fluid items_img" />
           <div className='items_text'>
             <div className='items_info'>
               <div className='items_left'>
-                <h3 className=''>Name Last Name</h3>
-                <p>ERC-73</p>
+                <h3 className=''>Forgotten Forest</h3>
+                <p>1500 HNTR</p>
               </div>
               <div className='items_right justify-content-end d-flex'>
                 <span> 
@@ -231,7 +213,7 @@ function ItemsList() {
                 </span>
               </div>
             </div>
-            <Link to={'#'} className='border_btn width-100 title_color'>Place bids</Link>
+            <Link to={'#'} className='border_btn width-100 title_color'>Buy</Link>
           </div>
         </div>
         <div className='items_slide last_slide'>

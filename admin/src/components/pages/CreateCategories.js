@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 import Deletesvg from "../SVG/deletesvg";
 
-function CreateCategories() {
+function CreateCategories(props) {
 
   const [catImg, setCatImg] = useState();
   const [CategorieName, setCategorieName] = useState("");
@@ -119,6 +119,7 @@ function CreateCategories() {
           </table>
         </div>
       </div>
+      
       <div
         className='modal fade'
         id='NftModal'
@@ -204,9 +205,11 @@ function CreateCategories() {
               <button
                 type='button'
                 className='btn btn-admin text-light'
-                onClick={handleCreateCategorie}>
+                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                onClick={props.showNotificationPopup}>
                 Create Categorie
               </button>
+              
             </div>
           </div>
         </div>

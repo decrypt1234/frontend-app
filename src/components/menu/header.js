@@ -405,7 +405,7 @@ const Header = function () {
             aria-controls='navbarSupportedContent'
             aria-expanded='false'
             aria-label='Toggle navigation'>
-            <span className='navbar-toggler-icon'></span>
+            <i class="fa fa-bars" aria-hidden="true"></i>
           </button>
           <div className='collapse navbar-collapse' id='navbarSupportedContent'>
             <form className='d-flex navbar_form'>
@@ -425,7 +425,7 @@ const Header = function () {
                   className='nav-link'
                   aria-current='page'
                   to='/marketplace'>
-                  Marketplace
+                  Market Place
                 </NavLink>
                 <ul className='sub_menu'>
                   <li>
@@ -452,24 +452,6 @@ const Header = function () {
                       Accesories
                     </NavLink>
                   </li>
-                  {/* <li>
-                    <NavLink to={'/'} className='sub-items'>
-                      <HotListsvg />
-                      Hot List
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={"/NFTdetails"} className='sub-items'>
-                      <NFTrankingsvg />
-                      NFT Ranking
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={'/'} className='sub-items'>
-                      <LiveAuctonsvg />
-                      Live Auctions
-                    </NavLink>
-                  </li> */}
                 </ul>
               </li>
               <li className='nav-item'>
@@ -531,7 +513,7 @@ const Header = function () {
                   <li className='nav-item'>
                     {!account ? (
                       <NavLink className='border_btn' onClick={onLogin} to=''>
-                        log in
+                        Log in
                       </NavLink>
                     ) : (
                       ""

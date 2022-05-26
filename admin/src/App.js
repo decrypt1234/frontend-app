@@ -14,6 +14,7 @@ import CreateBrands from './components/pages/CreateBrands';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import CreateCategories from './components/pages/CreateCategories';
+import NotificationPopup from './components/components/NotificationPopup';
 
 
 import {NotificationContainer} from 'react-notifications';
@@ -28,6 +29,17 @@ const instaImg = {
 function App() {
 
   const [mode, setMode] = useState('Darkmode');
+  const [notificationpopup, setNotificationPopup] = useState(null);
+
+  const showNotificationPopup = (message, title)=> {
+    setNotificationPopup({
+      msg: message,
+      tlt: title
+    })
+    setTimeout(() => {
+      setNotificationPopup(null);
+    }, 2000);
+  };
 
   const toggleMode = ()=> { 
     if(mode === 'Darkmode'){ 
@@ -61,7 +73,8 @@ function App() {
           <Route path='createbrands' element={ <CreateBrands /> } />
           <Route path='login' element={ <Login /> } />
           <Route path='register' element={ <Register /> } />
-          <Route path='createcategories' element={ <CreateCategories /> } />
+          <Route path='createcategories' showNotificationPopup={showNotificationPopup} element={ <CreateCategories /> } />
+          <Route path='notificationpopup' notificationpopup={notificationpopup} element={ <NotificationPopup /> } />
         </Routes>
         <NotificationContainer/>
       </BrowserRouter>
