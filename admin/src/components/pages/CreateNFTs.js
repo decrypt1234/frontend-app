@@ -316,7 +316,7 @@ function CreateNFTs() {
                       : ""}
                   </select>
                 </div>
-                <div className="col-md-6 mb-1">
+                {/* <div className="col-md-6 mb-1">
                   <label for="recipient-name" className="col-form-label">
                     Brand *
                   </label>
@@ -337,7 +337,7 @@ function CreateNFTs() {
                         })
                       : ""}
                   </select>
-                </div>
+                </div> */}
               </form>
             </div>
             <div className="modal-footer justify-content-center">
