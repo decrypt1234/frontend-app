@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import {
   createCollection,
   exportInstance,
+  GetBrand,
   GetMyCollectionsList,
 } from "../../apiServices";
 import contracts from "../../config/contracts";
@@ -31,6 +32,8 @@ function CreateCollection() {
   const [preSaleStartTime, setPreSaleStartTime] = useState("");
   const [datetime2, setDatetime2] = useState("");
   const [currentUser, setCurrentUser] = useState("");
+  const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
   const [myCollections, setMyCollections] = useState([]);
 
   useEffect(() => {
@@ -50,6 +53,11 @@ function CreateCollection() {
 
         let data = await GetMyCollectionsList(reqBody);
         if (data && data.results.length > 0) setMyCollections(data?.results[0]);
+
+        let _brands = await GetBrand()
+        console.log("_brands", _brands)
+
+        let _cat = await 
       };
       fetch();
     }
@@ -241,6 +249,8 @@ function CreateCollection() {
         fd.append("name", title);
         fd.append("description", description);
         fd.append("logoImage", logoImg);
+        fd.append("symbol", symbol);
+        fd.append("price", price);
         fd.append("coverImage", coverImg);
         fd.append("categoryID", "62878304ee30230742fcab07");
         fd.append("brandID", "628788089b97d717f190d9aa");
@@ -311,7 +321,10 @@ function CreateCollection() {
                 <th>Brand</th>
               </tr>
             </thead>
-            {myCollections && myCollections != undefined && myCollections != "" && myCollections.length>0
+            {myCollections &&
+            myCollections != undefined &&
+            myCollections != "" &&
+            myCollections.length > 0
               ? myCollections.map((item, index) => (
                   <tbody>
                     <tr>
