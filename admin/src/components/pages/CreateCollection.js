@@ -36,6 +36,7 @@ function CreateCollection() {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [myCollections, setMyCollections] = useState([]);
+  const [nftType, setNftType] = useState("1");
 
   useEffect(() => {
     if (cookies.selected_account) setCurrentUser(cookies.selected_account);
@@ -233,7 +234,7 @@ function CreateCollection() {
       setLoading(true);
       try {
         setLoading(true);
-        maxSupply == 1
+        nftType == "1"
           ? (res1 = await creator.deployExtendedERC721(
               title,
               symbol,
@@ -258,10 +259,10 @@ function CreateCollection() {
       console.log("res1 is--->", res1);
       if (res1.status === 1) {
         let type;
-        if (maxSupply > 1) {
+        if (nftType == "1") {
           type = 1;
         } else {
-          type = 0;
+          type = 2;
         }
         let contractAddress = await readReceipt(hash);
         console.log("contract address is--->", contractAddress);
@@ -345,6 +346,7 @@ function CreateCollection() {
           </p>
           <table className="table table-hover text-light">
             <thead>
+              <br></br>
               <tr>
                 <th>Customer</th>
                 <th>Title</th>
@@ -384,7 +386,7 @@ function CreateCollection() {
                     </tr>
                   </tbody>
                 ))
-              : "no collection"}
+              : "No Collections Found"}
           </table>
         </div>
       </div>
@@ -649,6 +651,22 @@ function CreateCollection() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
+                </div>
+
+                <div className="col-md-6 mb-1">
+                  <label for="recipient-name" className="col-form-label">
+                    NFT Type *
+                  </label>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    value={nftType}
+                    onChange={(e) => setNftType(e.target.value)}
+                  >
+                    <option selected>Open this select menu</option>
+                    <option value="1">Single</option>;
+                    <option value="2">Multiple</option>;
+                  </select>
                 </div>
               </form>
             </div>

@@ -293,9 +293,13 @@ export const createCollection = async (data) => {
   }
 };
 
-export const getAllCollections = async () => {
+export const getAllCollections = async (data) => {
   const requestOptions = {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   };
   try {
     let response = await fetch(
