@@ -485,7 +485,7 @@ const Header = function () {
                 </ul>
               </li>
               <li className='nav-item'>
-                <NavLink className='nav-link' to={"/collection"}>
+                <NavLink className='nav-link' to={"/marketplacecollection"}>
                   Collections
                 </NavLink>
               </li>
