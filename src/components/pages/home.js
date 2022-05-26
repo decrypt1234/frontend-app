@@ -123,7 +123,7 @@ const Home = () => (
         <div className="row">
           <div className="col-md-12">
             <h2 className="text-center second_hd color-light mb-5">
-              Upcoming Mint
+              Exclusive Sales
               <div className="border_div"><span className="title_bottom_border"></span></div>
             </h2>
           </div>
@@ -314,7 +314,7 @@ const Home = () => (
             <CarouselNew />
           </div>
           <div class="col-md-12 text-center mt-5">
-            <Link to={'/collection'} className="view_all_bdr">View All</Link>
+            <Link to={'/mintcollectionlive'} className="view_all_bdr">View All</Link>
           </div>
         </div>
       </section>

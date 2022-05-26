@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../components/footer';
 import CollectionList from '../components/CollectionList';
 import Relatedcollection from '../components/Relatedcollection';
@@ -28,7 +28,9 @@ const bgImgStyle = {
   };
 
 function CollectionWithCollection() {
-
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
 
   const gridtwo =()=>{
     console.log("red");

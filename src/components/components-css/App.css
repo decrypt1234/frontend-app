@@ -3685,7 +3685,7 @@ a:hover {
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
   height: 100%;
-    width: 100%;
+  width: 100%;
 }
 .last_slide:hover {
   background: linear-gradient(120.91deg, #ef981d 1.08%, #f5aa3e 100.06%);
@@ -3796,3 +3796,54 @@ a:hover {
 .second_hd {padding: 0px 10px;}
 .wallet_box h4, .mint_text h4, .category_sec h5 {font-size: 18px;line-height: initial;}
 }
+
+.switch_container .confirm_btn{
+  border: 2px solid  #1d8aef;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #1d8aef;
+  color: #fff;
+  transition: all .1s ease-in-out;
+}
+
+.switch_container .confirm_btn:hover{
+  color: #1d8aef;
+  background: #fff;
+}
+
+
+.switch_container .cancel_btn{
+  border: 2px solid  #ff0000;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #ff0000;
+  color: #fff;
+  transition: all .1s ease-in-out;
+}
+
+
+.switch_container .cancel_btn:hover{
+  color: #ff0000;
+  background: #fff;
+}
+
+.switch_container .network_btn{
+  border: 2px solid  #1d8aef;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #1d8aef;
+  color: #fff;
+  transition: all .1s ease-in-out;
+}
+
+.switch_container .network_btn:hover{
+  color: #1d8aef;
+  background: #fff;
+}
+
+
+.coverImg_cont img{
+  height: 33vh;
+  width: 100%;
+ object-fit: cover;
+} 
