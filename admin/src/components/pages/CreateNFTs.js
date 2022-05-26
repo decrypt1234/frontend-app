@@ -51,10 +51,7 @@ function CreateNFTs() {
       NotificationManager.error("Please Choose a Collection", "", 800);
       return false;
     }
-    if (brand === "" || brand === undefined) {
-      NotificationManager.error("Please Choose a Brand", "", 800);
-      return false;
-    }
+
     return true;
   };
 
@@ -66,26 +63,25 @@ function CreateNFTs() {
   }, [currentUser]);
 
   const handleCreateNFT = async () => {
-    
-    // if (handleValidationCheck()) {
-    var fd = new FormData();
+    if (handleValidationCheck()) {
+      var fd = new FormData();
 
-    fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
-    fd.append("values", JSON.stringify([{ hello: "neha" }]));
-    fd.append("creatorAddress", currentUser.toLowerCase());
-    fd.append("name", title);
-    fd.append("nftFile", nftImg);
-    fd.append("quantity", 1);
-    fd.append("collectionID", collection);
-    fd.append("description", description);
-    fd.append("tokenID", 1);
-    fd.append("type", 1);
-    fd.append("isMinted", 0);
-    fd.append("imageSize", "0");
-    fd.append("imageType", "0");
-    fd.append("imageDimension", "0");
-    await createNft(fd);
-    // }
+      fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
+      fd.append("levels", JSON.stringify([{ hello: "neha" }]));
+      fd.append("creatorAddress", currentUser.toLowerCase());
+      fd.append("name", title);
+      fd.append("nftFile", nftImg);
+      fd.append("quantity", 1);
+      fd.append("collectionID", collection);
+      fd.append("description", description);
+      fd.append("tokenID", 1);
+      fd.append("type", 1);
+      fd.append("isMinted", 0);
+      fd.append("imageSize", "0");
+      fd.append("imageType", "0");
+      fd.append("imageDimension", "0");
+      await createNft(fd);
+    }
   };
 
   useEffect(() => {
@@ -306,11 +302,15 @@ function CreateNFTs() {
                     class="form-select"
                     aria-label="Default select example"
                     value={collection}
-                    onChange={(e) => setCollection(e.target.value)}
+                    onChange={(e) => {
+                      console.log("e.target.value", e.target.value);
+                      setCollection(e.target.value);
+                    }}
                   >
+                    <option value="">Select</option>
                     {collections.length > 0
                       ? collections.map((c, i) => {
-                          console.log("c", c);
+                          console.log("c", c._id);
                           return <option value={c._id}>{c.name}</option>;
                         })
                       : ""}
