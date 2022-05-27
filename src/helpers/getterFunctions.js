@@ -691,6 +691,7 @@ export const getUpcomingMints = async (req) => {
           name: coll.name,
           desc: coll.description,
           saleStartTime: coll.preSaleStartTime,
+          saleEndTime: coll.preSaleEndTime,
           price: coll.price.$numberDecimal,
           items: coll.nftCount
         };
