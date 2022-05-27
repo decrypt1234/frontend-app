@@ -4,7 +4,7 @@ import SliderMain from "../components/SliderMain";
 import CarouselCollection from "../components/CarouselCollection";
 import CarouselNew from "../components/CarouselNew";
 import AuthorList from "../components/AuthorList";
-import Category from "../components/Category";
+// import Category from "../components/Category";
 import Footer from "../components/footer";
 import Reveal from "react-awesome-reveal";
 import { keyframes } from "@emotion/react";
@@ -208,7 +208,7 @@ const Home = () => {
             </Link>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
-          <Link to={'/collectionwithcollection'}>
+          <Link to={'/multimintingpage'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/head-down.png'} class="img-fluid" />
@@ -244,13 +244,13 @@ const Home = () => {
                 </radialGradient>
                 </defs>
               </svg>
-              Ongoing</span>
+              Live</span>
               </div>
             </div>
             </Link>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
-          <Link to={'/collectionwithcollection'}>
+          <Link to={'/multimintingpage'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/mint3.png'} class="img-fluid" />
@@ -293,7 +293,7 @@ const Home = () => {
                 <path d="M21.2846 4.87195C21.461 4.87195 21.604 4.72892 21.604 4.55248C21.604 4.37605 21.461 4.23302 21.2846 4.23302C21.1081 4.23302 20.9651 4.37605 20.9651 4.55248C20.9651 4.72892 21.1081 4.87195 21.2846 4.87195Z" fill="white"/>
                 <path d="M22.2429 5.79035C22.4194 5.79035 22.5624 5.64732 22.5624 5.47088C22.5624 5.29444 22.4194 5.15141 22.2429 5.15141C22.0665 5.15141 21.9235 5.29444 21.9235 5.47088C21.9235 5.64732 22.0665 5.79035 22.2429 5.79035Z" fill="white"/>
               </svg>
-              Launched</span>
+              Past</span>
               </div>
             </div>
             </Link>
@@ -352,7 +352,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="container pdd_8">
+      <section className="container pdd_8 Most-recent">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -365,12 +365,12 @@ const Home = () => {
             <CarouselNew />
           </div>
           <div class="col-md-12 text-center mt-5">
-            <Link to={'/mintcollectionlive'} className="view_all_bdr">View All</Link>
+            <Link to={'/marketplace'} className="view_all_bdr">View All</Link>
           </div>
         </div>
       </section>
 
-      <section >
+      <section className="pdd_8 pt-0">
         <div className="container no-bottom">
           <div className="row">
             <div className="col-lg-12">
@@ -385,7 +385,7 @@ const Home = () => {
         </div>
       </section>
 
-    <section className="category_sec pdd_8">
+    {/* <section className="category_sec pdd_8">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -398,7 +398,7 @@ const Home = () => {
         </div>
           <Category />
       </div>
-    </section>
+    </section> */}
 
     <Footer />
   </div>

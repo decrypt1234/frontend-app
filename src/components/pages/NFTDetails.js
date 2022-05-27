@@ -29,10 +29,10 @@ function NFTDetails() {
       <section style={bgImgStyle} className="pdd_8">
           <div className="container">
               <div className="row mb-5">
-                <div className="col-md-6">
+                <div className="col-lg-6 mb-xl-5 mb-lg-5 mb-5">
                     <img src={'../img/nftdetails/nftimg.png'} class="img-fluid nftimg" alt="" />
                 </div>
-                <div className="col-md-6 nft_details">
+                <div className="col-lg-6 nft_details">
                     <p className="mb-0">Meta Marine Collection <img src={'../img/check.png'} class="img-fluid" alt="" /></p>
                     <h1 className="mb-3">Marine Series #1895</h1>
                     <div className="owner_by mb-4">
@@ -140,17 +140,17 @@ function NFTDetails() {
                         <div className="price_div">
                             <img src={'../img/favicon.png'} class="img-fluid" alt="" />22500 $HNTR<span>($307.25)</span>
                         </div>
-                        <button type='button' className="yellow_btn mr-3">Buy Now</button>
+                        <button type='button' className="yellow_btn mr-3 mb-3">Buy Now</button>
                         <button type='button' className='border_btn title_color'>Bid / Offer</button> 
                     </div>
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-6 mb-5 width_45 auto_right">
+                <div className="col-lg-6 mb-5 width_45 auto_right">
                     <h3 className="title_36 mb-4">Description</h3>
                     <p className="textdes">The Digital Arms Meta Marines are a collection of 2000 yield generating fully-rigged 3D Soldier Avatar NFTs that will have full interoperability with metaverse gaming. </p>
                 </div>
-                <div className="col-md-6 mb-5">
+                <div className="col-lg-6 mb-5">
                     <h3 className="title_36 mb-4">About Meta Marine Collection</h3>
                     <div className='row'>
                         <div className="col-md-4">
@@ -163,7 +163,7 @@ function NFTDetails() {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-6 mb-5 width_45 auto_right">
+                <div className="col-lg-6 mb-5 width_45 auto_right">
                     <h3 className="title_36 mb-4">Asset Details</h3>
                     <ul className="nft_detaillist">
                         <li><span className="asset_title">Size</span><span className="asset_detail">356 KB</span></li>
@@ -171,7 +171,7 @@ function NFTDetails() {
                         <li><span className="asset_title">Format</span><span className="asset_detail">JPEG</span></li>
                     </ul>
                 </div>
-                <div className="col-md-6 mb-5">
+                <div className="col-lg-6 mb-5">
                     <h3 className="title_36 mb-4">Blockchain Details</h3>
                     <ul  className="nft_detaillist">
                         <li><span className="asset_title">Contact Address</span><span className="asset_detail">0x1wq51a9g1...ag541</span></li>
@@ -179,14 +179,14 @@ function NFTDetails() {
                         <li><span className="asset_title">Blockchain</span><span className="asset_detail">Binance Smart Chain</span></li>
                     </ul>
                 </div>
-                <div className="col-md-6 mb-5 width_45 auto_right">
+                <div className="col-lg-6 mb-5 width_45 auto_right">
                     <h3 className="title_36 mb-4">Properties</h3>
                     <ul  className="nft_detaillist">
                         <li><span className="asset_title">SERIAL</span><span className="asset_detail">16260</span></li>
                         <li><span className="asset_title">TYPE</span><span className="asset_detail">Firearms Collection</span></li>
                     </ul>
                 </div>
-                <div className="col-md-6 mb-5">
+                <div className="col-lg-6 mb-5">
                     <h3 className="title_36 mb-4">Levels</h3>
                     <ul className="nft_detailnumber">
                         <li><span>1</span>Generation</li>
@@ -199,15 +199,21 @@ function NFTDetails() {
                 </div>
                 <div className="col-md-12 mb-5">
                     <h3 className="title_36 mb-4">Listings</h3>
-                    <NFTlisting />
+                    <div className='table-responsive'>
+                        <NFTlisting />
+                    </div>
                 </div>
                 <div className="col-md-12 mb-5">
                     <h3 className="title_36 mb-4">Offers</h3>
-                    <NFToffer />
+                    <div className='table-responsive'>
+                        <NFToffer />
+                    </div>
                 </div>
                 <div className="col-md-12 mb-5">
                     <h3 className="title_36 mb-4">Histoy</h3>
-                    <NFThistory />
+                    <div className='table-responsive'>
+                        <NFThistory />
+                    </div>
                 </div>
                 
                 <div className="col-md-12">

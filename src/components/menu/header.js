@@ -478,24 +478,6 @@ const Header = function () {
                       Accesories
                     </NavLink>
                   </li>
-                  {/* <li>
-                    <NavLink to={'/'} className='sub-items'>
-                      <HotListsvg />
-                      Hot List
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={"/NFTdetails"} className='sub-items'>
-                      <NFTrankingsvg />
-                      NFT Ranking
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={'/'} className='sub-items'>
-                      <LiveAuctonsvg />
-                      Live Auctions
-                    </NavLink>
-                  </li> */}
                 </ul>
               </li>
               <li className="nav-item">
