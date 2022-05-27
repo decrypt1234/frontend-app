@@ -54,7 +54,8 @@ function CreateCollection() {
         };
 
         let data = await GetMyCollectionsList(reqBody);
-        if (data && data.results.length > 0) setMyCollections(data?.results[0]);
+        if (data && data.results && data.results.length > 0)
+          setMyCollections(data?.results[0]);
       };
       fetch();
     }
@@ -294,27 +295,27 @@ function CreateCollection() {
               "",
               1800
             );
-            setTimeout(() => {
-              window.location.href = "/createcollection";
-            }, 1000);
+            // setTimeout(() => {
+            //   window.location.href = "/createcollection";
+            // }, 1000);
           } else {
             NotificationManager.error(collection, "", 1800);
             console.log("category message", collection);
-            setTimeout(() => {
-              window.location.href = "/createcollection";
-            }, 1000);
+            // setTimeout(() => {
+            //   window.location.href = "/createcollection";
+            // }, 1000);
           }
         } catch (e) {
           NotificationManager.error(e.message, "", 1800);
-          setTimeout(() => {
-            window.location.href = "/createcollection";
-          }, 1000);
+          // setTimeout(() => {
+          //   window.location.href = "/createcollection";
+          // }, 1000);
         }
       } else {
         NotificationManager.error("Something went wrong", "", 1800);
-        setTimeout(() => {
-          window.location.href = "/createcollection";
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.href = "/createcollection";
+        // }, 1000);
       }
     }
   };

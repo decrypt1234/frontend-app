@@ -166,6 +166,7 @@ const Navbar = (props) => {
         if (isUserExist.message === "User not found") {
           try {
             const res = await adminRegister(address);
+            const res2 = await Login(address);
             if (res.message === "Wallet Address required") {
               NotificationManager.info(res.message);
               return;

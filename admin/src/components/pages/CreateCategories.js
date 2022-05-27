@@ -128,7 +128,7 @@ function CreateCategories() {
             </thead>
             <br></br>
             {myCategory &&
-            myCategory != "undefined" &&
+            myCategory != undefined &&
             myCategory != "" &&
             myCategory.length > 0
               ? myCategory.map((data, index) => (

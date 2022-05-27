@@ -91,7 +91,7 @@ function CreateNFTs() {
         isMinted: "",
       };
       let res = await getNFTList(reqBody);
-      if (res && res.results.length > 0) {
+      if (res && res.results && res.results.length > 0) {
         setNfts(res.results[0]);
         setTotalCount(res.count);
       }
@@ -237,7 +237,8 @@ function CreateNFTs() {
         limit: 20,
       };
       let data = await GetMyCollectionsList(reqBody);
-      if (data && data.results.length > 0) setCollections(data?.results[0]);
+      if (data && data.results && data.results.length > 0)
+        setCollections(data?.results[0]);
       setTotalCount(data?.count);
       // console.log("data", data);
     };
