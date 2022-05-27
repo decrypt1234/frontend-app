@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import SliderMain from "../components/SliderMain";
 // import FeatureBox from "../components/FeatureBox";
 import CarouselCollection from "../components/CarouselCollection";
@@ -9,6 +9,9 @@ import Footer from "../components/footer";
 import Reveal from "react-awesome-reveal";
 import { keyframes } from "@emotion/react";
 import { Link } from "react-router-dom";
+import Clock from "./../components/Clock";
+import { getUpcomingMints } from "../../helpers/getterFunctions";
+import moment from "moment";
 
 const fadeInUp = keyframes`
   0% {
@@ -60,7 +63,21 @@ var mint_bg = {
 //   backgroundPositionY: "30vh",
 // };
 
-const Home = () => (
+const Home = () => {
+  const [upcomingMints, setUpcomingMints] = useState([]);
+  useEffect(async() => {
+    try{
+      const res = await getUpcomingMints({page: 1, limit: 12, isExclusive: 0});
+      console.log("result of getUpcomingMints helper fn--->",res);
+      setUpcomingMints(res);
+    }
+   catch(e){
+     console.log("Error in fetching all upcoming mints list",e);
+   }
+  },[])
+ 
+
+  return(
   <div style={bgImgStyle}>
     <section style={bgImgStylesec1} className="jumbotron breadcumb no-bg h-vh pdd_8">
       <SliderMain />
@@ -127,7 +144,41 @@ const Home = () => (
               <div className="border_div"><span className="title_bottom_border"></span></div>
             </h2>
           </div>
-          <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
+          {
+            upcomingMints ? upcomingMints.map((card, key) => {
+              console.log("date---->",  moment(card.saleStartTime).format("MMM"), moment(card.saleStartTime).format("DD"));
+             return( <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
+              <Link to={'/collectionwithcollection'}>
+              <div className="mint_box" style={mint_bg}>
+                <div className="mint_img">
+                  <img alt="" src={card.coverImg} class="img-fluid" />
+                  <div className="mint_date"><span>{moment(card.saleStartTime).format("DD")}</span>  {moment(card.saleStartTime).format("MMM")}</div>
+                </div>
+                <div className="mint_text p-4">
+                <img alt="" src={'../img/mint/m1.png'} className="mc_img" />
+                <h4>{card.name}</h4>
+                <ul className="m-0 p-0">
+                  <li><img alt="" src={'../img/mint/hntr.svg'} /> {`${card.price} HNTR`} </li>
+                  <li><img alt="" src={'../img/mint/items.svg'} /> {`${card.items} items`}</li>
+                </ul>
+                <span className="mint_time mt-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.0399 23.6399C17.6069 23.6399 22.1199 19.1091 22.1199 13.52C22.1199 7.93086 17.6069 3.39999 12.0399 3.39999C6.47292 3.39999 1.95996 7.93086 1.95996 13.52C1.95996 19.1091 6.47292 23.6399 12.0399 23.6399Z" fill="#428BC1"/>
+                  <path d="M12.0399 21.4C16.3698 21.4 19.8799 17.872 19.8799 13.52C19.8799 9.168 16.3698 5.64001 12.0399 5.64001C7.71003 5.64001 4.19995 9.168 4.19995 13.52C4.19995 17.872 7.71003 21.4 12.0399 21.4Z" fill="white"/>
+                  <path d="M3.59997 18.52L2.71997 24H3.47997C3.95997 24 4.11997 23.44 4.43997 22.76C4.83996 21.88 5.79996 19.6 5.79996 19.6L3.59997 18.52ZM20.4399 18.52L21.3599 24H20.5999C20.1199 24 19.9599 23.44 19.6399 22.76C19.2399 21.88 18.2799 19.6 18.2799 19.6L20.4399 18.52ZM4.51996 3.28006L6.87996 5.64005L5.63996 6.92005L3.27997 4.52006L4.51996 3.28006ZM19.5599 3.28006L17.1999 5.64005L18.4399 6.92005L20.7999 4.52006L19.5599 3.28006Z" fill="#428BC1"/>
+                  <path d="M1.48 8.63997L8.51997 1.48C7.63997 0.559998 6.39998 0 4.99998 0C2.23999 0 0 2.27999 0 5.03998C0 6.43998 0.559998 7.71997 1.48 8.63997ZM15.4 1.52L22.5199 8.59997C23.4399 7.67998 23.9999 6.43998 23.9999 5.03998C23.9999 2.27999 21.7599 0 18.9599 0C17.5599 0.0399999 16.3199 0.599998 15.4 1.52Z" fill="#B0B8B8"/>
+                  <path d="M7.43994 17.84L11.5599 13.64L12.0399 14.12L7.91994 18.28L7.43994 17.84Z" fill="#ED4C5C"/>
+                  <path d="M12.0401 15.0002C12.8574 15.0002 13.52 14.3375 13.52 13.5202C13.52 12.7028 12.8574 12.0402 12.0401 12.0402C11.2227 12.0402 10.5601 12.7028 10.5601 13.5202C10.5601 14.3375 11.2227 15.0002 12.0401 15.0002Z" fill="#428BC1"/>
+                  <path d="M11.28 7.88022H12.76V13.8802H11.28V7.88022ZM12.76 12.7602H15.76V14.2402H12.76V12.7602Z" fill="#428BC1"/>
+                </svg>
+                  <Clock deadline={card.saleStartTime}></Clock></span>
+                </div>
+              </div>
+              </Link>
+            </div> )
+            }) : ""
+          }
+          {/* <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
             <Link to={'/collectionwithcollection'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
@@ -151,7 +202,7 @@ const Home = () => (
                 <path d="M12.0401 15.0002C12.8574 15.0002 13.52 14.3375 13.52 13.5202C13.52 12.7028 12.8574 12.0402 12.0401 12.0402C11.2227 12.0402 10.5601 12.7028 10.5601 13.5202C10.5601 14.3375 11.2227 15.0002 12.0401 15.0002Z" fill="#428BC1"/>
                 <path d="M11.28 7.88022H12.76V13.8802H11.28V7.88022ZM12.76 12.7602H15.76V14.2402H12.76V12.7602Z" fill="#428BC1"/>
               </svg>
-                05d 22h 54m 15s</span>
+                <Clock deadline="June, 3, 2022"></Clock></span>
               </div>
             </div>
             </Link>
@@ -246,7 +297,7 @@ const Home = () => (
               </div>
             </div>
             </Link>
-          </div>
+          </div> */}
           <div class="col-md-12 text-center mt-5">
             <Link to={'/mintcollectionlive'} className="view_all_bdr">View All</Link>
           </div>
@@ -351,5 +402,5 @@ const Home = () => (
 
     <Footer />
   </div>
-);
+)};
 export default Home;
