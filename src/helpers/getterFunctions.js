@@ -522,6 +522,7 @@ export const getAllMPCollections = async (req) => {
       filterString: "",
       isMinted: "",
       isHotCollection: "",
+      isExclusive: ""
     };
 
     data = await getAllCollections(reqBody);
@@ -565,7 +566,7 @@ export const getAllNFTs = async (req) => {
     data = await getNFTList(reqBody);
     console.log("get all collections--->", data);
   } catch (e) {
-    console.log("Error in getCollections API--->", e);
+    console.log("Error in getNFts API--->", e);
   }
   let arr = [];
   if (data && data.results && data.results.length > 0) arr = data.results[0];
@@ -600,6 +601,7 @@ export const getHotCollections = async (req) => {
       filterString: "",
       isMinted: "",
       isHotCollection: req.isHotCollection,
+      isExclusive: ""
     };
 
     data = await getAllCollections(reqBody);
@@ -647,6 +649,50 @@ export const getAuthors = async () => {
           profile: author.profileIcon,
           name: author.username
          
+        };
+      })
+    : (formattedData[0] = {});
+  return formattedData;
+};
+
+
+export const getUpcomingMints = async (req) => {
+  let data = [];
+  let formattedData = [];
+  try {
+    let reqBody = {
+      page: req.page,
+      limit: req.limit,
+      collectionID: "",
+      userID: "",
+      categoryID: "",
+      brandID: "",
+      ERCType: "",
+      searchText: "",
+      filterString: "",
+      isMinted: "",
+      isHotCollection: "",
+      isExclusive: req.isExclusive
+    };
+
+    data = await getAllCollections(reqBody);
+    console.log("get all collections--->", data);
+  } catch (e) {
+    console.log("Error in getCollections API--->", e);
+  }
+  let arr = [];
+  if (data && data.results && data.results.length > 0) arr = data.results[0];
+  else return [];
+  arr
+    ? arr.map((coll, key) => {
+        formattedData[key] = {
+          logoImg: coll.logoImage,
+          coverImg: coll.coverImage,
+          name: coll.name,
+          desc: coll.description,
+          saleStartTime: coll.preSaleStartTime,
+          price: coll.price.$numberDecimal,
+          items: coll.nftCount
         };
       })
     : (formattedData[0] = {});
