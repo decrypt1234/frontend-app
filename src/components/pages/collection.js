@@ -8,6 +8,8 @@ import { CollectionCard } from "../../Data/dummyJSON";
 import Dropdown from "../SVG/dropdown";
 import { useCookies } from "react-cookie";
 import { NotificationManager } from "react-notifications";
+import Threegrid from '../SVG/Threegrid';
+import Twogrid from '../SVG/Twogrid';
 
 const bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -30,20 +32,21 @@ var bgImgarrow = {
 
 function Collection() {
 
+  const gridtwo =()=>{
+    setgrid("col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4");
+    document.getElementById("gridtwo").classList.add("active");
+    document.getElementById("gridthree").classList.remove("active");
+  }
+  const gridthree =()=>{
+    setgrid("col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4");
+    document.getElementById("gridthree").classList.add("active");
+    document.getElementById("gridtwo").classList.remove("active");
+  }
   useEffect(() => {
     window.scrollTo(0, 0)
   }, []);
 
-  const gridtwo = () => {
-    console.log("red");
-    setgrid("col-md-6 mb-4");
-  };
-  const gridthree = () => {
-    console.log("red");
-    setgrid("col-md-4 mb-4");
-  };
-
-  const [grid, setgrid] = useState("col-md-3 mb-4");
+  const [grid, setgrid] = useState("col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4");
 
   const [currentUser, setCurrentUser] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies([]);
@@ -73,33 +76,12 @@ function Collection() {
               class='img-fluid check_img'
             />
           </div>
-          <h1 className='collection_title text-center'>Barrett Firarms</h1>
-          <ul class='collection_social mb-4'>
-            <li>
-              <Link to={"/"}>
-                <i class='fa fa-facebook fa-lg'></i>
-              </Link>
-            </li>
-            <li>
-              <Link to={"/"}>
-                <i class='fa fa-twitter fa-lg'></i>
-              </Link>
-            </li>
-            <li>
-              <Link to={"/"}>
-                <i class='fa fa-linkedin fa-lg'></i>
-              </Link>
-            </li>
-            <li>
-              <Link to={"/"}>
-                <i class='fa fa-pinterest fa-lg'></i>
-              </Link>
-            </li>
-            <li>
-              <Link to={"/"}>
-                <i class='fa fa-rss fa-lg'></i>
-              </Link>
-            </li>
+          <h1 className="collection_title text-center">Barrett Firarms</h1>
+          <ul class="collection_social mb-4">
+            <li><Link to={"/"}><i class="fa fa-facebook fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-twitter fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-linkedin fa-lg"></i></Link></li>
+            <li><Link to={"/"}><i class="fa fa-pinterest fa-lg"></i></Link></li>
           </ul>
           <div className='coppycode text-center'>
             <span>
@@ -204,13 +186,17 @@ function Collection() {
                   <option value='3'>$6000</option>
                 </select>
                 {/* <div className="market_div"> */}
-                <div className='market_grid' onClick={gridtwo}>
-                  <img alt='' src={"../img/twogrid.png"} class='img-fluid' />
-                </div>
-                <div className='market_grid' onClick={gridthree}>
-                  <img alt='' src={"../img/threegrid.png"} class='img-fluid' />
-                </div>
+
+                  <div id="gridtwo" className="market_grid" onClick={gridtwo}>
+                    <Twogrid />
+                  </div>
+                  <div id="gridthree" className="market_grid" onClick={gridthree}>
+                    <Threegrid />
+                  </div>
                 {/* </div> */}
+                <button type="button" className="filter_btn">Adv.Filter</button>
+              </div>
+             
                 <button type='button' className='filter_btn'>
                   Adv.Filter
                 </button>
@@ -339,10 +325,11 @@ function Collection() {
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> 
             </div>
           </div>
-        </div>
+        
+        
       </section>
       <section className='collection_list mb-5 pb-5'>
         <div className='container'>

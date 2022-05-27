@@ -11,7 +11,7 @@
         font-family: 'Montserrat';
         font-style: normal;
         font-weight: 700;
-        font-size: 60px;
+        font-size: 55px;
         line-height: 112.4%;
     }
     .btn-banner {
@@ -29,6 +29,6 @@
         transition: .5s ease-in-out;
     }
     .btn-banner:hover {background: #fff;}
-    .container.banner-container {
-        max-width: 1500px;
-    }
+    /* @media screen and (min-width:1600px){
+        .container.banner-container {max-width: 1500px;}
+    } */

@@ -152,6 +152,7 @@ function CreateCategories() {
           </table>
         </div>
       </div>
+      
       <div
         className="modal fade"
         id="NftModal"
@@ -245,6 +246,7 @@ function CreateCategories() {
               >
                 Create Categorie
               </button>
+              
             </div>
           </div>
         </div>

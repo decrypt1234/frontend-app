@@ -23,11 +23,11 @@ function Marketplacecart() {
             <div className='items_slide'>
                 <div className='items_profileimg'>
                 <div className='profile_left'>
-                    <img alt='' className='profile_img' src={'../img/items/item_profile.png'}  />
-                    <img alt='' className='icheck_img' src={'../img/collections/check.png'}  />
+                    <img alt='' className='profile_img' src={props.profileimage}  />
+                    <img alt='' className='icheck_img' src={props.checkImage}  />
                 </div>
                 <div className='profile_right'>
-                    <span>514d 18h 42m 39s</span>
+                    <span>{props.time}</span>
                 </div>
                 </div>
             <img alt='' src={card.image} class="img-fluid items_img" />
@@ -46,7 +46,7 @@ function Marketplacecart() {
                     </span>
                 </div>
                 </div>
-                <Link to={'#'} className='border_btn width-100 title_color'>Place bids</Link>
+                <Link to={props.btnslug} className='border_btn width-100 title_color'>Place bids</Link>
             </div>
             </div>
         </div>
