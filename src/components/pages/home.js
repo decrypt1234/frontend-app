@@ -194,9 +194,10 @@ const Home = () => {
                     moment(card.saleStartTime).format("MMM"),
                     moment(card.saleStartTime).format("DD")
                   );
+                  console.log("card", card);
                   return (
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
-                      <Link to={"/multimintingpage"}>
+                      <Link to={`/multimintingpage/${card._id}`}>
                         <div className="mint_box" style={mint_bg}>
                           <div className="mint_img">
                             <img alt="" src={card.coverImg} class="img-fluid" />
