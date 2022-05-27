@@ -41,9 +41,10 @@ const Helpcenter= () => (
       </div>
   </section>
 
-  <section className='container pdd_8'>
+  <section className=' pdd_8'>
+  <div className='container'>
     <div className="row">
-      <div className="col-lg-4 col-md-6 mb-4">
+      <div className="col-lg-4 col-md-6 mb-5">
         <div className="feature-box f-boxed style-3 text-center">
           <h4 className="mb-4">Getting Started</h4>
           <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam.</p>
@@ -51,7 +52,7 @@ const Helpcenter= () => (
         </div>
       </div>    
 
-      <div className="col-lg-4 col-md-6 mb-4">
+      <div className="col-lg-4 col-md-6 mb-5">
           <div className="feature-box f-boxed style-3 text-center">
               <div className="text">
                   <h4 className="mb-4">Buying</h4>
@@ -61,7 +62,7 @@ const Helpcenter= () => (
           </div>
       </div>  
 
-      <div className="col-lg-4 col-md-6 mb-4">
+      <div className="col-lg-4 col-md-6 mb-5">
           <div className="feature-box f-boxed style-3 text-center">
               <div className="text">
                   <h4 className="mb-4">Selling</h4>
@@ -71,7 +72,7 @@ const Helpcenter= () => (
           </div>
       </div>  
 
-      <div className="col-lg-4 col-md-6 mb-4">
+      <div className="col-lg-4 col-md-6 mb-5">
           <div className="feature-box f-boxed style-3 text-center">
               <div className="text">
                   <h4 className="mb-4">Creating</h4>
@@ -81,7 +82,7 @@ const Helpcenter= () => (
           </div>
       </div>  
 
-      <div className="col-lg-4 col-md-6 mb-4">
+      <div className="col-lg-4 col-md-6 mb-5">
           <div className="feature-box f-boxed style-3 text-center">
               <div className="text">
                   <h4 className="mb-4">Partners</h4>
@@ -91,7 +92,7 @@ const Helpcenter= () => (
           </div>
       </div>  
 
-      <div className="col-lg-4 col-md-6 mb-4">
+      <div className="col-lg-4 col-md-6 mb-5">
           <div className="feature-box f-boxed style-3 text-center">
               <div className="text">
                   <h4 className="mb-4">Developers</h4>
@@ -101,6 +102,7 @@ const Helpcenter= () => (
           </div>
       </div>  
     </div>
+  </div>
   </section>
   <section className="promoted_div pdd_8 pt-0">
     <div className="container">
@@ -108,49 +110,49 @@ const Helpcenter= () => (
         <div className="col-md-12">
           <h4 className="mb-5">Promoted articles</h4>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How do I set my NFT as my Twitter profile picture ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How do I create an Hunter Token Account?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>Which Blockchain does Hunter Token support ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>What are the key terms to know in NFTs and Web3 ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How do creators earnings work on Hunter Token ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How to I Sell an NFT ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How do it Create an NFT on Hunter Token ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How do I find my funs on Polygon ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>Where can I find my NFT sales ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>What can I do if my art, or Other IP is sold without my permission ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How can I revoke access to delisted items ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How can I stay safe and protect my NFTs ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>What can I do if I think my account is compromised ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How do I stay safe on the Hunter Token Discord ?</p>
         </div>
-        <div className="col-md-4 mb-3">
+        <div className="col-lg-4 mb-3">
           <p>How can I report fraudulent content on Hunter Token ?</p>
         </div>
       </div>

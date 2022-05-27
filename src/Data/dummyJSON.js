@@ -457,3 +457,86 @@ export const MintingSlider = [
         mintprice: "Mint Price 2000 HNTR"
     }
 ]
+
+export const Marketplacecartj = [
+    {
+        id: 1,
+        title: "Name Last Name",
+        subtitle: "ERC-73",
+        img: "../img/Marketplacecollection/HeadDownAR-1.png",
+        profile_img: "../img/items/item_profile.png",
+        icheck_img: "../img/collections/check.png",
+        time: "514d 18h 42m 39s",
+        btnslug: "/"
+    },
+    {
+        id: 1,
+        title: "Name Last Name",
+        subtitle: "ERC-73",
+        img: "../img/Marketplacecollection/HeadDownAR-2.png",
+        profile_img: "../img/items/item_profile.png",
+        icheck_img: "../img/collections/check.png",
+        time: "514d 18h 42m 39s",
+        btnslug: "/"
+    },
+    {
+        id: 1,
+        title: "Name Last Name",
+        subtitle: "ERC-73",
+        img: "../img/Marketplacecollection/HeadDownAR-3.png",
+        profile_img: "../img/items/item_profile.png",
+        icheck_img: "../img/collections/check.png",
+        time: "514d 18h 42m 39s",
+        btnslug: "/"
+    },
+    {
+        id: 1,
+        title: "Name Last Name",
+        subtitle: "ERC-73",
+        img: "../img/Marketplacecollection/HeadDownAR-4.png",
+        profile_img: "../img/items/item_profile.png",
+        icheck_img: "../img/collections/check.png",
+        time: "514d 18h 42m 39s",
+        btnslug: "/"
+    },
+    {
+        id: 1,
+        title: "Name Last Name",
+        subtitle: "ERC-73",
+        img: "../img/Marketplacecollection/HeadDownAR-5.png",
+        profile_img: "../img/items/item_profile.png",
+        icheck_img: "../img/collections/check.png",
+        time: "514d 18h 42m 39s",
+        btnslug: "/"
+    },
+    {
+        id: 1,
+        title: "Name Last Name",
+        subtitle: "ERC-73",
+        img: "../img/Marketplacecollection/HeadDownAR-6.png",
+        profile_img: "../img/items/item_profile.png",
+        icheck_img: "../img/collections/check.png",
+        time: "514d 18h 42m 39s",
+        btnslug: "/"
+    },
+    {
+        id: 1,
+        title: "Name Last Name",
+        subtitle: "ERC-73",
+        img: "../img/Marketplacecollection/HeadDownAR-5.png",
+        profile_img: "../img/items/item_profile.png",
+        icheck_img: "../img/collections/check.png",
+        time: "514d 18h 42m 39s",
+        btnslug: "/"
+    },
+    {
+        id: 1,
+        title: "Name Last Name",
+        subtitle: "ERC-73",
+        img: "../img/Marketplacecollection/HeadDownAR-6.png",
+        profile_img: "../img/items/item_profile.png",
+        icheck_img: "../img/collections/check.png",
+        time: "514d 18h 42m 39s",
+        btnslug: "/"
+    }
+]

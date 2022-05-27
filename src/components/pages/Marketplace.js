@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React,{ useState, useEffect } from 'react';
+// import { Card } from 'react-bootstrap';
 import Footer from "../components/footer";
 import Marketplacecart from "../components/Marketplacecart";
+import Threegrid from '../SVG/Threegrid';
+import Twogrid from '../SVG/Twogrid';
+import { Marketplacecartj } from '../../Data/dummyJSON';
 
 var register_bg = {
     backgroundImage: "url(./img/Marketplace/marketplace-bg.jpg)",
@@ -24,9 +28,22 @@ var bgImgarrow = {
 
 function Marketplace() {
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, []);
+
+useEffect(() => {
+  window.scrollTo(0, 0)
+}, []);
+  const gridtwo =()=>{
+    setgrid("col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4");
+    document.getElementById("gridtwo").classList.add("active");
+    document.getElementById("gridthree").classList.remove("active");
+  }
+  const gridthree =()=>{
+    setgrid("col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4");
+    document.getElementById("gridthree").classList.add("active");
+    document.getElementById("gridtwo").classList.remove("active");
+  }
+
+  const [grid, setgrid] = useState("col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4");
 
   return (
     <div>
@@ -61,18 +78,24 @@ function Marketplace() {
                   <option value="3">$6000</option>
                 </select>
                 {/* <div className="market_div"> */}
-                  <div className="market_grid">
-                    <img alt='' src={'../img/twogrid.png'} class="img-fluid" />
+                  <div id="gridtwo" className="market_grid" onClick={gridtwo}>
+                    <Twogrid />
                   </div>
-                  <div className="market_grid">
-                    <img alt='' src={'../img/threegrid.png'} class="img-fluid" />
+                  <div id="gridthree" className="market_grid" onClick={gridthree}>
+                    <Threegrid />
                   </div>
                 {/* </div> */}
                 <button type="button" className="filter_btn">Adv.Filter</button>
               </div>
             </div>
           </div>
-          <Marketplacecart />
+          <div className='row'>
+            {Marketplacecartj.map(card =>(
+              <div className={grid} key={card.id}>
+                <Marketplacecart image={card.img} profileimage={card.profile_img} checkImage={card.icheck_img} btnslug={card.btnslug} time={card.time} subtitle={card.subtitle} title={card.title}  />
+              </div>
+            ))}
+          </div>
           <div className="row">
             <div class="col-md-12 text-center mt-5"><a class="view_all_bdr" href="/">Load More</a></div>
           </div>

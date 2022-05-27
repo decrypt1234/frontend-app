@@ -20,7 +20,7 @@ function Minttab() {
         <div className="tab-content" id="pills-tabContent">
             <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
             <div className="row justify-content-center">
-          <div className="col-md-4 mb-4">
+          <div className="col-lg-4 col-md-6 mb-4">
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/mint1.png'} class="img-fluid" />
@@ -47,7 +47,7 @@ function Minttab() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 mb-4">
+          <div className="col-lg-4 col-md-6 mb-4">
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/mint2.png'} class="img-fluid" />
@@ -87,7 +87,7 @@ function Minttab() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 mb-4">
+          <div className="col-lg-4 col-md-6 mb-4">
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/mint3.png'} class="img-fluid" />
@@ -134,7 +134,7 @@ function Minttab() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 mb-4">
+          <div className="col-lg-4 col-md-6 mb-4">
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/head-down.png'} class="img-fluid" />
@@ -174,7 +174,7 @@ function Minttab() {
               </div>
             </div>
           </div>
-          <div className="col-md-4 mb-4">
+          <div className="col-lg-4 col-md-6 mb-4">
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/mint5.png'} class="img-fluid" />

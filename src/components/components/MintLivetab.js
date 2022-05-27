@@ -15,7 +15,7 @@ export default function MintLivetab() {
         <div className="tab-content" id="liveMintContent">
             <div className="tab-pane fade show active" id="liveMint" role="tabpanel" aria-labelledby="liveMint-tab">
             <div className="row justify-content-center">
-                <div className="col-md-4 mb-4">
+                <div className="col-lg-4 col-md-6 mb-4">
                     <div className="mint_box" style={mint_bg}>
                     <div className="mint_img">
                         <img alt="" src={'../img/mint/mint2.png'} class="img-fluid" />
