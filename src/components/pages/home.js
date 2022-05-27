@@ -128,7 +128,7 @@ const Home = () => (
             </h2>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
-            <Link to={'/collectionwithcollection'}>
+            <Link to={'/multimintingpage'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/mint1.png'} class="img-fluid" />
@@ -157,7 +157,7 @@ const Home = () => (
             </Link>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
-          <Link to={'/collectionwithcollection'}>
+          <Link to={'/multimintingpage'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/head-down.png'} class="img-fluid" />
@@ -199,7 +199,7 @@ const Home = () => (
             </Link>
           </div>
           <div className="col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4">
-          <Link to={'/collectionwithcollection'}>
+          <Link to={'/multimintingpage'}>
             <div className="mint_box" style={mint_bg}>
               <div className="mint_img">
                 <img alt="" src={'../img/mint/mint3.png'} class="img-fluid" />
@@ -314,7 +314,7 @@ const Home = () => (
             <CarouselNew />
           </div>
           <div class="col-md-12 text-center mt-5">
-            <Link to={'/mintcollectionlive'} className="view_all_bdr">View All</Link>
+            <Link to={'/marketplace'} className="view_all_bdr">View All</Link>
           </div>
         </div>
       </section>
