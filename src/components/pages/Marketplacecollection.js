@@ -24,6 +24,7 @@ function Marketplacecollection() {
     console.log("window location",window.location.pathname)
      
   const [allCollections, setAllCollections] = useState([]);
+
   useEffect(async() => {
     try{
       const res = await getAllMPCollections({page: 1, limit: 12});
@@ -34,6 +35,7 @@ function Marketplacecollection() {
      console.log("Error in fetching all collections list",e);
    }
   },[])
+  
   return (
     <div>
       <section className='register_hd pdd_12' style={register_bg}>

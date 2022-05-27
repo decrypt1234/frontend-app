@@ -187,17 +187,19 @@ const Home = () => {
                   const st = moment(card.saleStartTime).subtract({'hours':4,'minutes':34}).format(
                     "dddd, MMMM Do YYYY, h:mm:ss a"
                   );
+
                   const et = moment(card.saleStartTime).subtract({'hours':4,'minutes':34}).format(
                     "dddd, MMMM Do YYYY, h:mm:ss a"
                   );
                   const ct = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
                   return (
                     <div className='col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4'>
-                      <Link to={"/multimintingpage"}>
+                      <Link to={`/multimintingpage/${card._id}`}>
                         <div className='mint_box' style={mint_bg}>
                           <div className='mint_img'>
                             <img alt='' src={card.coverImg} class='img-fluid' />
                             <div className='mint_date'>
+
                               <span>
                                 {moment(card.saleStartTime).format("DD")}
                               </span>{" "}

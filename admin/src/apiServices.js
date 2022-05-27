@@ -18,12 +18,12 @@ export const adminRegister = async (account) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       walletAddress: account,
-      role: "admin",
+      // role: "admin",
     }),
   };
   try {
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + "/auth/adminregister",
+      process.env.REACT_APP_API_BASE_URL + "/auth/register",
       requestOptions
     );
 
