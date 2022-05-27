@@ -84,7 +84,7 @@ const App = (props) => {
         <Route path="/loginhome" element={<LoginHome />} />
         {/* <Route path="/loginheader" element={<LogInHeader />} /> */}
         <Route path="/mintingpage" element={<MintingPage />} />
-        <Route path="/multimintingpage" element={<MultiMintingPage />} />
+        <Route path="/multimintingpage/:id" element={<MultiMintingPage />} />
         <Route path="/partners" element={<Partners />} />
         <Route path="/helpcenterquery" element={<HelpCenterQuery />} />
         <Route path="/helpcenterdetail" element={<HelpCenterDetail />} />

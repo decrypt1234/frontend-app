@@ -1,6 +1,10 @@
-import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Footer from "../components/footer";
 import MintEventSlider from "../components/MintEventSlider";
+import { getAllCollections, getNFTList } from "../../apiServices";
+import { useCookies } from "react-cookie";
+import NotificationManager from "react-notifications/lib/NotificationManager";
 
 const bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -11,14 +15,65 @@ const bgImgStyle = {
   backgroundColor: "#000",
 };
 
-const bgImage = {
-  backgroundImage: "url(./img/collections/collection_bg.jpg)",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-};
-
 function MultiMintingPage(props) {
-  
+  const [currentUser, setCurrentUser] = useState();
+  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [nfts, setNfts] = useState([]);
+  const [collectionDetails, setCollectionDetails] = useState();
+
+  const bgImage = {
+    backgroundImage: `url(${collectionDetails?.coverImage})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+
+  console.log("here");
+  const { id } = useParams();
+  console.log("params", id);
+
+  useEffect(() => {
+    if (cookies.selected_account) setCurrentUser(cookies.selected_account);
+    else NotificationManager.error("Connect Yout Wallet", "", 800);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("current user is---->", currentUser, cookies.selected_account);
+  }, [currentUser]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      let reqBody = { page: 1, limit: 12, collectionID: id };
+      let nfts = await getNFTList(reqBody);
+      if (nfts && nfts.results && nfts.results.length > 0) setNfts(nfts);
+      reqBody = {
+        page: 1,
+        limit: 12,
+        collectionID: id,
+        userID: "",
+        categoryID: "",
+        brandID: "",
+        ERCType: "",
+        searchText: "",
+        filterString: "",
+        isMinted: "",
+        isHotCollection: "",
+        isExclusive: "",
+      };
+
+      let collection = await getAllCollections(reqBody);
+
+      if (collection && collection.results && collection.results.length > 0) {
+        console.log("collections", collection?.results[0][0]);
+        setCollectionDetails(collection.results[0][0]);
+      }
+
+      console.log("nfts", nfts);
+    };
+    fetch();
+  }, []);
+
+  const handleNftMint = async ()=>{
+    
+  }
+
   return (
     <div style={bgImgStyle}>
       <section className="collection_banner pdd_8" style={bgImage}></section>
@@ -27,7 +82,7 @@ function MultiMintingPage(props) {
           <div className="collection_pick">
             <img
               alt=""
-              src={"../img/collections/barrett.png"}
+              src={collectionDetails?.logoImage}
               class="img-fluid collection_profile"
             />
             <img
@@ -36,7 +91,9 @@ function MultiMintingPage(props) {
               class="img-fluid check_img"
             />
           </div>
-          <h1 className="collection_title text-center">Barrett Firarms</h1>
+          <h1 className="collection_title text-center">
+            {collectionDetails?.name}
+          </h1>
           <ul class="collection_social mb-4">
             <li>
               <a href="/">
@@ -66,11 +123,11 @@ function MultiMintingPage(props) {
           </ul>
           <ul className="collection_status mt-5 mb-5">
             <li>
-              <h4>10.0k</h4>
+              <h4>{collectionDetails?.totalSupply}</h4>
               <p>items</p>
             </li>
             <li>
-              <h4>2000</h4>
+              <h4>{collectionDetails?.price.$numberDecimal}</h4>
               <p>HNTR</p>
             </li>
             <li>
@@ -79,15 +136,7 @@ function MultiMintingPage(props) {
             </li>
           </ul>
           <div className="collection_description text-center">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa
-              fringilla eget quam fringilla pharetra scelerisque arcu aliquam
-              lacus. Non, tortor et lobortis facilisi nam. Adipiscing non
-              feugiat ultrices natoque a. Imperdiet eget tellus tempor ultricies
-              ipsum vitae. Felis elit nisi nunc sagittis morbi arcu, sed. Diam
-              diam ligula aliquet sollicitudin diam et pellentesque. Tempor
-              turpis nunc turpis ornare facilisis porttitor morbi tellus nullam.
-            </p>
+            <p>{collectionDetails?.description}</p>
             <span className="top_arrow">
               <img alt="" src={"../img/top_arrow.png"} class="img-fluid" />
             </span>
@@ -97,7 +146,13 @@ function MultiMintingPage(props) {
       <section className="collection_list mb-5 pb-5">
         <div className="container">
           <div className="event_slider">
-            <MintEventSlider />
+            <MintEventSlider
+              id={id}
+              price={collectionDetails?.price.$numberDecimal}
+              leftQty={
+                collectionDetails?.totalSupply - collectionDetails?.nftCount
+              }
+            />
           </div>
         </div>
       </section>

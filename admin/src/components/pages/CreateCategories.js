@@ -52,11 +52,11 @@ function CreateCategories() {
 
   const handleValidationCheck = () => {
     if (catImg === "" || catImg === undefined) {
-      NotificationManager.error("Please Upload an Categorie Image", "", 800);
+      NotificationManager.error("Please Upload an Category Image", "", 800);
       return false;
     }
     if (CategorieName.trim() === "" || CategorieName === undefined) {
-      NotificationManager.error("Please Enter a Categorie Name", "", 800);
+      NotificationManager.error("Please Enter a Category Name", "", 800);
       return false;
     }
     return true;
@@ -226,7 +226,7 @@ function CreateCategories() {
                 </div>
                 <div className="col-md-12 mb-1">
                   <label for="recipient-name" className="col-form-label">
-                    Categorie Name *
+                    Category Name *
                   </label>
                   <input
                     type="text"
