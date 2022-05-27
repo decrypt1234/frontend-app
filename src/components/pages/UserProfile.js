@@ -17,10 +17,10 @@ function Userprofile() {
     <div style={bgImgStyle}>
         <div className="container">
             <div className="row userinfo">
-                <div className="col-md-3 usersidebar">
+                <div className="col-lg-3 usersidebar">
                     <Sidebar />
                 </div>
-                <div className="col-md-9">
+                <div className="col-lg-9">
                     <Profile />
                 </div>
             </div>
