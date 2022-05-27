@@ -180,6 +180,7 @@ function CreateCollection() {
       NotificationManager.error("Please Enter the value for Royalty", "", 800);
       return false;
     }
+ 
     if (preSaleStartTime === "" || preSaleStartTime === undefined) {
       NotificationManager.error("Please Choose a Valid Start Date.");
       return false;
@@ -278,6 +279,7 @@ function CreateCollection() {
         //fd.append("chainID", chain);
         fd.append("contractAddress", contractAddress);
         fd.append("preSaleStartTime", preSaleStartTime);
+        fd.append("preSaleEndTime", datetime2)
         fd.append("totalSupply", maxSupply);
         fd.append("type", type);
         fd.append("price", price);
