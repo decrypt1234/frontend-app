@@ -5,7 +5,7 @@ import { getAllMPCollections } from '../../helpers/getterFunctions';
 import { marketPlaceCollection } from '../../Data/dummyJSON';
 
 var register_bg = {
-    backgroundImage: "url(../img/Marketplace/marketplace-bg.jpg)",
+    backgroundImage: "url(../img/marketplace/marketplace-bg.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPositionX: "center",

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/footer';
 
 var blog_bg = {
-    backgroundImage: "url(./img/blog/singleblog.jpg)",
+    backgroundImage: "url(./img/singleblog.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPositionX: "center",
@@ -34,7 +34,7 @@ function Blogdetails() {
                 <div className='row'>
                     <div className="col-md-7">
                         <div className="single-blog-detail">
-                            <img src={'../img/blog/single.png'} alt="" className="mb-4 img-fluid" />
+                            <img src={'../img/Blog/single.png'} alt="" className="mb-4 img-fluid" />
                             <p className="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque vestibulum, cursus morbi massa fermentum, a. Tellus cursus tortor amet morbi et eu. Non nullam tortor, vehicula lectus tortor malesuada nibh morbi. Quisque at vestibulum suscipit tincidunt mattis odio volutpat. Scelerisque elit eu nec diam quam. Gravida posuere sed tempus nisl habitant ultrices. Augue id mattis ipsum elit mi. Sollicitudin sit nisl tellus sed senectus sapien nec, purus, ultricies. Nibh diam nisi, eleifend velit quis risus tellus id tristique. Diam, ante mauris posuere pellentesque sit potenti scelerisque augue. Id pharetra sem et pharetra dignissim id amet. Semper aenean congue eros nec viverra faucibus varius nec. Nulla consectetur maecenas senectus interdum duis congue nisl, placerat. Lorem sed massa volutpat, posuere ornare vel mattis egestas. Viverra tristique vitae nibh vulputate cursus habitasse odio in. Magna lorem scelerisque semper convallis non. Lacinia ornare vestibulum ultrices urna ut et, vel felis eget. Vel, turpis sollicitudin pellentesque faucibus aenean mattis. In purus nunc turpis odio cursus orci, et tellus.</p>
                             <p className="mb-4">Sollicitudin sit nisl tellus sed senectus sapien nec, purus, ultricies. Nibh diam nisi, eleifend velit quis risus tellus id tristique. Diam, ante mauris posuere pellentesque sit potenti scelerisque augue. Id pharetra sem et pharetra dignissim id amet. Semper aenean congue eros nec viverra faucibus varius nec. Nulla consectetur maecenas senectus interdum duis congue nisl, placerat. Lorem sed massa volutpat, posuere ornare vel mattis egestas. Viverra tristique vitae nibh vulputate cursus habitasse odio in. Magna lorem scelerisque semper convallis non. Lacinia ornare vestibulum ultrices urna ut et, vel felis eget. Vel, turpis sollicitudin pellentesque faucibus aenean mattis. In purus nunc turpis odio cursus orci, et tellus.</p>
                             <ul>
@@ -61,7 +61,7 @@ function Blogdetails() {
                             <h5>Comments (1341)</h5>
                             <div className="row mb-5">
                                 <div className="col-md-2">
-                                    <img src={'../img/blog/comment_user.png'} alt="" className="img-fluid" />
+                                    <img src={'../img/Blog/comment_user.png'} alt="" className="img-fluid" />
                                 </div>
                                 <div className="col-md-10">
                                     <h6>User Name</h6>
@@ -71,7 +71,7 @@ function Blogdetails() {
                             </div>
                             <div className="row mb-5">
                                 <div className="col-md-2">
-                                    <img src={'../img/blog/comment_user.png'} alt="" className="img-fluid" />
+                                    <img src={'../img/Blog/comment_user.png'} alt="" className="img-fluid" />
                                 </div>
                                 <div className="col-md-10">
                                     <h6>User Name</h6>
@@ -81,7 +81,7 @@ function Blogdetails() {
                             </div>
                             <div className="row mb-5">
                                 <div className="col-md-2">
-                                    <img src={'../img/blog/comment_user.png'} alt="" className="img-fluid" />
+                                    <img src={'../img/Blog/comment_user.png'} alt="" className="img-fluid" />
                                 </div>
                                 <div className="col-md-10">
                                     <h6>User Name</h6>
