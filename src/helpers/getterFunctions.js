@@ -697,6 +697,7 @@ export const getUpcomingMints = async (req) => {
         };
       })
     : (formattedData[0] = {});
+   
   return formattedData;
 };
 

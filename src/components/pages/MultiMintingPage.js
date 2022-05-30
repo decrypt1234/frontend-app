@@ -18,7 +18,9 @@ const bgImage = {
 };
 
 function MultiMintingPage(props) {
-  
+  useEffect(() => {
+    window.scrollTo(0,0);
+  },[]);
   return (
     <div style={bgImgStyle}>
       <section className="collection_banner pdd_8" style={bgImage}></section>

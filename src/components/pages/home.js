@@ -183,16 +183,15 @@ const Home = () => {
               </h2>
             </div>
             {upcomingMints
-              ? upcomingMints.map((card, key) => {
-                  const st = moment(card.saleStartTime).subtract({'hours':4,'minutes':34}).format(
-                    "dddd, MMMM Do YYYY, h:mm:ss a"
-                  );
-                  const et = moment(card.saleStartTime).subtract({'hours':4,'minutes':34}).format(
-                    "dddd, MMMM Do YYYY, h:mm:ss a"
-                  );
-                  const ct = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+              ? upcomingMints.slice(0, 3).map((card, key) => {
+                console.log("upcoming mint-->",card.name)
+                  const st = card.saleStartTime;
+                  const et = card.saleEndTime;
+                  const ct = moment().add({
+                    'hours':5, 'minutes': 30
+                  }).toISOString();
                   return (
-                    <div className='col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4'>
+                    <div className='col-lg-4 col-md-6 col-sm-12 mb-lg-0 mb-xl-0 mb-4' key={key}>
                       <Link to={"/multimintingpage"}>
                         <div className='mint_box' style={mint_bg}>
                           <div className='mint_img'>
@@ -258,9 +257,12 @@ const Home = () => {
                                     fill='#428BC1'
                                   />
                                 </svg>
-                                <Clock deadline={moment(card.saleStartTime).subtract({'hours':4,'minutes':34})}></Clock>
+                                <Clock
+                                  deadline={moment(st).subtract({
+                                    'hours':5, 'minutes': 30
+                                  }).toISOString()}></Clock>
                               </span>
-                            ) : (ct >= st && ct < et) ? (
+                            ) : ct >= st && ct < et ? (
                               <span className='mint_time mt-4'>
                                 <svg
                                   width='19'
@@ -349,7 +351,7 @@ const Home = () => {
                                 </svg>
                                 Ongoing
                               </span>
-                            ) : 
+                            ) : (
                               <span className='mint_time mt-4'>
                                 <svg
                                   width='24'
@@ -468,7 +470,7 @@ const Home = () => {
                                 </svg>
                                 Launched
                               </span>
-                            }
+                            )}
                           </div>
                         </div>
                       </Link>
@@ -476,12 +478,15 @@ const Home = () => {
                   );
                 })
               : ""}
-
-            <div class='col-md-12 text-center mt-5'>
-              <Link to={"/mintcollectionlive"} className='view_all_bdr'>
-                View All
-              </Link>
-            </div>
+            {upcomingMints.length > 0 ? (
+              <div class='col-md-12 text-center mt-5'>
+                <Link to={"/mintcollectionlive"} className='view_all_bdr'>
+                  View All
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </section>
