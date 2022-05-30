@@ -10,14 +10,15 @@ function Marketplacecart() {
         page: 1,
         limit: 12,
         nftID: "",
-      collectionID: "",
-      userID: "",
-      categoryID: "",
-      brandID: "",
-      ERCType: "",
-      searchText: "",
-      isMinted: "",
-      }
+        collectionID: "",
+        isLazyMinted: false,
+        userID: "",
+        categoryID: "",
+        brandID: "",
+        ERCType: "",
+        searchText: "",
+        isMinted: "",
+      };
       const res = await getNFTs(reqData);
       console.log("result of getAllNFTs helper fn--->", res);
       setAllNFTs(res);

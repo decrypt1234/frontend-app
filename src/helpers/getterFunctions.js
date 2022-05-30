@@ -566,6 +566,7 @@ export const getNFTs = async (req) => {
       userID: req.userID,
       categoryID: req.categoryID,
       brandID: req.brandID,
+      isLazyMinted: req.isLazyMinted,
       ERCType: req.ERCType,
       searchText: req.searchText,
       isMinted: req.isMinted,

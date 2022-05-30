@@ -18,7 +18,6 @@ const bgImgStyle = {
 function MultiMintingPage(props) {
   const [currentUser, setCurrentUser] = useState();
   const [cookies, setCookie, removeCookie] = useCookies([]);
-  const [nfts, setNfts] = useState([]);
   const [collectionDetails, setCollectionDetails] = useState();
  
   const { id } = useParams();
@@ -69,7 +68,6 @@ function MultiMintingPage(props) {
         setCollectionDetails(collection.results[0][0]);
       }
 
-      console.log("nfts", nfts);
     };
     fetch();
   }, []);
