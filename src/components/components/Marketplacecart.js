@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAllNFTs } from "../../helpers/getterFunctions";
+import { getNFTs } from "../../helpers/getterFunctions";
 
 function Marketplacecart() {
   const [allNFTs, setAllNFTs] = useState([]);
   useEffect(async () => {
     try {
-      const res = await getAllNFTs({ page: 1, limit: 12, isLazyMinted: false });
+      const reqData = {
+        page: 1,
+        limit: 12,
+        nftID: "",
+        collectionID: "",
+        isLazyMinted: false,
+        userID: "",
+        categoryID: "",
+        brandID: "",
+        ERCType: "",
+        searchText: "",
+        isMinted: "",
+      };
+      const res = await getNFTs(reqData);
       console.log("result of getAllNFTs helper fn--->", res);
       setAllNFTs(res);
     } catch (e) {

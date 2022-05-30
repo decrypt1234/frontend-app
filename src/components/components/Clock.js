@@ -7,7 +7,7 @@ class Clock extends Component {
       days: 0,
       hours: 0,
       minutes: 0,
-      seconds: 0
+      seconds: 0,
     };
   }
   componentDidMount() {
@@ -18,7 +18,7 @@ class Clock extends Component {
     return num < 10 ? "0" + num : num;
   }
   getTimeUntil(deadline) {
-    const time = Date.parse(deadline) - Date.parse(new Date());
+    let time = Date.parse(deadline) - Date.parse(new Date());
     if (time < 0) {
       this.setState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     } else {
@@ -31,21 +31,19 @@ class Clock extends Component {
   }
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
-    this.setState = (state,callback)=>{
-        return;
+    this.setState = (state, callback) => {
+      return;
     };
   }
   render() {
     return (
-      <div className="d-flex">
-        <div className="Clock-days">{this.leading0(this.state.days)}d</div>
-        <div className="Clock-hours">
-          {this.leading0(this.state.hours)}h
-        </div>
-        <div className="Clock-minutes">
+      <div className='d-flex'>
+        <div className='Clock-days'>{this.leading0(this.state.days)}d</div>
+        <div className='Clock-hours'>{this.leading0(this.state.hours)}h</div>
+        <div className='Clock-minutes'>
           {this.leading0(this.state.minutes)}m
         </div>
-        <div className="Clock-seconds">
+        <div className='Clock-seconds'>
           {this.leading0(this.state.seconds)}s
         </div>
       </div>

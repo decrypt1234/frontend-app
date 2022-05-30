@@ -63,7 +63,7 @@ const App = (props) => {
         <Route path="/register" element={<Register />} />
         <Route path="/marketplaceCollection" element={<Marketplacecollection />} />
         <Route path="/marketplace" element={<Marketplace />} />
-        <Route path="/NFTdetails" element={<NFTDetails />} />
+        <Route path="/NFTdetails/:id" element={<NFTDetails />} />
         <Route path="/updateProfile" element={<UpdateProfile />} />
         <Route path="/userprofile"element={<UserProfile />} />
         <Route path="/profile" element={<Profile />} />

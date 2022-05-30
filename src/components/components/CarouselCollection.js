@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "./slick-loader/slider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getHotCollections } from "../../helpers/getterFunctions";
+import { getCollections } from "../../helpers/getterFunctions";
 
 
 
@@ -10,7 +10,7 @@ function CarouselCollection() {
   const [hotCollections, setHotCollections] = useState([]);
   useEffect(async () => {
     try {
-      const res = await getHotCollections({
+      const res = await getCollections({
         page: 1,
         limit: 12,
         isHotCollection: 1,

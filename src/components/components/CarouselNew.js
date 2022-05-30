@@ -3,7 +3,7 @@ import Slider from "./slick-loader/slider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
-import { getAllNFTs } from "./../../helpers/getterFunctions";
+import { getNFTs } from "./../../helpers/getterFunctions";
 import "./../components-css/App.css";
 
 function ItemsList() {
@@ -11,7 +11,19 @@ function ItemsList() {
   const [putOnSaleItems, setPutOnSaleItems] = useState([]);
   useEffect(async() => {
     try{
-      const res = await getAllNFTs({page: 1, limit: 12});
+      const reqData = {
+        page: 1,
+        limit: 12,
+        nftID: "",
+      collectionID: "",
+      userID: "",
+      categoryID: "",
+      brandID: "",
+      ERCType: "",
+      searchText: "",
+      isMinted: "",
+      }
+      const res = await getNFTs(reqData);
       console.log("result of getPutOnSaleItems helper fn--->",res);
       setPutOnSaleItems(res);
     }
@@ -77,6 +89,7 @@ function ItemsList() {
         {
           putOnSaleItems ? putOnSaleItems.map((card, key) => {
             return (
+              <a href={`/NFTdetails/${card.id}`}>
               <div className='items_slide'>
               <div className='items_profileimg'>
                 <div className='profile_left'>
@@ -106,9 +119,10 @@ function ItemsList() {
                   </span>
                 </div>
               </div>
-              <Link to={'/NFTdetails'} className='border_btn width-100 title_color'>Buy</Link>
+              <Link to={`/NFTdetails/${card.id}`} className='border_btn width-100 title_color'>Buy</Link>
             </div>
           </div>
+          </a>
             )
           }) : ""
         } 
