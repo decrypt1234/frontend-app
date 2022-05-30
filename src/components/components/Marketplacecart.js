@@ -6,7 +6,7 @@ function Marketplacecart() {
   const [allNFTs, setAllNFTs] = useState([]);
   useEffect(async () => {
     try {
-      const res = await getAllNFTs({ page: 1, limit: 12, isLazyMinted: 0 });
+      const res = await getAllNFTs({ page: 1, limit: 12, isLazyMinted: false });
       console.log("result of getAllNFTs helper fn--->", res);
       setAllNFTs(res);
     } catch (e) {
