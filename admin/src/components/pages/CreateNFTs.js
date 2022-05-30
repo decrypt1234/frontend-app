@@ -117,6 +117,18 @@ function CreateNFTs() {
         console.log("collectionDetail", collectionDetail);
         collectionDetail = collectionDetail?.results[0][0];
         console.log("collectionDetail11", collectionDetail);
+        if (collectionDetail.totalSupply < collectionDetail.nftCount + 1) {
+          console.log(
+            "collection.totalSupply",
+            collectionDetail.totalSupply < collectionDetail.nftCount + 1
+          );
+          NotificationManager.error(
+            "Total Supply exceeded max supply",
+            "",
+            800
+          );
+          return;
+        }
         fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
         fd.append("levels", JSON.stringify([]));
         fd.append("creatorAddress", currentUser.toLowerCase());
@@ -207,14 +219,14 @@ function CreateNFTs() {
 
         NotificationManager.success("NFT created successfully", "", 800);
         console.log("NFTcontract", NFTcontract);
-        // setTimeout(() => {
-        //   window.location.href = "/createcollection";
-        // }, 1000);
+        setTimeout(() => {
+          window.location.href = "/createcollection";
+        }, 1000);
       } catch (e) {
         console.log("e", e);
-        // setTimeout(() => {
-        //   window.location.href = "/createcollection";
-        // }, 1000);
+        setTimeout(() => {
+          window.location.href = "/createcollection";
+        }, 1000);
         return;
       }
     }
