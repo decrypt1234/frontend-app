@@ -7,6 +7,7 @@ import {
   getAllCollections,
   GetBrand,
   GetMyCollectionsList,
+  GetMyNftList,
   getNFTList,
 } from "../../apiServices";
 import { useCookies } from "react-cookie";
@@ -14,7 +15,7 @@ import extendedERC721Abi from "./../../config/abis/extendedERC721.json";
 import { exportInstance } from "../../apiServices";
 import contracts from "./../../config/contracts";
 import { getSignature } from "./../../helpers/getterFunctions";
-import { GENERAL_TIMESTAMP } from "../../helpers/constants";
+import { GENERAL_DATE, GENERAL_TIMESTAMP } from "../../helpers/constants";
 
 function CreateNFTs() {
   const [nftImg, setNftImg] = useState();
@@ -80,17 +81,8 @@ function CreateNFTs() {
       let reqBody = {
         page: 1,
         limit: 12,
-        nftID: "",
-        collectionID: "",
-        userID: "",
-        categoryID: "",
-        brandID: "",
-        ERCType: "",
-        searchText: "",
-        filterString: "",
-        isMinted: "",
       };
-      let res = await getNFTList(reqBody);
+      let res = await GetMyNftList(reqBody);
       if (res && res.results && res.results.length > 0) {
         setNfts(res.results[0]);
         setTotalCount(res.count);
@@ -147,7 +139,7 @@ function CreateNFTs() {
       }
       try {
         NFTcontract = await exportInstance(
-          "0xa056f9c1770620a889c3c4e56e0ddcb239534c8c",
+          collectionDetail.contractAddress,
           extendedERC721Abi.abi
         );
         let approval = await NFTcontract.isApprovedForAll(
@@ -184,7 +176,7 @@ function CreateNFTs() {
         collectionDetail.contractAddress,
         collectionDetail.nextID,
         quantity,
-        collectionDetail.type,
+        0,
         contracts.USDT,
         collectionDetail.price.$numberDecimal,
         GENERAL_TIMESTAMP,
@@ -193,7 +185,7 @@ function CreateNFTs() {
         salt,
       ];
 
-      console.log("currentUser, ...sellerOrder", currentUser, ...sellerOrder);
+      console.log("sellerOrder", sellerOrder);
       try {
         let signature = await getSignature(currentUser, ...sellerOrder);
         let reqParams = {
@@ -206,21 +198,23 @@ function CreateNFTs() {
           deadline: GENERAL_TIMESTAMP,
           signature: signature,
           tokenId: collectionDetail.nextID,
+          deadlineDate: GENERAL_DATE,
           // auctionEndDate: _auctionEndDate,
           salt: salt,
         };
 
         let res1 = await createOrder(reqParams);
+
         NotificationManager.success("NFT created successfully", "", 800);
         console.log("NFTcontract", NFTcontract);
-        setTimeout(() => {
-          window.location.href = "/createcollection";
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.href = "/createcollection";
+        // }, 1000);
       } catch (e) {
         console.log("e", e);
-        setTimeout(() => {
-          window.location.href = "/createcollection";
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.href = "/createcollection";
+        // }, 1000);
         return;
       }
     }

@@ -41,8 +41,8 @@ function MultiMintingPage(props) {
   useEffect(() => {
     const fetch = async () => {
       let reqBody = { page: 1, limit: 12, collectionID: id };
-      let nfts = await getNFTList(reqBody);
-      if (nfts && nfts.results && nfts.results.length > 0) setNfts(nfts);
+      // let nfts = await getNFTList(reqBody);
+      // if (nfts && nfts.results && nfts.results.length > 0) setNfts(nfts);
       reqBody = {
         page: 1,
         limit: 12,
@@ -70,9 +70,7 @@ function MultiMintingPage(props) {
     fetch();
   }, []);
 
-  const handleNftMint = async ()=>{
-    
-  }
+ 
 
   return (
     <div style={bgImgStyle}>

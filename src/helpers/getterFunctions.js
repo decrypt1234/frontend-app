@@ -1,19 +1,24 @@
-// import {
-//   exportInstance,
-//   GetCollectionsByAddress,
-//   GetCollectionsNftList,
-//   GetMyCollectionsList,
-//   GetMyLikedNft,
-//   GetMyNftList,
-//   GetMyOnSaleNft,
-//   GetNftDetails,
-//   getOrderDetails,
-// } from "../apiServices";
+import {
+  exportInstance,
+  //   GetCollectionsByAddress,
+  //   GetCollectionsNftList,
+  //   GetMyCollectionsList,
+  //   GetMyLikedNft,
+  //   GetMyNftList,
+  //   GetMyOnSaleNft,
+  //   GetNftDetails,
+  getOrderDetails,
+} from "../apiServices";
 // import { ethers } from "ethers";
 // import contracts from "../config/contracts";
-// import erc20Abi from "./../config/abis/erc20.json";
-// import erc721Abi from "./../config/abis/simpleERC721.json";
-// import erc1155Abi from "./../config/abis/simpleERC1155.json";
+import erc20Abi from "./../config/abis/erc20.json";
+import erc721Abi from "./../config/abis/simpleERC721.json";
+import erc1155Abi from "./../config/abis/simpleERC1155.json";
+import {
+  getAllCollections,
+  GetAllUserDetails,
+  getNFTList,
+} from "../apiServices";
 // import { fetchBidNft } from "../apiServices";
 // import { GENERAL_DATE, GENERAL_TIMESTAMP } from "./constants";
 // import NotificationManager from "react-notifications/lib/NotificationManager";
@@ -28,32 +33,54 @@
 //   return Object.keys(obj).length === 0;
 // };
 
-// export const buildSellOrder = async (id) => {
-//   let details;
-//   try {
-//     details = await getOrderDetails({ orderId: id });
-//     console.log("details 123", details.oPrice?.$numberDecimal);
-//     const order = [
-//       details.oSellerWalletAddress,
-//       details.oTokenAddress,
-//       details.oTokenId,
-//       details.oQuantity,
-//       details.oType,
-//       details.oPaymentToken,
-//       details.oPrice ? details.oPrice.$numberDecimal : "0",
-//       details.oValidUpto,
-//       details.oBundleTokens,
-//       details.oBundleTokensQuantities,
-//       details.oSalt,
-//     ];
+export const buildSellOrder = async (id) => {
+  let details;
+  try {
+    details = await getOrderDetails({ orderId: id });
+    console.log("details 123", details);
+    const order = [
+      details.sellerID?.walletAddress.toLowerCase(),
+      details.tokenAddress,
+      details.tokenID,
+      details.total_quantity,
+      details.salesType,
+      details.paymentToken,
+      details.price ? details.price.$numberDecimal : "0",
+      details.deadline,
+      details.bundleTokens,
+      details.bundleTokensQuantities,
+      details.salt,
+    ];
 
-//     console.log("getOrder", order);
+    console.log("getOrder", order);
 
-//     return order;
-//   } catch (e) {
-//     console.log("error in api", e);
-//   }
-// };
+    return order;
+  } catch (e) {
+    console.log("error in api", e);
+  }
+};
+
+export const GetOwnerOfToken = async (
+  collection,
+  tokenId,
+  isERC721,
+  account
+) => {
+  let collectionInstance = await exportInstance(
+    collection,
+    isERC721 ? erc721Abi.abi : erc1155Abi.abi
+  );
+  console.log("collectionInsatnce", collectionInstance);
+  let balance = 0;
+  if (isERC721) {
+    let owner = await collectionInstance.ownerOf(tokenId);
+    if (owner.toLowerCase() === account.toLowerCase()) {
+      balance = "1";
+    }
+  } else balance = await collectionInstance.balanceOf(account, tokenId);
+  console.log("balance", balance.toString());
+  return balance.toString();
+};
 
 // export const getUsersNFTs = async (
 //   paramType,
@@ -469,28 +496,6 @@
 //   return formattedData;
 // };
 
-// export const GetOwnerOfToken = async (
-//   collection,
-//   tokenId,
-//   isERC721,
-//   account
-// ) => {
-//   let collectionInstance = await exportInstance(
-//     collection,
-//     isERC721 ? erc721Abi.abi : erc1155Abi.abi
-//   );
-//   console.log("collectionInsatnce", collectionInstance);
-//   let balance = 0;
-//   if (isERC721) {
-//     let owner = await collectionInstance.ownerOf(tokenId);
-//     if (owner.toLowerCase() === account.toLowerCase()) {
-//       balance = "1";
-//     }
-//   } else balance = await collectionInstance.balanceOf(account, tokenId);
-//   console.log("balance", balance.toString());
-//   return balance.toString();
-// };
-
 // export const getMaxAllowedDate = () => {
 //   var dtToday = new Date();
 
@@ -503,12 +508,6 @@
 //   var maxDate = year + "-" + month + "-" + day;
 //   return maxDate;
 // };
-
-import {
-  getAllCollections,
-  GetAllUserDetails,
-  getNFTList,
-} from "../apiServices";
 
 export const getAllMPCollections = async (req) => {
   let data = [];
@@ -557,6 +556,7 @@ export const getAllNFTs = async (req) => {
     let reqBody = {
       page: req.page,
       limit: req.limit,
+      isLazyMinted: req.isLazyMinted,
       nftID: "",
       collectionID: "",
       userID: "",
