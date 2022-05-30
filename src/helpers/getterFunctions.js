@@ -591,6 +591,8 @@ export const getNFTs = async (req) => {
           Qty: nft.totalQuantity,
           collection: nft.collectionID,
           assetsInfo: nft?.assetsInfo[0],
+          catergoryInfo: nft?.categoryID,
+          tokenId : nft.tokenID
         };
       })
     : (formattedData[0] = {});
