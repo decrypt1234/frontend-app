@@ -196,12 +196,15 @@ const Home = () => {
                         <div className='mint_box' style={mint_bg}>
                           <div className='mint_img'>
                             <img alt='' src={card.coverImg} class='img-fluid' />
-                            <div className='mint_date'>
+                            {
+                              (ct >= st && ct < et) ? "" :  <div className='mint_date'>
                               <span>
                                 {moment(card.saleStartTime).format("DD")}
                               </span>{" "}
                               {moment(card.saleStartTime).format("MMM")}
-                            </div>
+                            </div> 
+                            }
+                           
                           </div>
                           <div className='mint_text p-4'>
                             <img
