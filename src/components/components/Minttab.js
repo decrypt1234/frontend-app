@@ -7,6 +7,8 @@ var mint_bg = {
   };
 
 function Minttab() {
+  
+
   return (
     <div className="container">
         <ul className="nav nav-pills mb-5 mint_tab" id="pills-tab" role="tablist">

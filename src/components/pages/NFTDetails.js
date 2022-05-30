@@ -331,7 +331,7 @@ function NFTDetails() {
               <ul className='nft_detaillist'>
                 <li>
                   <span className='asset_title'>Contact Address</span>
-                  <span className='asset_detail'>{(NFTDetails.collection?.contractAddress).slice(0,4) + "..." + (NFTDetails.collection?.contractAddress).slice(38,42)}</span>
+                  <span className='asset_detail'>{(NFTDetails.collection?.contractAddress)?.slice(0,4) + "..." + (NFTDetails.collection?.contractAddress)?.slice(38,42)}</span>
                 </li>
                 <li>
                   <span className='asset_title'>Token ID</span>
