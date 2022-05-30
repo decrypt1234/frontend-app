@@ -342,6 +342,32 @@ export const GetMyCollectionsList = async (data) => {
   }
 };
 
+export const GetMyNftList = async (data) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("Authorization"),
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_API_BASE_URL + "/nft/myNFTs",
+      requestOptions
+    );
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+    const datas = isJson && (await response.json());
+    console.log("nft data---->", datas);
+    return datas.data;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const addBrand = async (data) => {
   const requestOptions = {
     method: "POST",

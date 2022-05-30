@@ -4,7 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import Wallet from "../SVG/wallet";
-import { getNFTList } from "../../apiServices";
+import { getNFTList, GetOrdersByNftId } from "../../apiServices";
+import { handleBuyNft } from "../../helpers/sendFunctions";
+import { useCookies } from "react-cookie";
+import NotificationManager from "react-notifications/lib/NotificationManager";
 
 function MintEventSlider(props) {
   var settings = {
@@ -15,9 +18,9 @@ function MintEventSlider(props) {
     dots: false,
     speed: 300,
     centerPadding: "0px",
-    infinite: false,
-    autoplaySpeed: 5000,
-    autoplay: true,
+    infinite: true,
+    // autoplaySpeed: 5000,
+    // autoplay: true,
     initialSlide: 0,
     responsive: [
       {
@@ -40,13 +43,29 @@ function MintEventSlider(props) {
   };
 
   const [nfts, setNfts] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
+  const [cookies, setCookie, removeCookie] = useCookies([]);
   const [currQty, setCurrQty] = useState(0);
+  const [selectedNft, setSelectedNft] = useState(0);
+  const [orders, setOrders] = useState([]);
   let mint = [];
+
+  useEffect(() => {
+    if (cookies.selected_account) setCurrentUser(cookies.selected_account);
+    else NotificationManager.error("Connect Yout Wallet", "", 800);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("current user is---->", currentUser, cookies.selected_account);
+  }, [currentUser]);
 
   useEffect(() => {
     console.log("props.id", props.id);
     const fetch = async () => {
-      let reqBody = { page: 1, limit: 12, collectionID: props.id };
+      let reqBody = {
+        page: 1,
+        limit: 100,
+        collectionID: props.id,
+        isLazyMinted: true,
+      };
       let nfts = await getNFTList(reqBody);
       if (nfts && nfts.results && nfts.results.length > 0) {
         for (let i = 0; i < nfts.results.length; i++) {
@@ -57,6 +76,34 @@ function MintEventSlider(props) {
     };
     fetch();
   }, [props.id]);
+
+  const handleMint = async (i) => {
+    let id, isERC721, account, balance, qty;
+    id = nfts[i]._id;
+    isERC721 = nfts[i].type == 1;
+    account = currentUser;
+    balance = 10000;
+    qty = currQty;
+
+    let orders = await GetOrdersByNftId({ nftId: id });
+    console.log("orders", orders);
+    console.log(
+      "id, isERC721, account, balance, qty",
+      orders.results[0]._id,
+      isERC721,
+      account,
+      balance,
+      qty
+    );
+    await handleBuyNft(
+      orders?.results[0]?._id,
+      isERC721,
+      account,
+      balance,
+      qty,
+      1
+    );
+  };
 
   return (
     <Slider {...settings}>
@@ -69,7 +116,7 @@ function MintEventSlider(props) {
                   Start
                   <span>Live</span>
                 </div>
-                <h4>Mint Event</h4>
+                <h4>{n.name}</h4>
                 <p>
                   {props.leftQty} / {n.totalQuantity} Minted
                 </p>
@@ -87,7 +134,6 @@ function MintEventSlider(props) {
                   <div className="qt_selector">
                     <button
                       onClick={() => {
-                       
                         let mint = currQty - 1;
                         setCurrQty(Number(mint));
                       }}
@@ -108,7 +154,6 @@ function MintEventSlider(props) {
 
                     <button
                       onClick={() => {
-                      
                         let mint = currQty + 1;
                         setCurrQty(Number(mint));
                       }}
@@ -117,7 +162,14 @@ function MintEventSlider(props) {
                     </button>
                   </div>
                   <div className="mint_btn mt-4">
-                    <button className="" type="button">
+                    <button
+                      className=""
+                      type="button"
+                      onClick={async (e) => {
+                        console.log("index", i);
+                        await handleMint(i);
+                      }}
+                    >
                       Mint
                     </button>
                   </div>

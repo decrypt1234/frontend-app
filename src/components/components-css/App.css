@@ -3344,6 +3344,8 @@ button#btn-submit {
   margin: 0px 15px;
 } */
 .da_img img {
+  height: 100%;
+  object-fit: cover;
   width: 100%;
 }
 
@@ -4188,4 +4190,9 @@ a:hover {
 .Clock-hours,
 .Clock-minutes {
   margin-right: 4px;
+}
+
+.da_img {
+  height: 100px;
+  width: 100%;
 }
