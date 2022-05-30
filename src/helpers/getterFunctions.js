@@ -504,7 +504,11 @@
 //   return maxDate;
 // };
 
-import { getAllCollections, GetAllUserDetails, getNFTList } from "../apiServices";
+import {
+  getAllCollections,
+  GetAllUserDetails,
+  getNFTList,
+} from "../apiServices";
 
 export const getAllMPCollections = async (req) => {
   let data = [];
@@ -522,7 +526,7 @@ export const getAllMPCollections = async (req) => {
       filterString: "",
       isMinted: "",
       isHotCollection: "",
-      isExclusive: ""
+      isExclusive: "",
     };
 
     data = await getAllCollections(reqBody);
@@ -601,7 +605,7 @@ export const getHotCollections = async (req) => {
       filterString: "",
       isMinted: "",
       isHotCollection: req.isHotCollection,
-      isExclusive: ""
+      isExclusive: "",
     };
 
     data = await getAllCollections(reqBody);
@@ -628,16 +632,15 @@ export const getHotCollections = async (req) => {
 export const getAuthors = async () => {
   let data = [];
   let formattedData = [];
-  try{
+  try {
     let reqBody = {
       page: 1,
       limit: 12,
-      searchText: ""
-    }
+      searchText: "",
+    };
     data = await GetAllUserDetails(reqBody);
     console.log("get all collections--->", data);
-  }
-  catch(e){
+  } catch (e) {
     console.log("Error in getAllUserDetails API--->", e);
   }
   let arr = [];
@@ -647,14 +650,12 @@ export const getAuthors = async () => {
     ? arr.map((author, key) => {
         formattedData[key] = {
           profile: author.profileIcon,
-          name: author.username
-         
+          name: author.username,
         };
       })
     : (formattedData[0] = {});
   return formattedData;
 };
-
 
 export const getUpcomingMints = async (req) => {
   let data = [];
@@ -672,7 +673,7 @@ export const getUpcomingMints = async (req) => {
       filterString: "",
       isMinted: "",
       isHotCollection: "",
-      isExclusive: req.isExclusive
+      isExclusive: req.isExclusive,
     };
 
     data = await getAllCollections(reqBody);
@@ -686,6 +687,7 @@ export const getUpcomingMints = async (req) => {
   arr
     ? arr.map((coll, key) => {
         formattedData[key] = {
+          _id: coll._id,
           logoImg: coll.logoImage,
           coverImg: coll.coverImage,
           name: coll.name,
@@ -693,12 +695,10 @@ export const getUpcomingMints = async (req) => {
           saleStartTime: coll.preSaleStartTime,
           saleEndTime: coll.preSaleEndTime,
           price: coll.price.$numberDecimal,
-          items: coll.nftCount
+          items: coll.nftCount,
         };
       })
     : (formattedData[0] = {});
    
   return formattedData;
 };
-
-

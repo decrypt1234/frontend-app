@@ -1,6 +1,10 @@
-import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Footer from "../components/footer";
 import MintEventSlider from "../components/MintEventSlider";
+import { getAllCollections, getNFTList } from "../../apiServices";
+import { useCookies } from "react-cookie";
+import NotificationManager from "react-notifications/lib/NotificationManager";
 
 const bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -9,12 +13,6 @@ const bgImgStyle = {
   backgroundPositionX: "center",
   backgroundPositionY: "center",
   backgroundColor: "#000",
-};
-
-const bgImage = {
-  backgroundImage: "url(./img/collections/collection_bg.jpg)",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
 };
 
 function MultiMintingPage(props) {
@@ -29,7 +27,7 @@ function MultiMintingPage(props) {
           <div className="collection_pick">
             <img
               alt=""
-              src={"../img/collections/barrett.png"}
+              src={collectionDetails?.logoImage}
               class="img-fluid collection_profile"
             />
             <img
@@ -38,7 +36,9 @@ function MultiMintingPage(props) {
               class="img-fluid check_img"
             />
           </div>
-          <h1 className="collection_title text-center">Barrett Firarms</h1>
+          <h1 className="collection_title text-center">
+            {collectionDetails?.name}
+          </h1>
           <ul class="collection_social mb-4">
             <li>
               <a href="/">
@@ -68,11 +68,11 @@ function MultiMintingPage(props) {
           </ul>
           <ul className="collection_status mt-5 mb-5">
             <li>
-              <h4>10.0k</h4>
+              <h4>{collectionDetails?.totalSupply}</h4>
               <p>items</p>
             </li>
             <li>
-              <h4>2000</h4>
+              <h4>{collectionDetails?.price.$numberDecimal}</h4>
               <p>HNTR</p>
             </li>
             <li>
@@ -81,15 +81,7 @@ function MultiMintingPage(props) {
             </li>
           </ul>
           <div className="collection_description text-center">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa
-              fringilla eget quam fringilla pharetra scelerisque arcu aliquam
-              lacus. Non, tortor et lobortis facilisi nam. Adipiscing non
-              feugiat ultrices natoque a. Imperdiet eget tellus tempor ultricies
-              ipsum vitae. Felis elit nisi nunc sagittis morbi arcu, sed. Diam
-              diam ligula aliquet sollicitudin diam et pellentesque. Tempor
-              turpis nunc turpis ornare facilisis porttitor morbi tellus nullam.
-            </p>
+            <p>{collectionDetails?.description}</p>
             <span className="top_arrow">
               <img alt="" src={"../img/top_arrow.png"} class="img-fluid" />
             </span>
@@ -99,7 +91,13 @@ function MultiMintingPage(props) {
       <section className="collection_list mb-5 pb-5">
         <div className="container">
           <div className="event_slider">
-            <MintEventSlider />
+            <MintEventSlider
+              id={id}
+              price={collectionDetails?.price.$numberDecimal}
+              leftQty={
+                collectionDetails?.totalSupply - collectionDetails?.nftCount
+              }
+            />
           </div>
         </div>
       </section>
