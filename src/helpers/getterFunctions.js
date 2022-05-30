@@ -510,23 +510,23 @@ import {
   getNFTList,
 } from "../apiServices";
 
-export const getAllMPCollections = async (req) => {
+export const getCollections = async (req) => {
   let data = [];
   let formattedData = [];
   try {
     let reqBody = {
       page: req.page,
       limit: req.limit,
-      collectionID: "",
-      userID: "",
-      categoryID: "",
-      brandID: "",
-      ERCType: "",
-      searchText: "",
-      filterString: "",
-      isMinted: "",
-      isHotCollection: "",
-      isExclusive: "",
+      collectionID: req.collectionID,
+      userID: req.userID,
+      categoryID: req.categoryID,
+      brandID: req.brandID,
+      ERCType: req.ERCType,
+      searchText: req.searchText,
+      filterString: req.filterString,
+      isMinted: req.isMinted,
+      isHotCollection: req.isHotCollection,
+      isExclusive: req.isExclusive,
     };
 
     data = await getAllCollections(reqBody);
@@ -540,31 +540,36 @@ export const getAllMPCollections = async (req) => {
   arr
     ? arr.map((coll, key) => {
         formattedData[key] = {
+          _id: coll._id,
           logoImg: coll.logoImage,
           coverImg: coll.coverImage,
           name: coll.name,
           desc: coll.description,
+          saleStartTime: coll.preSaleStartTime,
+          saleEndTime: coll.preSaleEndTime,
+          price: coll.price.$numberDecimal,
+          items: coll.nftCount
         };
       })
     : (formattedData[0] = {});
   return formattedData;
 };
 
-export const getAllNFTs = async (req) => {
+export const getNFTs = async (req) => {
   let data = [];
   let formattedData = [];
   try {
     let reqBody = {
       page: req.page,
       limit: req.limit,
-      nftID: "",
-      collectionID: "",
-      userID: "",
-      categoryID: "",
-      brandID: "",
-      ERCType: "",
-      searchText: "",
-      isMinted: "",
+      nftID: req.nftID,
+      collectionID: req.collectionID,
+      userID: req.userID,
+      categoryID: req.categoryID,
+      brandID: req.brandID,
+      ERCType: req.ERCType,
+      searchText: req.searchText,
+      isMinted: req.isMinted,
     };
 
     data = await getNFTList(reqBody);
@@ -578,51 +583,15 @@ export const getAllNFTs = async (req) => {
   arr
     ? arr.map((nft, key) => {
         formattedData[key] = {
+          id: nft._id,
           image: nft.image,
           name: nft.name,
           desc: nft.description,
           like:
             nft.user_likes?.length === undefined ? 0 : nft.user_likes?.length,
-        };
-      })
-    : (formattedData[0] = {});
-  return formattedData;
-};
-
-export const getHotCollections = async (req) => {
-  let data = [];
-  let formattedData = [];
-  try {
-    let reqBody = {
-      page: req.page,
-      limit: req.limit,
-      collectionID: "",
-      userID: "",
-      categoryID: "",
-      brandID: "",
-      ERCType: "",
-      searchText: "",
-      filterString: "",
-      isMinted: "",
-      isHotCollection: req.isHotCollection,
-      isExclusive: "",
-    };
-
-    data = await getAllCollections(reqBody);
-    console.log("get all collections--->", data);
-  } catch (e) {
-    console.log("Error in getCollections API--->", e);
-  }
-  let arr = [];
-  if (data && data.results && data.results.length > 0) arr = data.results[0];
-  else return [];
-  arr
-    ? arr.map((coll, key) => {
-        formattedData[key] = {
-          logoImg: coll.logoImage,
-          coverImg: coll.coverImage,
-          name: coll.name,
-          desc: coll.description,
+            Qty: nft.totalQuantity,
+          collection: nft.collectionID,
+          assetsInfo: nft?.assetsInfo[0]
         };
       })
     : (formattedData[0] = {});
@@ -657,48 +626,3 @@ export const getAuthors = async () => {
   return formattedData;
 };
 
-export const getUpcomingMints = async (req) => {
-  let data = [];
-  let formattedData = [];
-  try {
-    let reqBody = {
-      page: req.page,
-      limit: req.limit,
-      collectionID: "",
-      userID: "",
-      categoryID: "",
-      brandID: "",
-      ERCType: "",
-      searchText: "",
-      filterString: "",
-      isMinted: "",
-      isHotCollection: "",
-      isExclusive: req.isExclusive,
-    };
-
-    data = await getAllCollections(reqBody);
-    console.log("get all collections--->", data);
-  } catch (e) {
-    console.log("Error in getCollections API--->", e);
-  }
-  let arr = [];
-  if (data && data.results && data.results.length > 0) arr = data.results[0];
-  else return [];
-  arr
-    ? arr.map((coll, key) => {
-        formattedData[key] = {
-          _id: coll._id,
-          logoImg: coll.logoImage,
-          coverImg: coll.coverImage,
-          name: coll.name,
-          desc: coll.description,
-          saleStartTime: coll.preSaleStartTime,
-          saleEndTime: coll.preSaleEndTime,
-          price: coll.price.$numberDecimal,
-          items: coll.nftCount,
-        };
-      })
-    : (formattedData[0] = {});
-   
-  return formattedData;
-};

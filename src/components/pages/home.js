@@ -10,7 +10,7 @@ import Reveal from "react-awesome-reveal";
 import { keyframes } from "@emotion/react";
 import { Link } from "react-router-dom";
 import Clock from "./../components/Clock";
-import { getUpcomingMints } from "../../helpers/getterFunctions";
+import { getCollections } from "../../helpers/getterFunctions";
 import moment from "moment";
 
 const fadeInUp = keyframes`
@@ -67,10 +67,10 @@ const Home = () => {
   const [upcomingMints, setUpcomingMints] = useState([]);
   useEffect(async () => {
     try {
-      const res = await getUpcomingMints({
+      const res = await getCollections({
         page: 1,
         limit: 12,
-        isExclusive: 0,
+        isExclusive: 1,
       });
       console.log("result of getUpcomingMints helper fn--->", res);
       setUpcomingMints(res);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import Footer from "../components/footer";
 import { Link } from 'react-router-dom';
-import { getAllMPCollections } from '../../helpers/getterFunctions';
+import { getCollections } from '../../helpers/getterFunctions';
 import { marketPlaceCollection } from '../../Data/dummyJSON';
 
 var register_bg = {
@@ -27,7 +27,11 @@ function Marketplacecollection() {
 
   useEffect(async() => {
     try{
-      const res = await getAllMPCollections({page: 1, limit: 12});
+        const reqData = {
+            page: 1,
+            limit: 12
+        }
+      const res = await getCollections(reqData);
       console.log("result of getALLCollections helper fn--->",res);
       setAllCollections(res);
     }
