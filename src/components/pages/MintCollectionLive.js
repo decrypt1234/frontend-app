@@ -40,50 +40,55 @@ function MintCollectionLive() {
       const res = await getCollections(reqData);
       console.log("all collections in mintcollection live page--->", res);
       setAllCollections(res);
-      
     } catch (e) {
       console.log("Error in fetching all collections list", e);
     }
   }, []);
 
-//   const handleCollection = () => {
-//     allCollections.map((coln) => {
-//       const st = coln.saleStartTime;
-//       const et = coln.saleEndTime;
-//       const ct = moment().add({ hours: 5, minutes: 30 }).toISOString();
+  //   const handleCollection = () => {
+  //     allCollections.map((coln) => {
+  //       const st = coln.saleStartTime;
+  //       const et = coln.saleEndTime;
+  //       const ct = moment().add({ hours: 5, minutes: 30 }).toISOString();
 
-//       if (ct < st) {
-//         setUpcoming(upcoming.push(coln));
-//       } else if (ct >= st && ct < et) {
-//         setOngoing(ongoing.push(coln));
-//       } else {
-//         setLaunched(launched.push(coln));
-//       }
-//     });
-//     console.log("upcoming coll", upcoming);
-//     console.log("ongoing coll", ongoing);
-//     console.log("launched", launched);
-//   };
+  //       if (ct < st) {
+  //         setUpcoming(upcoming.push(coln));
+  //       } else if (ct >= st && ct < et) {
+  //         setOngoing(ongoing.push(coln));
+  //       } else {
+  //         setLaunched(launched.push(coln));
+  //       }
+  //     });
+  //     console.log("upcoming coll", upcoming);
+  //     console.log("ongoing coll", ongoing);
+  //     console.log("launched", launched);
+  //   };
 
   useEffect(() => {
+    let _ongoing = [];
+    let _upcoming = [];
+    let _launched = [];
     allCollections.map((coln) => {
-        const st = coln.saleStartTime;
-        const et = coln.saleEndTime;
-        const ct = moment().add({ hours: 5, minutes: 30 }).toISOString();
-  
-        if (ct < st) {
-          setUpcoming(upcoming.push(coln));
-        } else if (ct >= st && ct < et) {
-          setOngoing(ongoing.push(coln));
-        } else {
-          setLaunched(launched.push(coln));
-        }
-      });
-      console.log("upcoming coll", upcoming);
-      console.log("ongoing coll", ongoing);
-      console.log("launched", launched);
-    
-  },[allCollections])
+      const st = coln.saleStartTime;
+      const et = coln.saleEndTime;
+      const ct = moment().add({ hours: 5, minutes: 30 }).toISOString();
+
+      if (ct < st) {
+        _upcoming.push(coln);
+      } else if (ct >= st && ct < et) {
+        _ongoing.push(coln);
+        // setOngoing(ongoing.push(coln));
+      } else {
+        _launched.push(coln);
+      }
+    });
+    setOngoing(_ongoing);
+    setUpcoming(_upcoming);
+    setLaunched(_launched);
+    console.log("upcoming coll", _upcoming);
+    console.log("ongoing coll", _ongoing);
+    console.log("launched", _launched);
+  }, [allCollections]);
 
   return (
     <div style={bgImgStyle}>
@@ -96,11 +101,13 @@ function MintCollectionLive() {
           </div>
         </div>
       </section>
-      <section className='pdd_8 pb-0'>
-        <Mintlivetab collections={ongoing}/>
-      </section>
+      {ongoing && ongoing.length > 0 ?   <section className='pdd_8 pb-0'>
+        {console.log("ongoing", ongoing)}
+        <Mintlivetab ongoing={ongoing} />
+      </section> : "" }
+    
       <section className='pdd_8'>
-        <Minttab />
+        <Minttab upcoming={upcoming} past={launched}/>
       </section>
       <Footer />
     </div>
