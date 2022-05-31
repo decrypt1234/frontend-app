@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 import Deletesvg from "../SVG/deletesvg";
 import { addCategory, getAllCategory } from "../../apiServices";
-
+import Loader from "../components/loader";
 import { useCookies } from "react-cookie";
 
 function CreateCategories() {
@@ -13,6 +13,8 @@ function CreateCategories() {
   const [cookies, setCookie, removeCookie] = useCookies([]);
   const [myCategory, setMyCategory] = useState("");
   const [currentUser, setCurrentUser] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isModal, setModal] = useState("");
 
   useEffect(() => {
     if (cookies.selected_account) setCurrentUser(cookies.selected_account);
@@ -63,7 +65,10 @@ function CreateCategories() {
   };
 
   const handleCreateCategory = async () => {
+    setLoading(true);
+    setModal("");
     if (handleValidationCheck() == false) {
+      setLoading(false);
       return;
     } else {
       var fd = new FormData();
@@ -79,17 +84,19 @@ function CreateCategories() {
         } else {
           NotificationManager.error(categories.message, "", 800);
         }
-
+        setLoading(false);
         setTimeout(() => {
           window.location.href = "/createcategories";
         }, 1000);
       } catch (e) {
         console.log(e);
         NotificationManager.error(e.message, "", 800);
+        setLoading(false);
         setTimeout(() => {
           window.location.href = "/createcategories";
         }, 1000);
       }
+      setLoading(false);
     }
   };
 
@@ -97,7 +104,7 @@ function CreateCategories() {
     <div className="wrapper">
       {/* <!-- Sidebar  --> */}
       <Sidebar />
-
+      {loading ? <Loader /> : ""}
       {/* <!-- Page Content  --> */}
       <div id="content">
         <div className="add_btn mb-4 d-flex justify-content-end">
@@ -106,6 +113,7 @@ function CreateCategories() {
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#NftModal"
+            onClick={() => setModal("active")}
           >
             + Add Categories
           </button>
@@ -152,9 +160,9 @@ function CreateCategories() {
           </table>
         </div>
       </div>
-      
-      <div
-        className="modal fade"
+
+      <div className={`modal fade createNft ${isModal}`}
+
         id="NftModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
@@ -246,7 +254,6 @@ function CreateCategories() {
               >
                 Create Categorie
               </button>
-              
             </div>
           </div>
         </div>

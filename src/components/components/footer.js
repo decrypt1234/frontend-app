@@ -8,7 +8,7 @@ const footer= () => (
                     <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                         <div className="widget text-widget">
                             <img alt='' src={'../img/logo.svg'} className="mb-3"/>
-                            <p>The only firearms industry supported cryptocurrency and firearms NFT trading platform in the world.</p>
+                            <p>The #1 NFT firearms supplier for the new era of interoperable metaverse gaming. </p>
                         </div>
                     </div>
                     <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">

@@ -14,15 +14,15 @@ import degnrABI from "./../../config/abis/dgnr8.json";
 import { ethers } from "ethers";
 //import Loader from "../components/loader";
 import { NotificationManager } from "react-notifications";
-import { Item } from "semantic-ui-react";
+import Loader from "../components/loader";
 
 function CreateCollection() {
   const [files, setFiles] = useState([]);
   const [logoImg, setLogoImg] = useState("");
   const [coverImg, setCoverImg] = useState("");
-  const [title, setTitle] = useState("MJ");
-  const [symbol, setSymbol] = useState("MJ");
-  const [description, setDescription] = useState("mj collection");
+  const [title, setTitle] = useState("");
+  const [symbol, setSymbol] = useState("");
+  const [description, setDescription] = useState("");
   const [royalty, setRoyalty] = useState(10);
   const [loading, setLoading] = useState(false);
   const [maxSupply, setMaxSupply] = useState(1);
@@ -37,6 +37,7 @@ function CreateCollection() {
   const [brands, setBrands] = useState([]);
   const [myCollections, setMyCollections] = useState([]);
   const [nftType, setNftType] = useState("1");
+  const [isModal, setModal] = useState("");
 
   useEffect(() => {
     if (cookies.selected_account) setCurrentUser(cookies.selected_account);
@@ -224,16 +225,23 @@ function CreateCollection() {
   //handle collection creator
 
   const handleCollectionCreation = async () => {
+    let res1;
+    let creator;
     if (handleValidationCheck()) {
-      console.log("category", category);
-      let creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
-      console.log("creator is---->", creator);
-      console.log("create collection is called");
-      console.log("contracts usdt address", contracts.USDT);
-
-      let res1;
-
       setLoading(true);
+      setModal("");
+      console.log("category", category);
+      try {
+        creator = await exportInstance(contracts.CREATOR_PROXY, degnrABI);
+        console.log("creator is---->", creator);
+        console.log("create collection is called");
+        console.log("contracts usdt address", contracts.USDT);
+      } catch (e) {
+        console.log("err", e);
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         nftType == "1"
@@ -252,12 +260,14 @@ function CreateCollection() {
       } catch (e) {
         console.log(e);
         NotificationManager.error(e.message, "", 1500);
+        setLoading(false);
         setTimeout(() => {
           window.location.href = "/createcollection";
         }, 1000);
       }
       let hash = res1;
       res1 = await res1.wait();
+
       console.log("res1 is--->", res1);
       if (res1.status === 1) {
         let type;
@@ -286,7 +296,7 @@ function CreateCollection() {
         fd.append("royalty", royalty);
 
         console.log("form data is---->", fd.value);
-        setLoading(true);
+
         try {
           let collection = await createCollection(fd);
           console.log("create Collection response is--->", collection);
@@ -297,24 +307,28 @@ function CreateCollection() {
               "",
               1800
             );
+            setLoading(false);
             setTimeout(() => {
               window.location.href = "/createcollection";
             }, 1000);
           } else {
             NotificationManager.error(collection, "", 1800);
             console.log("category message", collection);
+            setLoading(false);
             setTimeout(() => {
               window.location.href = "/createcollection";
             }, 1000);
           }
         } catch (e) {
           NotificationManager.error(e.message, "", 1800);
+          setLoading(false);
           setTimeout(() => {
             window.location.href = "/createcollection";
           }, 1000);
         }
       } else {
         NotificationManager.error("Something went wrong", "", 1800);
+        setLoading(false);
         setTimeout(() => {
           window.location.href = "/createcollection";
         }, 1000);
@@ -326,7 +340,7 @@ function CreateCollection() {
     <div className="wrapper">
       {/* <!-- Sidebar  --> */}
       <Sidebar />
-
+      {loading ? <Loader /> : ""}
       {/* <!-- Page Content  --> */}
       <div id="content">
         <div className="add_btn mb-4 d-flex justify-content-end">
@@ -335,6 +349,7 @@ function CreateCollection() {
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
+            onClick={() => setModal("active")}
           >
             + Add Collection
           </button>
@@ -395,7 +410,7 @@ function CreateCollection() {
         </div>
       </div>
       <div
-        className="modal fade"
+        className={`modal fade createNft ${isModal}`}
         id="exampleModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"

@@ -16,6 +16,9 @@ import { exportInstance } from "../../apiServices";
 import contracts from "./../../config/contracts";
 import { getSignature } from "./../../helpers/getterFunctions";
 import { GENERAL_DATE, GENERAL_TIMESTAMP } from "../../helpers/constants";
+import Loader from "../components/loader";
+import "../../App.css"
+
 
 function CreateNFTs() {
   const [nftImg, setNftImg] = useState();
@@ -31,6 +34,8 @@ function CreateNFTs() {
   const [totalCount, setTotalCount] = useState(0);
   const [nfts, setNfts] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [isModal, setModal] = useState("");
 
   const handleImageUpload = (e) => {
     const [file] = e.target.files;
@@ -93,6 +98,8 @@ function CreateNFTs() {
   }, []);
 
   const handleCreateNFT = async () => {
+    setLoading(true);
+    setModal("");
     if (handleValidationCheck()) {
       let salt = Math.round(Math.random() * 10000000);
       var fd = new FormData();
@@ -144,9 +151,10 @@ function CreateNFTs() {
         fd.append("imageType", "0");
         fd.append("imageDimension", "0");
         console.log("field values--->", fd.values);
-        createRes = await createNft(fd);
       } catch (e) {
         console.log("e", e);
+        NotificationManager.error(e, "", 800);
+        setLoading(false);
         return;
       }
       try {
@@ -173,6 +181,7 @@ function CreateNFTs() {
           approvalRes = await approvalRes.wait();
           if (approvalRes.status === 0) {
             NotificationManager.error("Transaction failed", "", 800);
+            setLoading(false);
             return;
           }
 
@@ -180,6 +189,16 @@ function CreateNFTs() {
         }
       } catch (e) {
         console.log("e", e);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        createRes = await createNft(fd);
+      } catch (e) {
+        console.log("err", e);
+        NotificationManager.error(e, "", 800);
+        setLoading(false);
         return;
       }
 
@@ -215,17 +234,19 @@ function CreateNFTs() {
           salt: salt,
         };
 
-        let res1 = await createOrder(reqParams);
+        await createOrder(reqParams);
 
         NotificationManager.success("NFT created successfully", "", 800);
+        setLoading(false);
         console.log("NFTcontract", NFTcontract);
         setTimeout(() => {
-          window.location.href = "/createcollection";
+          window.location.href = "/createnfts";
         }, 1000);
       } catch (e) {
         console.log("e", e);
+        setLoading(false);
         setTimeout(() => {
-          window.location.href = "/createcollection";
+          window.location.href = "/createnfts";
         }, 1000);
         return;
       }
@@ -252,10 +273,12 @@ function CreateNFTs() {
   }, []);
 
   return (
+   
     <div className="wrapper">
       {/* <!-- Sidebar  --> */}
+     {loading ? <Loader />: "" } 
       <Sidebar />
-
+     
       {/* <!-- Page Content  --> */}
       <div id="content">
         <div className="add_btn mb-4 d-flex justify-content-end">
@@ -264,6 +287,7 @@ function CreateNFTs() {
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#NftModal"
+            onClick={() => setModal("active")}
           >
             + Add NFTs
           </button>
@@ -305,7 +329,7 @@ function CreateNFTs() {
         </div>
       </div>
       <div
-        className="modal fade"
+        className={`modal fade createNft ${isModal}`}
         id="NftModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"

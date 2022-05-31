@@ -36,34 +36,34 @@ export default function Home() {
         {/* <!-- Page Content  --> */}
         <div id="content">
             <div className='boxrow row'>
-              <div className='col-xxl-3 col-md-6 mb-4'>
+              <div className='col-xxl-4 col-md-6 mb-4'>
                 <div className='boxcol box-background adminbody'>
                   <div className='svg_icon'>
                     <Walletsvg />
                   </div>
-                    <h4 className='font-24 font-600 text-light mb-3'>Connect your Wallet</h4>
-                    <p className='text-light font-400'>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
+                    <h4 className='font-24 font-600 text-light mb-3'>#1 Buy NFT’s </h4>
+                    <p className='text-light font-400'>Be the first to mint a new collection, with a chance to score a “Legendary“ firearm</p>
                 </div>
               </div>
-              <div className='col-xxl-3 col-md-6 mb-4'>
+              <div className='col-xxl-4 col-md-6 mb-4'>
                 <div className='boxcol box-background adminbody'>
                   <div className='svg_icon'>
                     <Buketsvg />
                   </div>
-                    <h4 className='font-24 font-600 text-light mb-3'>Buy NFTs</h4>
-                    <p className='text-light font-400'>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
+                    <h4 className='font-24 font-600 text-light mb-3'>#2 Customize NFT’s (coming soon) </h4>
+                    <p className='text-light font-400'>Win, earn or purchase accessories and exclusive skins. Forge them to your NFT firearms increasing the rarity and value.</p>
                 </div>
               </div>
-              <div className='col-xxl-3 col-md-6 mb-4'>
+              <div className='col-xxl-4 col-md-6 mb-4'>
                 <div className='boxcol box-background adminbody'>
                   <div className='svg_icon'>
                     <Sellsvg />
                   </div>
-                    <h4 className='font-24 font-600 text-light mb-3'>Sell NFTs</h4>
-                    <p className='text-light font-400'>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
+                    <h4 className='font-24 font-600 text-light mb-3'>#3 Sell NFT’s </h4>
+                    <p className='text-light font-400'>List your NFT’s on the secondary market place  </p>
                 </div>
               </div>
-              <div className='col-xxl-3 col-md-6 mb-4'>
+              {/* <div className='col-xxl-3 col-md-6 mb-4'>
                 <div className='boxcol box-background adminbody'>
                   <div className='svg_icon'>
                     <Walletsvg />
@@ -71,7 +71,7 @@ export default function Home() {
                     <h4 className='font-24 font-600 text-light mb-3'>Connect your Wallet</h4>
                     <p className='text-light font-400'>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem.</p>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className='row'>

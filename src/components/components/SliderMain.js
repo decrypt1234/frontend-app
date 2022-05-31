@@ -37,7 +37,7 @@ const SliderMain = () => (
           duration={600}
           triggerOnce
         >
-          <h6 className="hunter-market">HNTR TOKEN</h6>
+          {/* <h6 className="hunter-market">HNTR TOKEN</h6> */}
         </Reveal>
         <div className="spacer-10"></div>
         <Reveal
@@ -48,7 +48,7 @@ const SliderMain = () => (
           triggerOnce
         >
           <h1 className="main-title title_color text-uppercase">
-          DIGItal ARMS TRADING PLatform
+            DIGItal ARMS
           </h1>
         </Reveal>
         <Reveal
@@ -59,9 +59,8 @@ const SliderMain = () => (
           triggerOnce
         >
           <p className="lead description_color mt-3 mb-5">
-          Unit of data stored on a digital ledger, called a blockchain,
-          that certifies a digital asset to be unique and therefore 
-          not interchangeable
+            The only NFT marketplace where you can buy, sell and customize
+            licensed firearms from the world's leading brands
           </p>
         </Reveal>
         <div className="spacer-10"></div>
@@ -72,7 +71,7 @@ const SliderMain = () => (
           duration={900}
           triggerOnce
         >
-          <Link className="btn-banner" to={'/marketplace'}>
+          <Link className="btn-banner" to={"/marketplace"}>
             Explore
           </Link>
           <div className="mb-sm-30"></div>
@@ -86,11 +85,7 @@ const SliderMain = () => (
           duration={1500}
           triggerOnce
         >
-          <img
-            src="./img/misc/home.png"
-            className="lazy img-fluid"
-            alt=""
-          />
+          <img src="./img/misc/home.png" className="lazy img-fluid" alt="" />
         </Reveal>
       </div>
     </div>
