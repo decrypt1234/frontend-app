@@ -9,7 +9,7 @@ import { AuthorCard } from "../../Data/dummyJSON";
 import Threegrid from "../SVG/Threegrid";
 import Twogrid from "../SVG/Twogrid";
 import { useParams } from "react-router-dom";
-import { GetIndividualAuthorDetail } from "../../apiServices";
+import { GetIndividualAuthorDetail, GetOwnedNftList } from "../../apiServices";
 
 const bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -33,16 +33,28 @@ var bgImgarrow = {
 function Author() {
   const { id } = useParams();
   const [profile, setProfile] = useState();
+  const [ownedNFTs, setOwnedNFTs] = useState([]);
+  const [totalOwned, setTotalOwned] = useState(0);
 
   useEffect(() => {
     console.log("id", id);
     const fetch = async () => {
       let _profile = await GetIndividualAuthorDetail({ userID: id });
-      setProfile(_profile.data);
+      setProfile(_profile);
+      let reqBody = {
+        page: 1,
+        limit: 12,
+        userWalletAddress: _profile.walletAddress,
+        searchType: "owned",
+      };
+      let _owned = await GetOwnedNftList(reqBody);
+      setTotalOwned(_owned.count);
+      if (_owned && _owned.results.length > 0) setOwnedNFTs(_owned.results[0]);
+      console.log("owned nfts", _owned);
       console.log("in user profile api", _profile);
     };
     fetch();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -108,7 +120,7 @@ function Author() {
           </div> */}
 
           <h1 className="collection_title text-center">
-            User Name{" "}
+            {profile?.username ? profile?.username : "-"}
             <img alt="" src={"../img/author/check.png"} class="img-fluid" />
           </h1>
 
@@ -147,7 +159,11 @@ function Author() {
                   fill="#8C8C8C"
                 />
               </svg>
-              0xff55...0149
+              {profile?.walletAddress
+                ? profile.walletAddress.slice(0, 4) +
+                  "..." +
+                  profile.walletAddress.slice(38, 41)
+                : "-"}
             </span>
           </div>
           <div className="user_description text-center mb-5">
@@ -172,7 +188,7 @@ function Author() {
                 className="active"
               >
                 <img alt="" src={"../img/author/icon1.svg"} class="img-fluid" />{" "}
-                Owned 45
+                Owned ({totalOwned})
               </button>
             </li>
             <li>
@@ -305,16 +321,16 @@ function Author() {
               aria-labelledby="pills-Owned-tab"
             >
               <div className="row">
-                {AuthorCard.map((card) => (
+                {ownedNFTs.map((card) => (
                   <div className={grid} key={card.id}>
                     <AuthorListing
-                      image={card.img}
-                      submenu={card.Subheading}
-                      heading={card.Heading}
-                      price={card.price}
-                      date={card.Date}
-                      button={card.Slug}
-                      link={card.Like}
+                      image={card.image}
+                      // submenu={card.Subheading}
+                      // heading={card.Heading}
+                      // price={card.price}
+                      // date={card.Date}
+                      // button={card.Slug}
+                      link={`/nftDetails/${card._id}`}
                     />
                   </div>
                 ))}

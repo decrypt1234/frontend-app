@@ -593,7 +593,7 @@ export const getNFTs = async (req) => {
           collection: nft.collectionID,
           assetsInfo: nft?.assetsInfo[0],
           catergoryInfo: nft?.categoryID,
-          tokenId : nft.tokenID
+          tokenId: nft.tokenID,
         };
       })
     : (formattedData[0] = {});
@@ -620,6 +620,7 @@ export const getAuthors = async () => {
   arr
     ? arr.map((author, key) => {
         formattedData[key] = {
+          _id: author._id,
           profile: author.profileIcon,
           name: author.username,
         };
