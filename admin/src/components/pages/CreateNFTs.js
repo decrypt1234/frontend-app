@@ -189,6 +189,7 @@ function CreateNFTs() {
         }
       } catch (e) {
         console.log("e", e);
+        NotificationManager.error("Something went wrong", "", 800);
         setLoading(false);
         return;
       }
@@ -219,6 +220,7 @@ function CreateNFTs() {
       console.log("sellerOrder", sellerOrder);
       try {
         let signature = await getSignature(currentUser, ...sellerOrder);
+        console.log("signature", signature);
         let reqParams = {
           nftId: createRes.data._id,
           tokenAddress: contracts.USDT,
