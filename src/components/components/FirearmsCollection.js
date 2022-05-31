@@ -4,10 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
-function FirearmsCollection() {
+function FirearmsCollection(props) {
 
   var settings = {
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -43,72 +43,28 @@ function FirearmsCollection() {
   return (
     <div className="nftdetails">
       <Slider {...settings}>
-        <div className='nft_slide'>
-          <img alt='' src={'../img/nftdetails/DA-Meta1.png'} class="img-fluid mb-3 nftslide_img" />
-
-            <div className='nft_info'>
-              
-                <span>Meta Marine Collection <img alt='' src={'../img/check.png'} class="img-fluid" /></span>
-                <h3 className=''>Meta Marine #625</h3>
-                <p><img alt='' src={'../img/favicon.png'} class="img-fluid" /> 22500 $HNTR</p>
-              
+        {
+          props.nfts ? props.nfts.map((card, key) => {
+            return (
+             
+              <div className='nft_slide' key={key}>
+                 <a href={`/NFTdetails/${card.id}`}>
+              <img alt='' src={card.image} class="img-fluid mb-3 nftslide_img" />
+    
+                <div className='nft_info'>
+                  
+                    <span>{props.collectionName} Collection &nbsp;<img alt='' src={'../img/check.png'} class="img-fluid" /></span>
+                    <h3 className=''>{card.name}</h3>
+                    <p className='justify-content-start'><img alt='' src={'../img/favicon.png'} class="img-fluid" />{props.price} HNTR</p>
+                  
+                </div>
+                </a>
             </div>
-
-        </div>
-        <div className='nft_slide'>
-          <img alt='' src={'../img/nftdetails/DA-Meta2.png'} class="img-fluid mb-3 nftslide_img" />
-
-            <div className='nft_info'>
-              
-                <span>Meta Marine Collection <img alt='' src={'../img/check.png'} class="img-fluid" /></span>
-                <h3 className=''>Meta Marine #625</h3>
-                <p><img alt='' src={'../img/favicon.png'} class="img-fluid" /> 22500 $HNTR</p>
-              
-            </div>
-        </div>
-        <div className='nft_slide'>
-          <img alt='' src={'../img/nftdetails/DA-Meta3.png'} class="img-fluid mb-3 nftslide_img" />
-
-            <div className='nft_info'>
-              
-                <span>Meta Marine Collection <img alt='' src={'../img/check.png'} class="img-fluid" /></span>
-                <h3 className=''>Meta Marine #625</h3>
-                <p><img alt='' src={'../img/favicon.png'} class="img-fluid" /> 22500 $HNTR</p>
-              
-            </div>
-        </div>
-        <div className='nft_slide'>
-          <img alt='' src={'../img/nftdetails/DA-Meta4.png'} class="img-fluid mb-3 nftslide_img" />
-            <div className='nft_info'>
-              
-                <span>Meta Marine Collection <img alt='' src={'../img/check.png'} class="img-fluid" /></span>
-                <h3 className=''>Meta Marine #625</h3>
-                <p><img alt='' src={'../img/favicon.png'} class="img-fluid" /> 22500 $HNTR</p>
-              
-            </div>
-        </div>
-        <div className='nft_slide'>
-          <img alt='' src={'../img/nftdetails/DA-Meta1.png'} class="img-fluid mb-3 nftslide_img" />
-          
-            <div className='nft_info'>
-              
-                <span>Meta Marine Collection <img alt='' src={'../img/check.png'} class="img-fluid" /></span>
-                <h3 className=''>Meta Marine #625</h3>
-                <p><img alt='' src={'../img/favicon.png'} class="img-fluid" /> 22500 $HNTR</p>
-              
-            </div>
-        </div>
-        <div className='nft_slide'>
-          <img alt='' src={'../img/nftdetails/DA-Meta2.png'} class="img-fluid mb-3 nftslide_img" />
-          
-            <div className='nft_info'>
-              
-                <span>Meta Marine Collection <img alt='' src={'../img/check.png'} class="img-fluid" /></span>
-                <h3 className=''>Meta Marine #625</h3>
-                <p><img alt='' src={'../img/favicon.png'} class="img-fluid" /> 22500 $HNTR</p>
-              
-            </div>
-        </div>
+           
+            )
+          }) : ""
+        }
+      
       </Slider>
     </div>
   )

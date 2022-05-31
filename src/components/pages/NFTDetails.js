@@ -23,22 +23,29 @@ function NFTDetails() {
   const { id } = useParams();
 
   const [NFTDetails, setNFTDetails] = useState([]);
+  const [allNFTs, setAllNFTs] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
 
   useEffect(async () => {
     try {
       const reqData = {
         page: 1,
         limit: 12,
-        nftID: id
+        nftID: id,
       };
-     
+
       const res = await getNFTs(reqData);
       console.log("result--->", res);
       setNFTDetails(res[0]);
+      const reqData1 = {
+        page: 1,
+        limit: 12,
+        collectionID: res[0].collection?._id,
+      };
+      const nfts = await getNFTs(reqData1);
+      setAllNFTs(nfts);
     } catch (e) {
       console.log("Error in fetching nft Details", e);
     }
@@ -47,25 +54,23 @@ function NFTDetails() {
   return (
     <div>
       <section style={bgImgStyle} className='pdd_8'>
-          
         <div className='container'>
           <div className='row mb-5'>
             <div className='col-lg-6 mb-xl-5 mb-lg-5 mb-5'>
-              <img
-                src={NFTDetails.image}
-                class='img-fluid nftimg'
-                alt=''
-              />
+              <img src={NFTDetails.image} class='img-fluid nftimg' alt='' />
             </div>
             <div className='col-lg-6 nft_details'>
               <p className='mb-0'>
-               {NFTDetails.collection?.name} Collection{" "}
+                {NFTDetails.collection?.name} Collection{" "}
                 <img src={"../img/check.png"} class='img-fluid' alt='' />
               </p>
               <h1 className='mb-3'>{NFTDetails.name}</h1>
               <div className='owner_by mb-4'>
                 <p>
-                  Owned by <span style={textColor}>{NFTDetails.collection?.createdBy}</span>
+                  Owned by{" "}
+                  <span style={textColor}>
+                    {NFTDetails.collection?.createdBy}
+                  </span>
                 </p>
                 <span className='add_wishlist'>
                   <svg
@@ -288,12 +293,12 @@ function NFTDetails() {
           <div className='row'>
             <div className='col-lg-6 mb-5 width_45 auto_right'>
               <h3 className='title_36 mb-4'>Description</h3>
-              <p className='textdes'>
-                {NFTDetails.desc}.{" "}
-              </p>
+              <p className='textdes'>{NFTDetails.desc}. </p>
             </div>
             <div className='col-lg-6 mb-5'>
-              <h3 className='title_36 mb-4'>About {NFTDetails.collection?.name} Collection</h3>
+              <h3 className='title_36 mb-4'>
+                About {NFTDetails.collection?.name} Collection
+              </h3>
               <div className='row'>
                 <div className='col-md-4 nftDetails_img_con'>
                   <img
@@ -304,7 +309,7 @@ function NFTDetails() {
                 </div>
                 <div className='col-md-8'>
                   <p className='textdes'>
-                   {NFTDetails.collection?.description}.{" "}
+                    {NFTDetails.collection?.description}.{" "}
                   </p>
                 </div>
               </div>
@@ -314,15 +319,21 @@ function NFTDetails() {
               <ul className='nft_detaillist'>
                 <li>
                   <span className='asset_title'>Size</span>
-                  <span className='asset_detail'>{NFTDetails.assetsInfo?.size} KB</span>
+                  <span className='asset_detail'>
+                    {NFTDetails.assetsInfo?.size} KB
+                  </span>
                 </li>
                 <li>
                   <span className='asset_title'>Dimension</span>
-                  <span className='asset_detail'>{NFTDetails.assetsInfo?.dimension} px</span>
+                  <span className='asset_detail'>
+                    {NFTDetails.assetsInfo?.dimension} px
+                  </span>
                 </li>
                 <li>
                   <span className='asset_title'>Format</span>
-                  <span className='asset_detail'>{NFTDetails.assetsInfo?.type}</span>
+                  <span className='asset_detail'>
+                    {NFTDetails.assetsInfo?.type}
+                  </span>
                 </li>
               </ul>
             </div>
@@ -331,7 +342,11 @@ function NFTDetails() {
               <ul className='nft_detaillist'>
                 <li>
                   <span className='asset_title'>Contact Address</span>
-                  <span className='asset_detail'>{(NFTDetails.collection?.contractAddress)?.slice(0,4) + "..." + (NFTDetails.collection?.contractAddress)?.slice(38,42)}</span>
+                  <span className='asset_detail'>
+                    {NFTDetails.collection?.contractAddress?.slice(0, 4) +
+                      "..." +
+                      NFTDetails.collection?.contractAddress?.slice(38, 42)}
+                  </span>
                 </li>
                 <li>
                   <span className='asset_title'>Token ID</span>
@@ -352,7 +367,9 @@ function NFTDetails() {
                 </li>
                 <li>
                   <span className='asset_title'>TYPE</span>
-                  <span className='asset_detail'>{NFTDetails.catergoryInfo?.name}</span>
+                  <span className='asset_detail'>
+                    {NFTDetails.catergoryInfo?.name}
+                  </span>
                 </li>
               </ul>
             </div>
@@ -396,17 +413,27 @@ function NFTDetails() {
               </div>
             </div>
 
-            <div className='col-md-12'>
-              <h3 className='title_36 mb-4'>
-                More from Barrett Firearms Collection
-              </h3>
-              <FirearmsCollection />
-            </div>
-            <div class='col-md-12 text-center mt-5'>
-              <a class='view_all_bdr' href='/'>
-                View All
-              </a>
-            </div>
+            {allNFTs && allNFTs.length > 0 ? (
+              <>
+                <div className='col-md-12'>
+                  <h3 className='title_36 mb-4'>
+                    More from {NFTDetails.collection?.name} Collection
+                  </h3>
+                  <FirearmsCollection
+                    nfts={allNFTs}
+                    collectionName={NFTDetails.collection?.name}
+                    price={NFTDetails.collection?.price.$numberDecimal}
+                  />
+                </div>
+                <div class='col-md-12 text-center mt-5'>
+                  <a class='view_all_bdr' href={'/marketplace'}>
+                    View All
+                  </a>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </section>

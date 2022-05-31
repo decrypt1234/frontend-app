@@ -45,24 +45,6 @@ function MintCollectionLive() {
     }
   }, []);
 
-  //   const handleCollection = () => {
-  //     allCollections.map((coln) => {
-  //       const st = coln.saleStartTime;
-  //       const et = coln.saleEndTime;
-  //       const ct = moment().add({ hours: 5, minutes: 30 }).toISOString();
-
-  //       if (ct < st) {
-  //         setUpcoming(upcoming.push(coln));
-  //       } else if (ct >= st && ct < et) {
-  //         setOngoing(ongoing.push(coln));
-  //       } else {
-  //         setLaunched(launched.push(coln));
-  //       }
-  //     });
-  //     console.log("upcoming coll", upcoming);
-  //     console.log("ongoing coll", ongoing);
-  //     console.log("launched", launched);
-  //   };
 
   useEffect(() => {
     let _ongoing = [];

@@ -27,6 +27,7 @@ import Firearmsvg from "../SVG/Firearmsvg";
 import { slowRefresh } from "./../../helpers/NotifyStatus";
 import PopupModal from "./../components/AccountModal/popupModal";
 import "./../components-css/App.css";
+import { getCollections } from "../../helpers/getterFunctions";
 
 setDefaultBreakpoints([{ xs: 0 }, { l: 1199 }, { xl: 1200 }]);
 
@@ -120,18 +121,14 @@ const Header = function () {
   const [isAccountSwitched, setIsAccountSwitched] = useState(false);
   const [isChainSwitched, setIsChainSwitched] = useState(false);
   const [userDetails, setUserDetails] = useState();
-  
+  const [searchResult, setSearchResult] = useState([]);
+
 
   useEffect(() => {
     if (cookies["selected_account"]) {
       setAccount(cookies["selected_account"]);
       
     }
-
-    // if(cookies["provider"])
-    // {
-    //   setProvider(cookies["provider"]);
-    // }
   }, []);
 
   const refreshState = () => {
@@ -354,6 +351,18 @@ const Header = function () {
     }
   };
 
+  const handleSearch = async (e) => {
+    console.log("onchange search text--->",e.target.value);
+    const _result = [];
+    const reqData = {
+      page:1,
+      limit: 12,
+      searchText: e.target.value
+    }
+    const colxns = await getCollections(reqData);
+    console.log("colxns", colxns);
+  }
+
   return (
     <header id="myHeader">
       {isAccountSwitched ? (
@@ -439,6 +448,9 @@ const Header = function () {
                 type="search"
                 placeholder="Search item here..."
                 aria-label="Search"
+                onChange={(e) => {
+                  handleSearch(e);
+                }}
               />
               <button className="search_btn" type="submit">
                 <img src={"../img/search.svg"} alt="" />
@@ -678,7 +690,7 @@ const Header = function () {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="square_yello" to="" tabindex="-1">
+                    <NavLink className="square_yello" to="" tabindex="-1" onClick={disconnectWallet}>
                       <img src="../img/edit.png" alt="edit" />{" "}
                       {account?.slice(0, 4) + "..." + account?.slice(38, 42)}
                     </NavLink>

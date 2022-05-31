@@ -189,7 +189,6 @@ const Home = () => {
             </div>
             {upcomingMints
               ? upcomingMints.slice(0, 3).map((card, key) => {
-                  console.log("upcoming mint-->", card.name);
                   const st = card.saleStartTime;
                   const et = card.saleEndTime;
                   const ct = moment()
@@ -219,11 +218,12 @@ const Home = () => {
                             )}
                           </div>
                           <div className="mint_text p-4">
+                          <div className="logoImg_con">
                             <img
                               alt=""
-                              src={"../img/mint/m1.png"}
+                              src={card.logoImg}
                               className="mc_img"
-                            />
+                            /></div>
                             <h4>{card.name}</h4>
                             <ul className="m-0 p-0">
                               <li>

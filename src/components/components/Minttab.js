@@ -46,7 +46,7 @@ function Minttab(props) {
             id='pills-upcoming'
             role='tabpanel'
             aria-labelledby='pills-upcoming-tab'>
-            <div className='row justify-content-center'>
+            <div className='row justify-content-start'>
               {
                 props.upcoming ? props.upcoming.map((card, key) => {
                   return (
@@ -139,7 +139,7 @@ function Minttab(props) {
             id='pills-past'
             role='tabpanel'
             aria-labelledby='pills-past-tab'>
-            <div className='row justify-content-center'>
+            <div className='row justify-content-start'>
               {props.past ? props.past.map((card, key) => {
                 return (
                   
