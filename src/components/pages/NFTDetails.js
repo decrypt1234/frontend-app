@@ -331,11 +331,11 @@ function NFTDetails() {
               <ul className='nft_detaillist'>
                 <li>
                   <span className='asset_title'>Contact Address</span>
-                  <span className='asset_detail'>0x1wq51a9g1...ag541</span>
+                  <span className='asset_detail'>{(NFTDetails.collection?.contractAddress)?.slice(0,4) + "..." + (NFTDetails.collection?.contractAddress)?.slice(38,42)}</span>
                 </li>
                 <li>
                   <span className='asset_title'>Token ID</span>
-                  <span className='asset_detail'>16260</span>
+                  <span className='asset_detail'>{NFTDetails.tokenId}</span>
                 </li>
                 <li>
                   <span className='asset_title'>Blockchain</span>
@@ -348,11 +348,11 @@ function NFTDetails() {
               <ul className='nft_detaillist'>
                 <li>
                   <span className='asset_title'>SERIAL</span>
-                  <span className='asset_detail'>16260</span>
+                  <span className='asset_detail'>{NFTDetails.tokenId}</span>
                 </li>
                 <li>
                   <span className='asset_title'>TYPE</span>
-                  <span className='asset_detail'>Firearms Collection</span>
+                  <span className='asset_detail'>{NFTDetails.catergoryInfo?.name}</span>
                 </li>
               </ul>
             </div>

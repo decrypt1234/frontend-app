@@ -96,9 +96,9 @@ function ItemsList() {
                   <img alt='' className='profile_img' src={'../img/profile/profile1.png'} />
                   <img alt='' className='icheck_img' src={'../img/collections/check.png'} />
                 </div>
-                <div className='profile_right'>
+                {/* <div className='profile_right'>
                   <span>514d 18h 42m 39s</span>
-                </div>
+                </div> */}
               </div>
               <div className='coverImg_cont'>
 

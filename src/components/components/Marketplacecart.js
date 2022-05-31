@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getNFTs } from "../../helpers/getterFunctions";
 
 function Marketplacecart() {
   const [allNFTs, setAllNFTs] = useState([]);
+  const { id } = useParams();
   useEffect(async () => {
     try {
       const reqData = {
@@ -32,6 +33,7 @@ function Marketplacecart() {
         ? allNFTs.map((card, key) => {
             return (
               <>
+              <a href={`/NFTdetails/${card.id}`}>
                 <div className="items_profileimg" key={key}>
                   <div className="profile_left">
                     <img alt="" className="profile_img" src={card.logoImage} />
@@ -66,10 +68,11 @@ function Marketplacecart() {
                       </span>
                     </div>
                   </div>
-                  <Link to="/" className="border_btn width-100 title_color">
+                  <Link to={`/NFTdetails/${card.id}`} className="border_btn width-100 title_color">
                     Place bids
                   </Link>
                 </div>
+                </a>
               </>
             );
           })
