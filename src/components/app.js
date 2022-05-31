@@ -58,7 +58,7 @@ const App = (props) => {
       <Header />
       <Routes>
         <Route exact path="/" element={<Home/>} />
-        <Route exact path="/author" element={<Author />} />
+        <Route exact path="/author/:id" element={<Author />} />
         <Route exact path="/login" element={<Login/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/marketplaceCollection" element={<Marketplacecollection />} />
