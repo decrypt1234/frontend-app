@@ -53,16 +53,13 @@ function Profile() {
   
 
   useEffect(() => {
-
     const fetch=async () => {
       console.log("in user profile api")
-
       let _profile=await getProfile();
       setProfile(_profile.data);
-
     };
     fetch();
-  },[currentUser]);
+  },[]);
 
 
 
@@ -75,14 +72,6 @@ function Profile() {
 
       setUname(username.trim());
 
-
-      //setWebsite(
-      //  profile.sWebsite &&
-      //    profile.sWebsite !== undefined &&
-      //    profile.sWebsite !== "undefined"
-      //    ? profile.sWebsite
-      //    : ""
-      //);
       setBio(
         profile.bio&&
           profile.bio!==undefined&&

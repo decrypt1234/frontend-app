@@ -8,6 +8,7 @@ import { getNFTList, GetOrdersByNftId } from "../../apiServices";
 import { handleBuyNft } from "../../helpers/sendFunctions";
 import { useCookies } from "react-cookie";
 import NotificationManager from "react-notifications/lib/NotificationManager";
+import Loader from "./../components/loader";
 
 function MintEventSlider(props) {
   var settings = {
@@ -18,7 +19,7 @@ function MintEventSlider(props) {
     dots: false,
     speed: 300,
     centerPadding: "0px",
-    infinite: true,
+    infinite: false,
     // autoplaySpeed: 5000,
     // autoplay: true,
     initialSlide: 0,
@@ -36,7 +37,6 @@ function MintEventSlider(props) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          initialSlide: 2,
         },
       },
     ],
@@ -45,9 +45,9 @@ function MintEventSlider(props) {
   const [nfts, setNfts] = useState([]);
   const [currentUser, setCurrentUser] = useState();
   const [cookies, setCookie, removeCookie] = useCookies([]);
-  const [currQty, setCurrQty] = useState(0);
-  const [selectedNft, setSelectedNft] = useState(0);
-  const [orders, setOrders] = useState([]);
+  const [currQty, setCurrQty] = useState(1);
+  const [loading, setLoading] = useState(false);
+
   let mint = [];
 
   useEffect(() => {
@@ -78,38 +78,50 @@ function MintEventSlider(props) {
   }, [props.id]);
 
   const handleMint = async (i) => {
+    setLoading(true);
     let id, isERC721, account, balance, qty;
     id = nfts[i]._id;
     isERC721 = nfts[i].type == 1;
     account = currentUser;
     balance = 10000;
     qty = currQty;
-
-    let orders = await GetOrdersByNftId({ nftId: id });
-    console.log("orders", orders);
-    console.log(
-      "id, isERC721, account, balance, qty",
-      orders.results[0]._id,
-      isERC721,
-      account,
-      balance,
-      qty
-    );
-    await handleBuyNft(
-      orders?.results[0]?._id,
-      isERC721,
-      account,
-      balance,
-      qty,
-      1
-    );
+    try {
+      let orders = await GetOrdersByNftId({ nftId: id });
+      console.log("orders", orders);
+      console.log(
+        "id, isERC721, account, balance, qty",
+        orders.results[0]._id,
+        isERC721,
+        account,
+        balance,
+        qty
+      );
+      let res = await handleBuyNft(
+        orders?.results[0]?._id,
+        isERC721,
+        account,
+        balance,
+        qty,
+        1
+      );
+      if (res == false) {
+        setLoading(false);
+        return;
+      }
+    } catch (e) {
+      console.log("err", e);
+      NotificationManager.error("Something went wrong");
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
   };
 
   return (
     <Slider {...settings}>
-      {console.log("nfts", nfts)}
       {nfts && nfts.length > 0
         ? nfts.map((n, i) => {
+            console.log("loop--->>");
             return (
               <div className="mintevent text-center">
                 <div className="start_btn">
@@ -135,6 +147,7 @@ function MintEventSlider(props) {
                     <button
                       onClick={() => {
                         let mint = currQty - 1;
+                        if (mint < 1) mint = 1;
                         setCurrQty(Number(mint));
                       }}
                     >
@@ -155,6 +168,7 @@ function MintEventSlider(props) {
                     <button
                       onClick={() => {
                         let mint = currQty + 1;
+                        if (mint > n.totalQuantity) mint = n.totalQuantity;
                         setCurrQty(Number(mint));
                       }}
                     >

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NotificationManager } from "react-notifications";
 import Sidebar from "../components/Sidebar";
 import { useCookies } from "react-cookie";
-
+import Loader from "../components/loader";
 import { addBrand, GetBrand } from "../../apiServices";
 import { isEmptyObject } from "jquery";
 
@@ -14,6 +14,8 @@ function CreateBrands() {
   const [currentUser, setCurrentUser] = useState("");
   const [myBrand, setMyBrand] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [loading, setLoading] = useState(false);
+  const [isModal, setModal] = useState("");
 
   useEffect(() => {
     if (cookies.selected_account) setCurrentUser(cookies.selected_account);
@@ -73,11 +75,11 @@ function CreateBrands() {
 
   const handleValidationCheck = () => {
     if (logoImg === "" || logoImg === undefined) {
-      NotificationManager.error("Please Upload a Logo Image", "", 800);
+      NotificationManager.error("Please Upload Logo Image", "", 800);
       return false;
     }
     if (coverImg === "" || coverImg === undefined) {
-      NotificationManager.error("Please Upload a Cover Image", "", 800);
+      NotificationManager.error("Please Upload Cover Image", "", 800);
       return false;
     }
     if (title.trim() === "" || title === undefined) {
@@ -91,7 +93,10 @@ function CreateBrands() {
   };
 
   const handleCreateBrand = async () => {
+    setLoading(true);
+    setModal("");
     if (handleValidationCheck() == false) {
+      setLoading(false);
       return;
     } else {
       var fd = new FormData();
@@ -103,16 +108,19 @@ function CreateBrands() {
         let brand = await addBrand(fd);
 
         NotificationManager.success(brand.message, "", 800);
+        setLoading(false);
         setTimeout(() => {
           window.location.href = "/createbrands";
         }, 1000);
       } catch (e) {
         console.log(e);
         NotificationManager.error(e.message, "", 800);
+        setLoading(false);
         setTimeout(() => {
           window.location.href = "/createbrands";
         }, 1000);
       }
+      setLoading(false);
     }
   };
 
@@ -120,7 +128,7 @@ function CreateBrands() {
     <div className="wrapper">
       {/* <!-- Sidebar  --> */}
       <Sidebar />
-
+      {loading ? <Loader /> : ""}
       {/* <!-- Page Content  --> */}
       <div id="content">
         <div className="add_btn mb-4 d-flex justify-content-end">
@@ -129,6 +137,7 @@ function CreateBrands() {
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#brandModal"
+            onClick={() => setModal("active")}
           >
             + Add Brand
           </button>
@@ -175,7 +184,7 @@ function CreateBrands() {
         </div>
       </div>
       <div
-        className="modal fade"
+        className={`modal fade createNft ${isModal}`}
         id="brandModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
