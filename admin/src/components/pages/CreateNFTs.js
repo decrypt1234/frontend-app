@@ -103,7 +103,11 @@ function CreateNFTs() {
   const handleCreateNFT = async () => {
     setLoading(true);
     setModal("");
-    if (handleValidationCheck()) {
+    if (!handleValidationCheck()) {
+      NotificationManager.error("Validation error", "", 800);
+      setLoading(false);
+      return;
+    } else {
       let salt = Math.round(Math.random() * 10000000);
       var fd = new FormData();
       let createRes;
