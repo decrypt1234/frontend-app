@@ -19,6 +19,7 @@ import {
   GetAllUserDetails,
   getNFTList,
 } from "../apiServices";
+import Avatar from "./../assets/images/avatar5.jpg";
 // import { fetchBidNft } from "../apiServices";
 // import { GENERAL_DATE, GENERAL_TIMESTAMP } from "./constants";
 // import NotificationManager from "react-notifications/lib/NotificationManager";
@@ -594,6 +595,9 @@ export const getNFTs = async (req) => {
           assetsInfo: nft?.assetsInfo[0],
           catergoryInfo: nft?.categoryID,
           tokenId: nft.tokenID,
+          authorImage: nft.createdBy?.profileIcon
+            ? nft.createdBy?.profileIcon
+            : Avatar,
         };
       })
     : (formattedData[0] = {});
