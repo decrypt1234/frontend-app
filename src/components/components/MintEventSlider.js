@@ -46,9 +46,7 @@ function MintEventSlider(props) {
   const [nfts, setNfts] = useState([]);
   const [currentUser, setCurrentUser] = useState();
   const [cookies, setCookie, removeCookie] = useCookies([]);
-  const [currQty, setCurrQty] = useState(0);
-  const [selectedNft, setSelectedNft] = useState(0);
-  const [orders, setOrders] = useState([]);
+  const [currQty, setCurrQty] = useState(1);
   const [loading, setLoading] = useState(false);
 
   let mint = [];
@@ -149,6 +147,8 @@ function MintEventSlider(props) {
                     <button
                       onClick={() => {
                         let mint = currQty - 1;
+                        if(mint<1)
+                        mint=1
                         setCurrQty(Number(mint));
                       }}
                     >
@@ -169,6 +169,8 @@ function MintEventSlider(props) {
                     <button
                       onClick={() => {
                         let mint = currQty + 1;
+                        if(mint>n.totalQuantity)
+                        mint=n.totalQuantity
                         setCurrQty(Number(mint));
                       }}
                     >

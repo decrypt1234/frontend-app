@@ -581,7 +581,7 @@ function CreateCollection() {
                     Max Supply *
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
                     id="recipient-name"
                     value={maxSupply}
@@ -593,6 +593,9 @@ function CreateCollection() {
                         typeof maxSupply
                       );
                       setMaxSupply(e.target.value);
+                    }}
+                    onKeyPress={(e) => {
+                      if (!/^\d*?\d*$/.test(e.key)) e.preventDefault();
                     }}
                   />
                 </div>

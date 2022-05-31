@@ -17,8 +17,7 @@ import contracts from "./../../config/contracts";
 import { getSignature } from "./../../helpers/getterFunctions";
 import { GENERAL_DATE, GENERAL_TIMESTAMP } from "../../helpers/constants";
 import Loader from "../components/loader";
-import "../../App.css"
-
+import "../../App.css";
 
 function CreateNFTs() {
   const [nftImg, setNftImg] = useState();
@@ -273,12 +272,11 @@ function CreateNFTs() {
   }, []);
 
   return (
-   
     <div className="wrapper">
       {/* <!-- Sidebar  --> */}
-     {loading ? <Loader />: "" } 
+      {loading ? <Loader /> : ""}
       <Sidebar />
-     
+
       {/* <!-- Page Content  --> */}
       <div id="content">
         <div className="add_btn mb-4 d-flex justify-content-end">
@@ -412,18 +410,52 @@ function CreateNFTs() {
                   />
                 </div>
 
-                <div className="col-md-12 mb-1">
+                <div className="col-md-6 mb-1">
                   <label for="recipient-name" className="col-form-label">
-                    Quantity *
+                    Choose Collection *
                   </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="recipient-name"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    value={collection}
+                    onChange={(e) => {
+                      console.log("e.target.value", e.target.value);
+                      setCollection(e.target.value);
+                      setQuantity(1)
+                    }}
+                  >
+                    <option value="">Select</option>
+                    {collections.length > 0
+                      ? collections.map((c, i) => {
+                          console.log("c", c._id);
+                          return (
+                            <option value={JSON.stringify(c)}>{c.name}</option>
+                          );
+                        })
+                      : ""}
+                  </select>
                 </div>
+                {console.log("collection?.type == 2", collection)}
+                {collection && JSON.parse(collection)?.type == 2 ? (
+                  <div className="col-md-12 mb-1">
+                    <label for="recipient-name" className="col-form-label">
+                      Quantity *
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="recipient-name"
+                      value={quantity}
+                      // disabled={collection.type == 1 ? true : false}
+                      onKeyPress={(e) => {
+                        if (!/^\d*?\d*$/.test(e.key)) e.preventDefault();
+                      }}
+                      onChange={(e) => setQuantity(e.target.value)}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
 
                 <div className="col-md-12 mb-1">
                   <label for="message-text" className="col-form-label">
@@ -437,28 +469,6 @@ function CreateNFTs() {
                   ></textarea>
                 </div>
 
-                <div className="col-md-6 mb-1">
-                  <label for="recipient-name" className="col-form-label">
-                    Choose Collection *
-                  </label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    value={collection}
-                    onChange={(e) => {
-                      console.log("e.target.value", e.target.value);
-                      setCollection(e.target.value);
-                    }}
-                  >
-                    <option value="">Select</option>
-                    {collections.length > 0
-                      ? collections.map((c, i) => {
-                          console.log("c", c._id);
-                          return <option value={c._id}>{c.name}</option>;
-                        })
-                      : ""}
-                  </select>
-                </div>
                 {/* <div className="col-md-6 mb-1">
                   <label for="recipient-name" className="col-form-label">
                     Brand *
