@@ -271,7 +271,12 @@ export const handleBuyNft = async (
         Number(details.quantity_sold) + Number(qty) >=
         details.total_quantity
       ) {
-        DeleteOrder({ orderId: id });
+        try {
+          await DeleteOrder({ orderId: id });
+        } catch (e) {
+          console.log("error in updating order data", e);
+          return false;
+        }
       }
     }
   } catch (e) {

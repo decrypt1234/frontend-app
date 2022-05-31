@@ -118,10 +118,10 @@ const Home = () => {
                       />
                     </svg>
                   </div>
-                  <h4>Connect your Wallet</h4>
+                  <h4>#1 Buy NFT’s </h4>
                   <p className="textdes">
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem.
+                    Be the first to mint a new collection, with a chance to
+                    score a “Legendary“ firearm
                   </p>
                 </div>
               </div>
@@ -141,10 +141,10 @@ const Home = () => {
                       />
                     </svg>
                   </div>
-                  <h4>Buy NFTs</h4>
+                  <h4>#2 Customize NFT’s (coming soon) </h4>
                   <p className="textdes">
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem.
+                    Win, earn or purchase accessories and exclusive skins. Forge
+                    them to your NFT firearms increasing the rarity and value. 
                   </p>
                 </div>
               </div>
@@ -164,10 +164,9 @@ const Home = () => {
                       />
                     </svg>
                   </div>
-                  <h4>Sell NFTs</h4>
+                  <h4>#3 Sell NFT’s </h4>
                   <p className="textdes">
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem.
+                    List your NFT’s on the secondary market place
                   </p>
                 </div>
               </div>
@@ -219,11 +218,13 @@ const Home = () => {
                             )}
                           </div>
                           <div className="mint_text p-4">
-                            <img
-                              alt=""
-                              src={"../img/mint/m1.png"}
-                              className="mc_img"
-                            />
+                            <div className="logoImg_con">
+                              <img
+                                alt=""
+                                src={card.logoImg}
+                                className="mc_img"
+                              />
+                            </div>
                             <h4>{card.name}</h4>
                             <ul className="m-0 p-0">
                               <li>
