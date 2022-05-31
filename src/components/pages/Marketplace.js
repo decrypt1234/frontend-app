@@ -140,14 +140,15 @@ function Marketplace() {
             <div className="row">
               {allNFTs
                 ? allNFTs.map((card, key) => {
+                  console.log("cardsssssss",card)
                     return (
                       <div className={grid}>
                         <div className="items_slide">
                       <a href={`/NFTdetails/${card.id}`}>
                         <div className="items_profileimg" key={key}>
                           <div className="profile_left">
-                            <img alt="" className="profile_img" src={card.logoImage} />
-                            <img alt="" className="icheck_img" src={card.logoImage} />
+                            <img alt="" className="profile_img" src={card.image} />
+                            <img alt="" className="icheck_img" src={'../img/collections/check.png'} />
                           </div>
                           <div className="profile_right">
                             <span>sfs</span>
