@@ -62,7 +62,7 @@ function CreateCategories() {
     return true;
   };
 
-  const handleCreateCategorie = async () => {
+  const handleCreateCategory = async () => {
     if (handleValidationCheck() == false) {
       return;
     } else {
@@ -242,7 +242,7 @@ function CreateCategories() {
               <button
                 type="button"
                 className="btn btn-admin text-light"
-                onClick={handleCreateCategorie}
+                onClick={handleCreateCategory}
               >
                 Create Categorie
               </button>

@@ -5,7 +5,7 @@ import {
   // GENERAL_DATE,
   // GENERAL_TIMESTAMP,
   // MAX_ALLOWANCE_AMOUNT,
-  CURRENCY
+  CURRENCY,
 } from "./constants";
 // import degnrABI from "./../config/abis/dgnr8.json";
 // import erc20Abi from "./../config/abis/erc20.json";
@@ -247,24 +247,24 @@ export const handleBuyNft = async (
     if (isERC721) {
       await UpdateOrder({
         orderId: id,
-        nftId: details.oNftId, //to make sure we update the quantity left : NFTid
-        sellerID: details.sellerID, //to make sure we update the quantity left : walletAddress
+        nftId: details.nftID._id, //to make sure we update the quantity left : NFTid
+        seller: details.sellerID.walletAddress, //to make sure we update the quantity left : walletAddress
         qtyBought: Number(qty),
         qty_sold: Number(details.quantity_sold) + Number(qty),
         buyer: account.toLowerCase(),
-        LazyMintingStatus: LazyMintingStatus,
+        LazyMintingStatus: 0,
       });
 
       DeleteOrder({ orderId: id });
     } else {
       await UpdateOrder({
         orderId: id,
-        nftID: details.oNftId, //to make sure we update the quantity left : NFTid
-        sellerID: details.sellerID, //to make sure we update the quantity left : walletAddress
+        nftID: details.nftID._id, //to make sure we update the quantity left : NFTid
+        seller: details.sellerID.walletAddress, //to make sure we update the quantity left : walletAddress
         qtyBought: Number(qty),
         qty_sold: Number(details.quantity_sold) + Number(qty),
         buyer: account.toLowerCase(),
-        LazyMintingStatus: LazyMintingStatus,
+        LazyMintingStatus: 0,
       });
 
       if (
@@ -280,7 +280,9 @@ export const handleBuyNft = async (
   }
 
   NotificationManager.success("NFT Purchased Successfully");
-  slowRefresh();
+  setTimeout(() => {
+    window.location.href = `/multimintingpage/${details.nftID._id}`;
+  }, 1000);
 };
 
 // export const handleRemoveFromSale = async (orderId, account) => {
