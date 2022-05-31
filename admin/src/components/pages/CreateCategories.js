@@ -131,7 +131,6 @@ function CreateCategories() {
               <tr>
                 <th>Name</th>
                 <th>Image</th>
-                <th>Action</th>
               </tr>
             </thead>
             <br></br>
@@ -142,16 +141,9 @@ function CreateCategories() {
               ? myCategory.map((data, index) => (
                   <tbody>
                     <tr>
-                      <td>
-                        <img src={data.image} className="profile_i" alt="" />
-                      </td>
                       <td>{data.name}</td>
                       <td>
-                        <div class="btn-group btn-group-sm">
-                          <Link to={"/"} class="btn btn-danger">
-                            <Deletesvg />
-                          </Link>
-                        </div>
+                        <img src={data.image} className="profile_i" alt="" />
                       </td>
                     </tr>
                   </tbody>
@@ -161,8 +153,8 @@ function CreateCategories() {
         </div>
       </div>
 
-      <div className={`modal fade createNft ${isModal}`}
-
+      <div
+        className={`modal fade createNft ${isModal}`}
         id="NftModal"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"

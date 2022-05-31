@@ -218,11 +218,13 @@ const Home = () => {
                             )}
                           </div>
                           <div className="mint_text p-4">
-                            <img
-                              alt=""
-                              src={"../img/mint/m1.png"}
-                              className="mc_img"
-                            />
+                            <div className="logoImg_con">
+                              <img
+                                alt=""
+                                src={card.logoImg}
+                                className="mc_img"
+                              />
+                            </div>
                             <h4>{card.name}</h4>
                             <ul className="m-0 p-0">
                               <li>
