@@ -283,7 +283,7 @@ export const GetAllUserDetails = async () => {
 
 export const GetIndividualAuthorDetail = async (data) => {
   const requestOptions = {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: localStorage.getItem("Authorization"),
@@ -292,7 +292,7 @@ export const GetIndividualAuthorDetail = async (data) => {
   };
   try {
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + "/user/profileDetail",
+      process.env.REACT_APP_API_BASE_URL + `/user/getIndividualUser/`,
       requestOptions
     );
     const isJson = response.headers

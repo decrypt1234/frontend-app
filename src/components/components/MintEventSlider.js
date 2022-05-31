@@ -19,7 +19,7 @@ function MintEventSlider(props) {
     dots: false,
     speed: 300,
     centerPadding: "0px",
-    infinite: true,
+    infinite: false,
     // autoplaySpeed: 5000,
     // autoplay: true,
     initialSlide: 0,
@@ -37,7 +37,6 @@ function MintEventSlider(props) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          initialSlide: 2,
         },
       },
     ],
@@ -122,6 +121,7 @@ function MintEventSlider(props) {
     <Slider {...settings}>
       {nfts && nfts.length > 0
         ? nfts.map((n, i) => {
+            console.log("loop--->>");
             return (
               <div className="mintevent text-center">
                 <div className="start_btn">
@@ -147,8 +147,7 @@ function MintEventSlider(props) {
                     <button
                       onClick={() => {
                         let mint = currQty - 1;
-                        if(mint<1)
-                        mint=1
+                        if (mint < 1) mint = 1;
                         setCurrQty(Number(mint));
                       }}
                     >
@@ -169,8 +168,7 @@ function MintEventSlider(props) {
                     <button
                       onClick={() => {
                         let mint = currQty + 1;
-                        if(mint>n.totalQuantity)
-                        mint=n.totalQuantity
+                        if (mint > n.totalQuantity) mint = n.totalQuantity;
                         setCurrQty(Number(mint));
                       }}
                     >

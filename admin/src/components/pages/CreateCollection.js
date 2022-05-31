@@ -166,15 +166,15 @@ function CreateCollection() {
       return false;
     }
     if (logoImg === "" || logoImg === undefined) {
-      NotificationManager.error("Please Upload a Logo Image", "", 800);
+      NotificationManager.error("Please Upload Logo Image", "", 800);
       return false;
     }
     if (coverImg === "" || coverImg === undefined) {
-      NotificationManager.error("Please Upload a Cover Imag", "", 800);
+      NotificationManager.error("Please Upload Cover Image", "", 800);
       return false;
     }
     if (title.trim() === "" || title === undefined) {
-      NotificationManager.error("Please Enter a Title", "", 800);
+      NotificationManager.error("Please Enter Title", "", 800);
       return false;
     }
     if (royalty === "" || royalty === undefined) {
@@ -187,7 +187,7 @@ function CreateCollection() {
       return false;
     }
     if (datetime2 === "" || datetime2 === undefined) {
-      NotificationManager.error("Please Choose a Valid End Date", "", 800);
+      NotificationManager.error("Please Choose Valid End Date", "", 800);
       return false;
     }
     if (maxSupply === "" || maxSupply === undefined) {
@@ -366,7 +366,7 @@ function CreateCollection() {
             <thead>
               <br></br>
               <tr>
-                <th>Customer</th>
+                <th>Collection</th>
                 <th>Title</th>
                 <th>Symbol</th>
                 <th>Description</th>

@@ -75,11 +75,11 @@ function CreateBrands() {
 
   const handleValidationCheck = () => {
     if (logoImg === "" || logoImg === undefined) {
-      NotificationManager.error("Please Upload a Logo Image", "", 800);
+      NotificationManager.error("Please Upload Logo Image", "", 800);
       return false;
     }
     if (coverImg === "" || coverImg === undefined) {
-      NotificationManager.error("Please Upload a Cover Image", "", 800);
+      NotificationManager.error("Please Upload Cover Image", "", 800);
       return false;
     }
     if (title.trim() === "" || title === undefined) {

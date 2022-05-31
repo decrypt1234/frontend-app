@@ -54,19 +54,19 @@ function CreateNFTs() {
 
   const handleValidationCheck = async () => {
     if (nftImg === "" || nftImg === undefined) {
-      NotificationManager.error("Please Upload an Image", "", 800);
+      NotificationManager.error("Please Upload Image", "", 800);
       return false;
     }
     if (title.trim() === "" || title === undefined) {
-      NotificationManager.error("Please Enter a Title", "", 800);
+      NotificationManager.error("Please Enter Title", "", 800);
       return false;
     }
     if (description.trim() === "" || description === undefined) {
-      NotificationManager.error("Please Enter a Description", "", 800);
+      NotificationManager.error("Please Enter Description", "", 800);
       return false;
     }
     if (collection === "" || collection === undefined) {
-      NotificationManager.error("Please Choose a Collection", "", 800);
+      NotificationManager.error("Please Choose Collection", "", 800);
       return false;
     }
 
@@ -108,7 +108,7 @@ function CreateNFTs() {
       let reqBody = {
         page: 1,
         limit: 12,
-        collectionID: collection,
+        collectionID: JSON.parse(collection)._id,
         userID: "",
         categoryID: "",
         brandID: "",
@@ -133,6 +133,7 @@ function CreateNFTs() {
             "",
             800
           );
+          setLoading(false);
           return;
         }
         fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
@@ -141,7 +142,7 @@ function CreateNFTs() {
         fd.append("name", title);
         fd.append("nftFile", nftImg);
         fd.append("quantity", quantity);
-        fd.append("collectionID", collection);
+        fd.append("collectionID", JSON.parse(collection)._id);
         fd.append("description", description);
         fd.append("tokenID", collectionDetail.nextID);
         fd.append("type", collectionDetail.type);
@@ -152,7 +153,7 @@ function CreateNFTs() {
         console.log("field values--->", fd.values);
       } catch (e) {
         console.log("e", e);
-        NotificationManager.error(e, "", 800);
+        NotificationManager.error("Something went wrong", "", 800);
         setLoading(false);
         return;
       }
@@ -196,7 +197,7 @@ function CreateNFTs() {
         createRes = await createNft(fd);
       } catch (e) {
         console.log("err", e);
-        NotificationManager.error(e, "", 800);
+        NotificationManager.error("Something went wrong", "", 800);
         setLoading(false);
         return;
       }
@@ -421,7 +422,7 @@ function CreateNFTs() {
                     onChange={(e) => {
                       console.log("e.target.value", e.target.value);
                       setCollection(e.target.value);
-                      setQuantity(1)
+                      setQuantity(1);
                     }}
                   >
                     <option value="">Select</option>
