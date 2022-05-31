@@ -23,6 +23,7 @@ function NFTDetails() {
   const { id } = useParams();
 
   const [NFTDetails, setNFTDetails] = useState([]);
+  const [allNFTs, setAllNFTs] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -38,6 +39,13 @@ function NFTDetails() {
       const res = await getNFTs(reqData);
       console.log("result--->", res);
       setNFTDetails(res[0]);
+      const reqData1 = {
+        page: 1,
+        limit: 12,
+        collectionID: res[0].collection?._id,
+      };
+      const nfts = await getNFTs(reqData1);
+      setAllNFTs(nfts);
     } catch (e) {
       console.log("Error in fetching nft Details", e);
     }

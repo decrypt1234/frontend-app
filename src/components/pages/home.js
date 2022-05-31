@@ -188,7 +188,6 @@ const Home = () => {
             </div>
             {upcomingMints
               ? upcomingMints.slice(0, 3).map((card, key) => {
-                  console.log("upcoming mint-->", card.name);
                   const st = card.saleStartTime;
                   const et = card.saleEndTime;
                   const ct = moment()

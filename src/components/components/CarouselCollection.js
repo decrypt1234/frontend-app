@@ -80,7 +80,8 @@ function CarouselCollection() {
               return (
                 
                 <div className='collection_slide' key={key}>
-                  <img src={card.logoImg} class='img-fluid' alt='' />
+                  <a href={`/multimintingpage/${card._id}`}>
+                  <img src={card.logoImg} class='img-fluid w-100' alt='' />
                   <div className='collection_text'>
                     <div className='coll_profileimg'>
                       <img alt='' className='profile_img' src={card.coverImg} />
@@ -93,6 +94,7 @@ function CarouselCollection() {
                     <h3 className='collname'>{card.name}</h3>
                     <p>{card.desc}</p>
                   </div>
+                  </a>
                 </div>
               );
             })
