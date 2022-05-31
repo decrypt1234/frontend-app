@@ -1193,12 +1193,27 @@ header#myHeader {
 .mint_text {
   position: relative;
 }
-.mc_img {
+
+.logoImg_con {
+  position: absolute;
+    width: 100px;
+    border-radius: 100%;
+    height: 100px;
+    right: 10px;
+    top: -50px;
+}
+.logoImg_con img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+/* .mc_img {
   position: absolute;
   right: 10px;
   top: 0%;
   transform: translateY(-50%);
-}
+} */
 .mint_text h4 {
   margin-top: 0px;
 }

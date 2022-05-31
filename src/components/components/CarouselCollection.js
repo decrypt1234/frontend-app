@@ -78,6 +78,7 @@ function CarouselCollection() {
         {hotCollections
           ? hotCollections.map((card, key ) => {
               return (
+                
                 <div className='collection_slide' key={key}>
                   <img src={card.logoImg} class='img-fluid' alt='' />
                   <div className='collection_text'>
