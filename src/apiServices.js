@@ -104,7 +104,7 @@ export const Logout = async () => {
 export const getProfile = async () => {
   console.log("get profile is called");
   const response = await fetch(
-    process.env.REACT_APP_API_BASE_URL + "/user/Profile",
+    process.env.REACT_APP_API_BASE_URL + "/user/profile",
     {
       headers: { Authorization: getHeaders() },
     }
@@ -283,7 +283,7 @@ export const GetAllUserDetails = async () => {
 
 export const GetIndividualAuthorDetail = async (data) => {
   const requestOptions = {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: localStorage.getItem("Authorization"),
@@ -292,7 +292,8 @@ export const GetIndividualAuthorDetail = async (data) => {
   };
   try {
     let response = await fetch(
-      process.env.REACT_APP_API_BASE_URL + `/user/getIndividualUser/`,
+      process.env.REACT_APP_API_BASE_URL +
+        `/user/getIndividualUser/${data.userID}`,
       requestOptions
     );
     const isJson = response.headers
@@ -401,6 +402,30 @@ export const DeleteOrder = async (data) => {
   try {
     let response = await fetch(
       process.env.REACT_APP_API_BASE_URL + "/order/deleteOrder",
+      requestOptions
+    );
+    const isJson = response.headers
+      .get("content-type")
+      ?.includes("application/json");
+    const datas = isJson && (await response.json());
+    return datas.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const GetOwnedNftList = async (data) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    let response = await fetch(
+      process.env.REACT_APP_API_BASE_URL + "/nft/getOwnedNFTList",
       requestOptions
     );
     const isJson = response.headers
