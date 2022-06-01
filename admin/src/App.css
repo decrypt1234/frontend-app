@@ -609,5 +609,57 @@ tbody td {vertical-align: middle;}
   }
 
 
+.attributeAdded_con
+  {
+    max-height: 20vh;
+    overflow-y: scroll;
+  }
+
+ .createProperty{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 2px solid #adb5bd;
+    border-radius: 10px;
+    padding: 8px 10px;
+    margin: 4px;
+ }
+
+ .createProperty .nft_attr h5{
+     font-size: 18px;
+     font-weight: 600;
+     margin: 0px !important;
+ }
+
+ .createProperty .nft_attr h4{
+     font-size: 16px;
+     font-weight: 500;
+     color: #535e66;
+     margin: 0px !important;
+ }
+
+.remove-btn {
+    border: none;
+    background: none;
+    font-size: 24px;
+    color: #9b0e1b;
+ }
+
+ .modal-body .add_attr{
+    font-size: 24px;
+    font-weight: bold;
+ }
+
+ .modal{
+    pointer-events: none;
+}
+
+.modal-dialog{
+    pointer-events: all;
+ }
+
+ #AttributeModal .modal-dialog{
+     z-index: 1;
+ }
 
  
