@@ -176,17 +176,17 @@ export const handleBuyNft = async (
   //   // balance = window.sessionStorage.getItem("balance");
   //   balance = cookies.balance
   // }
-  if (balance)
-    if (
-      new BigNumber(balance.toString()).isLessThan(
-        new BigNumber(order[6].toString()).multipliedBy(
-          new BigNumber(qty.toString())
-        )
-      )
-    ) {
-      NotificationManager.error(`Buyer don't have enough ${CURRENCY}`);
-      return false;
-    }
+  // if (balance)
+  //   if (
+  //     new BigNumber(balance.toString()).isLessThan(
+  //       new BigNumber(order[6].toString()).multipliedBy(
+  //         new BigNumber(qty.toString())
+  //       )
+  //     )
+  //   ) {
+  //     NotificationManager.error(`Buyer don't have enough ${CURRENCY}`);
+  //     return false;
+  //   }
 
   let signature = details.signature;
   let options;
@@ -217,9 +217,7 @@ export const handleBuyNft = async (
     options = {
       from: account,
       gasLimit: 9000000,
-      value: new BigNumber(order[6].toString())
-        .multipliedBy(new BigNumber(qty.toString()))
-        .toString(),
+      value: 0,
     };
 
     let completeOrder = await marketplace.completeOrder(
@@ -252,7 +250,12 @@ export const handleBuyNft = async (
         qtyBought: Number(qty),
         qty_sold: Number(details.quantity_sold) + Number(qty),
         buyer: account.toLowerCase(),
-        LazyMintingStatus: 0,
+        LazyMintingStatus:
+          details.nftID.quantity_minted+qty == details.nftID.totalQuantity ? 0 : 1,
+        quantity_minted:
+          details.nftID.quantity_minted == details.nftID.totalQuantity
+            ? details.nftID.quantity_minted
+            : details.nftID.quantity_minted + qty,
       });
 
       DeleteOrder({ orderId: id });
@@ -264,7 +267,12 @@ export const handleBuyNft = async (
         qtyBought: Number(qty),
         qty_sold: Number(details.quantity_sold) + Number(qty),
         buyer: account.toLowerCase(),
-        LazyMintingStatus: 0,
+        LazyMintingStatus:
+          details.nftID.quantity_minted+qty == details.nftID.totalQuantity ? 0 : 1,
+        quantity_minted:
+          details.nftID.quantity_minted == details.nftID.totalQuantity
+            ? details.nftID.quantity_minted
+            : details.nftID.quantity_minted + qty,
       });
 
       if (

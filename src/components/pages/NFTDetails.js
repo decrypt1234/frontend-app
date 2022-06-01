@@ -6,6 +6,7 @@ import NFToffer from "../components/NFToffer";
 import NFThistory from "../components/NFThistory";
 import { getNFTs } from "../../helpers/getterFunctions";
 import { useParams } from "react-router-dom";
+import { convertToEth } from "../../helpers/numberFormatter";
 
 var bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -291,7 +292,10 @@ function NFTDetails() {
                 <h4>Price</h4>
                 <div className="price_div">
                   <img src={"../img/favicon.png"} class="img-fluid" alt="" />
-                  {NFTDetails.collection?.price.$numberDecimal} HNTR
+                  {Number(
+                    convertToEth(NFTDetails.collection?.price.$numberDecimal)
+                  ).toFixed(4)}{" "}
+                  HNTR
                 </div>
                 <button type="button" className="yellow_btn mr-3 mb-3">
                   Buy Now

@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Clock from "./../components/Clock";
 import { getCollections } from "../../helpers/getterFunctions";
 import moment from "moment";
+import { convertToEth } from "../../helpers/numberFormatter";
 
 const fadeInUp = keyframes`
   0% {
@@ -228,7 +229,9 @@ const Home = () => {
                             <ul className="m-0 p-0">
                               <li>
                                 <img alt="" src={"../img/mint/hntr.svg"} />{" "}
-                                {`${card.price} HNTR`}{" "}
+                                {`${Number(convertToEth(card.price)).toFixed(
+                                  4
+                                )} HNTR`}{" "}
                               </li>
                               <li>
                                 <img alt="" src={"../img/mint/items.svg"} />{" "}
