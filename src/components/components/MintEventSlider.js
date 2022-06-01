@@ -128,12 +128,12 @@ function MintEventSlider(props) {
                   Start
                   <span>Live</span>
                 </div>
-                <h4>{n.name}</h4>
+                <h4>Mint Event</h4>
                 <p>
-                  {props.leftQty} / {n.totalQuantity} Minted
+                  {n.quantity_minted} / {n.totalQuantity} Minted
                 </p>
                 <div className="da_img mb-3">
-                  <img src={n.image} alt="" />
+                  <img src={"../img/mint/da.png"} alt="" />
                 </div>
                 <Link to={"#"} className="connect_wallet_btn mb-4">
                   {" "}
@@ -168,7 +168,8 @@ function MintEventSlider(props) {
                     <button
                       onClick={() => {
                         let mint = currQty + 1;
-                        if (mint > n.totalQuantity) mint = n.totalQuantity;
+                        if (mint > n.totalQuantity - n.quantity_minted)
+                          mint = n.totalQuantity - n.quantity_minted;
                         setCurrQty(Number(mint));
                       }}
                     >

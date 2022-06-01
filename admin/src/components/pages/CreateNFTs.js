@@ -228,6 +228,11 @@ function CreateNFTs() {
       console.log("sellerOrder", sellerOrder);
       try {
         let signature = await getSignature(currentUser, ...sellerOrder);
+        if(signature==false){
+          NotificationManager.error("signature not found","",800)
+          setLoading(false)
+          return
+        }
         console.log("signature", signature);
         let reqParams = {
           nftId: createRes.data._id,

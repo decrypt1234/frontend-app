@@ -15,6 +15,7 @@ import { ethers } from "ethers";
 //import Loader from "../components/loader";
 import { NotificationManager } from "react-notifications";
 import Loader from "../components/loader";
+import { convertToEth } from "../../helpers/numberFormatter";
 
 function CreateCollection() {
   const [files, setFiles] = useState([]);
@@ -292,7 +293,7 @@ function CreateCollection() {
         fd.append("preSaleEndTime", datetime2);
         fd.append("totalSupply", maxSupply);
         fd.append("type", type);
-        fd.append("price", price);
+        fd.append("price", ethers.utils.parseEther(price.toString()));
         fd.append("royalty", royalty);
 
         console.log("form data is---->", fd.value);
@@ -399,7 +400,11 @@ function CreateCollection() {
                       <td>{item.royalityPercentage}</td>
                       <td>{item.preSaleStartTime}</td>
                       <td>{item.totalSupply}</td>
-                      <td>{item.price.$numberDecimal}</td>
+                      <td>
+                        {Number(
+                          convertToEth(item.price.$numberDecimal)
+                        ).toFixed(4)}
+                      </td>
                       <td>{item.categoryID?.name}</td>
                       <td>{item.brandID?.name}</td>
                     </tr>
