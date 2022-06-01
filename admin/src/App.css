@@ -650,16 +650,6 @@ tbody td {vertical-align: middle;}
     font-weight: bold;
  }
 
- .modal{
-    pointer-events: none;
-}
 
-.modal-dialog{
-    pointer-events: all;
- }
-
- #AttributeModal .modal-dialog{
-     z-index: 1;
- }
 
  

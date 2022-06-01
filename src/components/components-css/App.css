@@ -1447,10 +1447,10 @@ button.slick-arrow.slick-next {
   line-height: 19px;
   color: #9e9e9e;
 }
-.items_img {
+/* .items_img {
   margin-bottom: 15px;
   margin-top: -35px;
-}
+} */
 .items_profileimg span {
   background: #28353e;
   border: 1px solid #ef981d;
@@ -4208,6 +4208,7 @@ a:hover {
   object-fit: cover;
 }
 
+
 .Clock-days,
 .Clock-hours,
 .Clock-minutes {
@@ -4217,4 +4218,11 @@ a:hover {
 .da_img {
   height: 100px;
   width: 100%;
+}
+
+.coverImg_cont {
+  height: 210px;
+  overflow: hidden;
+  margin-top: -35px;
+  margin-bottom: 15px;
 }
