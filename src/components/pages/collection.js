@@ -72,8 +72,10 @@ function Collection() {
   const filterToggle = ()=> { 
     if(togglemode === 'filterhide'){ 
       setTogglemode('filtershow');
+      document.getElementsByClassName("filter_btn")[0].classList.add("active");
     }else{
       setTogglemode('filterhide');
+      document.getElementsByClassName("filter_btn")[0].classList.remove("active");
     } 
   }; 
 
