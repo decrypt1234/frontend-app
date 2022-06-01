@@ -4218,3 +4218,30 @@ a:hover {
   height: 100px;
   width: 100%;
 }
+
+
+
+/****Search*******/
+.navbar_form{
+  position: relative;
+}
+
+.searched_div{
+  position: absolute;
+  top: 75px;
+  color: #fff;
+  background: #1c2932;
+  min-width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+ display: none;
+}
+
+.searched_div.active{
+  display: block;
+}
+
+.searched_div p {
+  font-size: 18px;
+  font-weight: 600;
+}

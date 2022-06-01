@@ -643,16 +643,19 @@ function CreateNFTs() {
                 data-bs-target='#NftModal'
                 className='btn btn-admin text-light'
                 onClick={() => {
-                  let metaData = [];
-                  for (let i = 0; i < attrKeys.length; i++) {
-                    metaData.push({
-                      trait_type: attrKeys[i],
-                      value: attrValues[i],
-                    });
+                  if(attrKeys.length > 0){
+
+                    let metaData = [];
+                    for (let i = 0; i < attrKeys.length; i++) {
+                      metaData.push({
+                        trait_type: attrKeys[i],
+                        value: attrValues[i],
+                      });
+                    }
+                    setAttributes(metaData);
+                    console.log("ATTRIBUTES",attributes);
+                  }}
                   }
-                  setAttributes(metaData);
-                  console.log("ATTRIBUTES",attributes);
-                }}
                 >
                 Add Attributes
               </button>

@@ -58,6 +58,7 @@ export const handleBuyNft = async (
   let status;
   let marketplace;
   try {
+    console.log("order idd",id)
     order = await buildSellOrder(id);
     details = await getOrderDetails({ orderId: id });
     status = 1;
