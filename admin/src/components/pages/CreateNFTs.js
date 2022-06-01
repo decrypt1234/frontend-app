@@ -24,7 +24,6 @@ function CreateNFTs() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [collection, setCollection] = useState();
-  const [brand, setBrand] = useState();
   const [currentUser, setCurrentUser] = useState();
   const uploadedImage = React.useRef(null);
   const imageUploader = React.useRef(null);
@@ -35,10 +34,11 @@ function CreateNFTs() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isModal, setModal] = useState("");
-  const [attributes, setAttributes] = useState([{}]);
-  const [attributeCount, setAttributeCount] = useState(1);
-  const [attrKey, setAttrKey] = useState("");
-  const [attrValue, setAttrValue] = useState("");
+  const [currAttrKey, setCurrAttrKey] = useState("");
+  const [currAttrValue, setCurrAttrValue] = useState("");
+  const [attrKeys, setAttrKeys] = useState([]);
+  const [attrValues, setAttrValues] = useState([]);
+  const [attributes, setAttributes] = useState([]);
 
   const handleImageUpload = (e) => {
     const [file] = e.target.files;
@@ -101,6 +101,7 @@ function CreateNFTs() {
   }, []);
 
   const handleCreateNFT = async () => {
+    console.log("ATTRIBUTES",attributes);
     setLoading(true);
     setModal("");
     if (handleValidationCheck()) {
@@ -140,7 +141,7 @@ function CreateNFTs() {
           setLoading(false);
           return;
         }
-        fd.append("attributes", JSON.stringify([{ hello: "neha" }]));
+        fd.append("attributes", JSON.stringify(attributes));
         fd.append("levels", JSON.stringify([]));
         fd.append("creatorAddress", currentUser.toLowerCase());
         fd.append("name", title);
@@ -277,47 +278,38 @@ function CreateNFTs() {
     };
     fetch();
   }, []);
- 
-  const attributeHandler = (e) => {
-   
-    if (e?.target.name === "key") setAttrKey(e?.target.value);
 
-    if (e?.target.name === "value") setAttrValue(e?.target.value);
-    
+  const handlePropertyAdded = () => {
+    if (currAttrKey === "" || currAttrValue === "") {
+      NotificationManager.info("Please Enter Both the Fields", "", 800);
+      return;
+    }
 
+    if (attrKeys.includes(currAttrKey)) {
+      NotificationManager.error("Cannot Add Same Property Twice", "", 800);
+      return;
+    }
+
+    let tempArr1 = [];
+    let tempArr2 = [];
+    if (currAttrKey) {
+      tempArr1.push(...attrKeys, currAttrKey);
+      tempArr2.push(...attrValues, currAttrValue);
+    }
+
+    setAttrKeys(tempArr1);
+    setAttrValues(tempArr2);
+    setCurrAttrKey("");
+    setCurrAttrValue("");
   };
 
-  const attributeInputmethod = () => {
-    var inputs = [];
-    for (let i = 0; i < attributeCount; i = i + 1) {
-      inputs.push(
-        <>
-          <div className='col-md-6 mb-1'>
-            <input
-              type='text'
-              className='form-control col-md-6'
-              id='attribute-key'
-              placeholder='e.g. Size'
-              value={attrKey}
-              name='key'
-              onChange={(e) => attributeHandler(e)}
-            />
-          </div>
-          <div className='col-md-6 mb-1'>
-            <input
-              type='text'
-              className='form-control col-md-6'
-              id='attribute-value'
-              placeholder='e.g. M'
-              value={attrValue}
-              name='value'
-              onChange={(e) => attributeHandler(e)}
-            />
-          </div>
-        </>
-      );
-    }
-    return inputs;
+  const handlePropertyRemoved = async (index) => {
+    let tempArr1 = [...attrKeys];
+    tempArr1[index] = "";
+    setAttrKeys(tempArr1);
+    let tempArr2 = [...attrValues];
+    tempArr2[index] = "";
+    setAttrValues(tempArr2);
   };
 
   return (
@@ -375,11 +367,13 @@ function CreateNFTs() {
         </div>
       </div>
       <div
-        className={`modal fade createNft ${isModal}`}
+        className={`modal fade createNft ${isModal} `}
         id='NftModal'
         tabindex='-1'
         aria-labelledby='exampleModalLabel'
-        aria-hidden='true'>
+        aria-hidden='true'
+        data-keyboard='false'
+        data-backdrop='static'>
         <div className='modal-dialog modal-lg'>
           <div className='modal-content'>
             <div className='modal-header'>
@@ -514,7 +508,8 @@ function CreateNFTs() {
                     type='button'
                     data-bs-toggle='modal'
                     data-bs-target='#AttributeModal'
-                    className='btn btn-admin text-light'>
+                    className='btn btn-admin text-light'
+                    >
                     Add Attributes
                   </button>
                 </div>
@@ -555,11 +550,13 @@ function CreateNFTs() {
         </div>
       </div>
       <div
-        className={`modal  fade`}
+        className="modal fade"
         id='AttributeModal'
         tabindex='-1'
         aria-labelledby='attributeModal'
-        aria-hidden='true'>
+        aria-hidden='true'
+        data-keyboard='false'
+        data-backdrop='static'>
         <div className='modal-dialog modal-dialog-centered'>
           <div className='modal-content'>
             <div className='modal-header'>
@@ -575,13 +572,79 @@ function CreateNFTs() {
                 aria-label='Close'></button>
             </div>
             <div className='modal-body'>
-              <form className='row'>{attributeInputmethod()}</form>
+              <form className='row justify-content-center '>
+                {" "}
+                <div className='col-md-6 mb-1'>
+                  <input
+                    type='text'
+                    className='form-control col-md-6'
+                    id='attribute-key'
+                    placeholder='e.g. Size'
+                    value={currAttrKey}
+                    onChange={(e) => setCurrAttrKey(e.target.value)}
+                  />
+                </div>
+                <div className='col-md-5 mb-1'>
+                  <input
+                    type='text'
+                    className='form-control col-md-6'
+                    id='attribute-value'
+                    placeholder='e.g. M'
+                    value={currAttrValue}
+                    onChange={(e) => setCurrAttrValue(e.target.value)}
+                  />
+                </div>
+                <button
+                  type='button'
+                  className='btn btn-admin text-light col-md-1 add_attr'
+                  onClick={handlePropertyAdded}>
+                  +
+                </button>
+              </form>
+              <div className='row mt-3 attributeAdded_con'>
+                {attrKeys && attrValues
+                  ? attrKeys.map((attrKey, key) => {
+                      return attrKey !== "" ? (
+                        <div className='col-lg-6 col-md-6 col-sm-6'>
+                          <div className='createProperty'>
+                            <div className='nft_attr'>
+                              <h5>{attrKey}</h5>
+                              <h4>{attrValues[key]}</h4>
+                            </div>
+                            <button
+                              className='remove-btn btn-main'
+                              onClick={() => {
+                                handlePropertyRemoved(key);
+                              }}>
+                              <i className='fa fa-trash' aria-hidden='true'></i>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      );
+                    })
+                  : ""}
+              </div>
             </div>
             <div className='modal-footer justify-content-center'>
               <button
                 type='button'
+                data-bs-toggle='modal'
+                data-bs-target='#NftModal'
                 className='btn btn-admin text-light'
-                onClick={attributeHandler()}>
+                onClick={() => {
+                  let metaData = [];
+                  for (let i = 0; i < attrKeys.length; i++) {
+                    metaData.push({
+                      trait_type: attrKeys[i],
+                      value: attrValues[i],
+                    });
+                  }
+                  setAttributes(metaData);
+                  console.log("ATTRIBUTES",attributes);
+                }}
+                >
                 Add Attributes
               </button>
             </div>
