@@ -239,7 +239,15 @@ function Author() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img alt="" src={"../img/author/icon5.svg"} class="img-fluid" />{" "}
+                <img
+                  alt=""
+                  src={
+                    profile?.profileIcon
+                      ? profile?.profileIcon
+                      : "../img/author/icon5.svg"
+                  }
+                  class="img-fluid"
+                />{" "}
                 Offers
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
