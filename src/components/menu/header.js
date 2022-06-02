@@ -23,11 +23,11 @@ import Soldierssvg from "../SVG/Soldierssvg";
 // import NFTrankingsvg from "../SVG/NFTrankingsvg";
 // import LiveAuctonsvg from "../SVG/LiveAuctonsvg";
 import Firearmsvg from "../SVG/Firearmsvg";
-
 import { slowRefresh } from "./../../helpers/NotifyStatus";
 import PopupModal from "./../components/AccountModal/popupModal";
 import "./../components-css/App.css";
 import { getCollections, getNFTs } from "../../helpers/getterFunctions";
+import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 
 setDefaultBreakpoints([{ xs: 0 }, { l: 1199 }, { xl: 1200 }]);
 
@@ -123,7 +123,8 @@ const Header = function () {
   const [userDetails, setUserDetails] = useState();
   const [scolns, setSColns] = useState([]);
   const [sNfts, setSNfts] = useState([]);
-  const [showSearchDiv, setShowSearchDiv] = useState('');
+  const [showSearchDiv, setShowSearchDiv] = useState("");
+  const [searchedText, setShowSearchedText] = useState("");
 
   useEffect(() => {
     if (cookies["selected_account"]) {
@@ -356,19 +357,26 @@ const Header = function () {
   };
 
   const handleSearch = async (e) => {
-    setShowSearchDiv('active')
+    setShowSearchDiv("active");
     console.log("onchange search text--->", e.target.value);
-    const _result = [];
-    const reqData = {
-      page: 1,
-      limit: 12,
-      searchText: e.target.value,
-    };
-    const colns = await getCollections(reqData);
-    setSColns(colns);
-    const nfts = await getNFTs(reqData);
-    setSNfts(nfts);
-    console.log("searched result--->", colns, nfts);
+    if (e.target.value !== "") {
+      setShowSearchedText(e.target.value);
+      const reqData = {
+        page: 1,
+        limit: 12,
+        searchText: e.target.value,
+      };
+      const colns = await getCollections(reqData);
+      setSColns(colns);
+      const nfts = await getNFTs(reqData);
+      setSNfts(nfts);
+      console.log("searched result--->", colns, nfts);
+      if (!colns || !nfts) {
+        setShowSearchDiv("");
+      }
+    } else {
+      setShowSearchDiv("");
+    }
   };
 
   return (
@@ -460,27 +468,30 @@ const Header = function () {
                 <img src={"../img/search.svg"} alt='' />
               </button>
             </form>
-            {
-              (!sNfts || !scolns) ?   <div className="searched_div">
-              {scolns.length > 0 && <p>Collections</p>}
-               <ul>
-                 {scolns
-                   ? scolns.map((item) => {
-                       return <li>{item.name}</li>;
-                     })
-                   : ""}
-               </ul>
-              {sNfts.length > 0 && <p>NFTs</p>}
-               <ul>
-                 {sNfts
-                   ? sNfts.map((item) => {
-                       return <li>{item.name}</li>;
-                     })
-                   : ""}
-               </ul>
-             </div> :""
-            }
-          
+            {sNfts.length > 0 || (scolns.length > 0 && searchedText) ? (
+              <div className={`searched_div ${showSearchDiv}`}>
+                {scolns.length > 0 && <p>Collections</p>}
+                <ul>
+                  {scolns
+                    ? scolns.map((item) => {
+                        return (
+                        <li> <a href={`/collection/`}>{item.name}</a></li>)
+                      })
+                    : ""}
+                </ul>
+                {sNfts.length > 0 && <p>NFTs</p>}
+                <ul>
+                  {sNfts
+                    ? sNfts.map((item) => {
+                        return <li><a href={`/NFTdetails/${item._id}`}>{item.name}</a></li>;
+                      })
+                    : ""}
+                </ul>
+              </div>
+            ) : (
+              ""
+            )}
+
             <ul className='navbar-nav me-auto align-items-center mb-2 mb-lg-0'>
               <li className='nav-item'>
                 <NavLink
