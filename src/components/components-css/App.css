@@ -4237,9 +4237,7 @@ a:hover {
  display: none;
 }
 
-.searched_div.active{
-  display: block;
-}
+
 
 .searched_div p {
   font-size: 18px;

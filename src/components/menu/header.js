@@ -460,24 +460,27 @@ const Header = function () {
                 <img src={"../img/search.svg"} alt='' />
               </button>
             </form>
-            <div className={`searched_div ${showSearchDiv}`}>
-             {scolns && <p>Collections</p>} 
-              <ul>
-                {scolns
-                  ? scolns.map((item) => {
-                      return <li>{item.name}</li>;
-                    })
-                  : ""}
-              </ul>
-             {sNfts && <p>NFTs</p> } 
-              <ul>
-                {sNfts
-                  ? sNfts.map((item) => {
-                      return <li>{item.name}</li>;
-                    })
-                  : ""}
-              </ul>
-            </div>
+            {
+              (!sNfts || !scolns) ?   <div className="searched_div">
+              {scolns.length > 0 && <p>Collections</p>}
+               <ul>
+                 {scolns
+                   ? scolns.map((item) => {
+                       return <li>{item.name}</li>;
+                     })
+                   : ""}
+               </ul>
+              {sNfts.length > 0 && <p>NFTs</p>}
+               <ul>
+                 {sNfts
+                   ? sNfts.map((item) => {
+                       return <li>{item.name}</li>;
+                     })
+                   : ""}
+               </ul>
+             </div> :""
+            }
+          
             <ul className='navbar-nav me-auto align-items-center mb-2 mb-lg-0'>
               <li className='nav-item'>
                 <NavLink

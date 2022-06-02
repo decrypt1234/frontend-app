@@ -16,6 +16,7 @@ import { ethers } from "ethers";
 import { NotificationManager } from "react-notifications";
 import Loader from "../components/loader";
 import { convertToEth } from "../../helpers/numberFormatter";
+import moment from "moment";
 
 function CreateCollection() {
   const [files, setFiles] = useState([]);
@@ -79,12 +80,24 @@ function CreateCollection() {
   function handleChange(ev) {
     if (!ev.target["validity"].valid) return;
     const dt = ev.target["value"] + ":00Z";
+    const ct = moment().toISOString();
+    if(dt < ct)
+    {
+      NotificationManager.error("Start date should not be of past date","",800);
+      return;
+    }
+    console.log("start date---->", dt, ct);
     setPreSaleStartTime(dt);
   }
 
   function handleChange2(evv) {
     if (!evv.target["validity"].valid) return;
     const dtt = evv.target["value"] + ":00Z";
+    if(dtt < preSaleStartTime)
+    {
+      NotificationManager.error("End date should be greater than Start date","",800);
+      return;
+    }
     setDatetime2(dtt);
   }
 
@@ -556,7 +569,16 @@ function CreateCollection() {
                     id="recipient-name"
                     value={royalty}
                     name="royalty"
-                    onChange={(e) => setRoyalty(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (!/^\d*?\d*$/.test(e.key)) e.preventDefault();
+                    }}
+                    onChange={(e) => {
+                      if(e.target.value > 100)
+                      {
+                        NotificationManager.error("Royalty can't be greater than 100", "",800);
+                        return;
+                      }
+                      setRoyalty(e.target.value)}}
                   />
                 </div>
                 <div className="col-md-6 mb-1">

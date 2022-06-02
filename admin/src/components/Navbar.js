@@ -124,21 +124,7 @@ const Navbar = (props) => {
     setProvider();
   };
 
-  useEffect(() => {
-    window.addEventListener('load', async () => {
-      const wallets = await onboard.connectWallet();
-      console.log("wallet address--->", wallets[0]);
-      const success = await onboard.setChain({
-        chainId: process.env.REACT_APP_CHAIN_ID,
-      });
-      console.log("setChain method", success);
-      const primaryWallet = wallets[0];
-      setChainId(primaryWallet.chains[0].id);
-      console.log("provider", primaryWallet.provider);
-      setProvider(primaryWallet.provider);
-      console.log("provider", provider);
-    })
-  },[])
+ 
 
   useEffect(() => {
     console.log("provider in useEffect", provider);
