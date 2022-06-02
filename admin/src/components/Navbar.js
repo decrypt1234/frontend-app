@@ -102,7 +102,7 @@ const onboard = Onboard({
 
 const Navbar = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies([]);
-  const [provider, setProvider] = useState(null);
+  const [provider, setProvider] = useState();
   const [account, setAccount] = useState();
   const [chainId, setChainId] = useState();
   const [isAccountSwitched, setIsAccountSwitched] = useState(false);
@@ -115,10 +115,16 @@ const Navbar = (props) => {
   }, []);
 
   const refreshState = () => {
+    removeCookie("selected_account", { path: "/" });
+    removeCookie("chain_id", { path: "/" });
+    removeCookie("balance", { path: "/" });
+
     setAccount("");
     setChainId("");
-    setProvider(null);
+    setProvider();
   };
+
+ 
 
   useEffect(() => {
     console.log("provider in useEffect", provider);
@@ -135,7 +141,7 @@ const Navbar = (props) => {
         }
       });
     }
-  }, [provider]);
+  }, [provider, account]);
 
   const getUserProfile = async () => {
     const profile = await getProfile();
@@ -238,10 +244,7 @@ const Navbar = (props) => {
   };
 
   const disconnectWallet = async () => {
-    removeCookie("selected_account", { path: "/" });
-    removeCookie("chain_id", { path: "/" });
-    removeCookie("balance", { path: "/" });
-
+    
     // const [primaryWallet] = await onboard.state.get().wallets;
     // if (!primaryWallet) return;
     await onboard.disconnectWallet({ label: "Metamask" });
@@ -262,7 +265,7 @@ const Navbar = (props) => {
                 Please logout from the current account if you would like to
                 switch the account?
               </p>
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-center align-items-center">
                 <button
                   className="btn confirm_btn"
                   onClick={() => {
@@ -270,12 +273,6 @@ const Navbar = (props) => {
                   }}
                 >
                   Logout
-                </button>
-                <button
-                  className="btn cancel_btn"
-                  onClick={() => setIsAccountSwitched(false)}
-                >
-                  Cancel
                 </button>
               </div>
             </div>
@@ -291,7 +288,7 @@ const Navbar = (props) => {
             <div className="switch_container">
               <h3>Chain Switched</h3>
               <p className="my-4 mr-2">
-                Please Switch to Rinkeby Testnet Network
+                Please Switch to Binance Testnet Network
               </p>
               <div className="d-flex justify-content-center align-items-center">
                 <button
