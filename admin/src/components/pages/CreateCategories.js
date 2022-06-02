@@ -167,7 +167,7 @@ function CreateCategories() {
                 className="modal-title text-yellow font-24 font-600"
                 id="exampleModalLabel"
               >
-                Create New Categorie
+                Create New Category
               </h5>
               <button
                 type="button"
@@ -180,7 +180,7 @@ function CreateCategories() {
               <form className="row">
                 <div className="mb-1 col-md-4 offset-md-4">
                   <label for="recipient-name" className="col-form-label">
-                    Upload Categorie Image *
+                    Upload Category Image *
                   </label>
                   <div
                     style={{
@@ -244,7 +244,7 @@ function CreateCategories() {
                 className="btn btn-admin text-light"
                 onClick={handleCreateCategory}
               >
-                Create Categorie
+                Create Category
               </button>
             </div>
           </div>
