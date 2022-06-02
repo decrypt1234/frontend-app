@@ -103,7 +103,8 @@ function MintEventSlider(props) {
         account,
         balance,
         qty,
-        1
+        1,
+        props.id
       );
       if (res == false) {
         setLoading(false);

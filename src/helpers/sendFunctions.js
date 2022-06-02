@@ -51,7 +51,8 @@ export const handleBuyNft = async (
   account,
   balance,
   qty = 1,
-  LazyMintingStatus
+  LazyMintingStatus,
+  collectionId
 ) => {
   let order;
   let details;
@@ -252,7 +253,9 @@ export const handleBuyNft = async (
         qty_sold: Number(details.quantity_sold) + Number(qty),
         buyer: account.toLowerCase(),
         LazyMintingStatus:
-          details.nftID.quantity_minted+qty == details.nftID.totalQuantity ? 0 : 1,
+          details.nftID.quantity_minted + qty == details.nftID.totalQuantity
+            ? 0
+            : 1,
         quantity_minted:
           details.nftID.quantity_minted == details.nftID.totalQuantity
             ? details.nftID.quantity_minted
@@ -269,7 +272,9 @@ export const handleBuyNft = async (
         qty_sold: Number(details.quantity_sold) + Number(qty),
         buyer: account.toLowerCase(),
         LazyMintingStatus:
-          details.nftID.quantity_minted+qty == details.nftID.totalQuantity ? 0 : 1,
+          details.nftID.quantity_minted + qty == details.nftID.totalQuantity
+            ? 0
+            : 1,
         quantity_minted:
           details.nftID.quantity_minted == details.nftID.totalQuantity
             ? details.nftID.quantity_minted
@@ -295,7 +300,7 @@ export const handleBuyNft = async (
 
   NotificationManager.success("NFT Purchased Successfully");
   setTimeout(() => {
-    window.location.href = `/multimintingpage/${details.nftID._id}`;
+    window.location.href = `/multimintingpage/${collectionId}`;
   }, 1000);
 };
 
