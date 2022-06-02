@@ -1833,7 +1833,7 @@ label {
   width: 20px;
 } */
 button.filter_btn {
-  background: #ef981d;
+  background: transparent;
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 600;
@@ -1844,6 +1844,9 @@ button.filter_btn {
   height: 45px;
   border-radius: 40px;
   width: 10%;
+}
+button.filter_btn.active {
+  background: #ef981d;
 }
 .market_div {
   width: 9%;
@@ -3829,6 +3832,10 @@ a:hover {
   display: block;
   position: relative;
   margin-bottom: 10px;
+  background: transparent;
+    width: 100%;
+    text-align: left;
+    border: 0;
 }
 .drop_down_tlt svg {
   position: absolute;
