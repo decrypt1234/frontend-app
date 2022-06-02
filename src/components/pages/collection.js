@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import Footer from "../components/footer";
 import CollectionList from "../components/CollectionList";
 import ItemSVG from "../SVG/ItemSVG";
@@ -10,6 +10,9 @@ import { useCookies } from "react-cookie";
 import { NotificationManager } from "react-notifications";
 import Threegrid from '../SVG/Threegrid';
 import Twogrid from '../SVG/Twogrid';
+import AllNFTs from "../SVG/AllNFTs";
+import Firearmsvg from "../SVG/Firearmsvg";
+import Soldierssvg from "../SVG/Soldierssvg";
 
 const bgImgStyle = {
   backgroundImage: "url(./img/background.jpg)",
@@ -29,6 +32,12 @@ var bgImgarrow = {
   backgroundImage: "url(./img/ep_arrow-right-bold.png)",
   backgroundRepeat: "no-repeat",
 };
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+]
 
 function Collection() {
 
@@ -58,7 +67,19 @@ function Collection() {
   }, [currentUser]);
 
 
- 
+   
+  const [togglemode, setTogglemode] = useState('filterhide');
+  const filterToggle = ()=> { 
+    if(togglemode === 'filterhide'){ 
+      setTogglemode('filtershow');
+      document.getElementsByClassName("filter_btn")[0].classList.add("active");
+    }else{
+      setTogglemode('filterhide');
+      document.getElementsByClassName("filter_btn")[0].classList.remove("active");
+    } 
+  }; 
+
+
   return (
     <div style={bgImgStyle}>
       <section className='collection_banner pdd_8' style={bgImage}></section>
@@ -155,7 +176,7 @@ function Collection() {
 
           <div className='row'>
             <div className='col-lg-12'>
-              <div className='market_search_form mb-5'>
+              <div className='market_search_form mb-4'>
                 <form class='d-flex marketplace_form'>
                   <input
                     class=' me-2'
@@ -194,44 +215,45 @@ function Collection() {
                     <Threegrid />
                   </div>
                 {/* </div> */}
-                <button type="button" className="filter_btn">Adv.Filter</button>
+                <button type="button" className="filter_btn" onClick={filterToggle}>Adv.Filter</button>
               </div>
              
-                <button type='button' className='filter_btn'>
-                  Adv.Filter
-                </button>
               </div>
-              <div className='filter'>
+              <div className={`filter mb-5 ${togglemode}`}>
                 <div className='filtercol'>
                   <form>
-                    <ul>
-                      <span className='drop_down_tlt'>
-                        Status <Dropdown />
-                      </span>
+                  <button type="button" class="drop_down_tlt" data-bs-toggle="collapse" data-bs-target="#demo">
+                    Status <Dropdown />
+                  </button>
+                  <div id="demo" class="collapse show">
+                    <ul className="status_ul">
                       <li>
-                        <Link to={"/"} className=''>
+                        <Link to={"/"} className='filter_border'>
                           Buy Now
                         </Link>
-                        <Link to={"/"} className=''>
+                        <Link to={"/"} className='filter_border'>
                           On Auction
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/"} className=''>
+                        <Link to={"/"} className='filter_border'>
                           Now
                         </Link>
-                        <Link to={"/"} className=''>
+                        <Link to={"/"} className='filter_border'>
                           Offers
                         </Link>
                       </li>
                     </ul>
-                    <ul>
-                      <span className='drop_down_tlt'>
-                        Price <Dropdown />
-                      </span>
+                  </div>
+                  
+                  <button type="button" class="drop_down_tlt" data-bs-toggle="collapse" data-bs-target="#demo2">
+                    Price <Dropdown />
+                  </button>
+                  <div id="demo2" class="collapse show">
+                    <ul className="status_ul">
                       <li>
                         <select
-                          class='form-select'
+                          class='form-select filter_apply filter-text-left'
                           aria-label='Default select example'>
                           <option selected>$ Australian Dollar (AUD)</option>
                           <option value='1'>One</option>
@@ -240,16 +262,16 @@ function Collection() {
                         </select>
                       </li>
                       <li>
-                        <div class=''>
+                        <div class='range_input'>
                           <input
-                            type='number'
+                            type='text'
                             class='form-control'
                             id='exampleInputPassword1'
                             value='min'
                           />
-                          to
+                          <span className="span_class">to</span>
                           <input
-                            type='number'
+                            type='text'
                             class='form-control'
                             id='exampleInputPassword1'
                             value='max'
@@ -257,73 +279,80 @@ function Collection() {
                         </div>
                       </li>
                       <li>
-                        <button type='submit' class='btn btn-primary'>
+                        <button type='submit' class='filter_apply'>
                           Apply
                         </button>
                       </li>
                     </ul>
+                  </div>
                   </form>
                 </div>
                 <div className='filtercol'>
                   <form>
-                    <ul>
-                      <span className='drop_down_tlt'>
-                        Collections <Dropdown />
-                      </span>
-                      <li>
-                        <input type='text' placeholder='Search..' />
-                      </li>
-                    </ul>
+                    <button type="button" class="drop_down_tlt" data-bs-toggle="collapse" data-bs-target="#demo3">
+                      Collections <Dropdown />
+                    </button>
+                    <div id="demo3" class="collapse show">
+                      <input type='text' value='Filter' className="filter_apply filter-text-left filter_padd" />
+                    </div>
                   </form>
                 </div>
                 <div className='filtercol'>
-                  <ul>
-                    <span className='drop_down_tlt'>
-                      Categories <Dropdown />
-                    </span>
-                    <li>Firearms</li>
-                    <li>Soldiers</li>
-                    <li>Hot List</li>
-                    <li>NFT Ranking</li>
-                    <li>Live Auctions</li>
-                  </ul>
+                  <button type="button" class="drop_down_tlt mb-4" data-bs-toggle="collapse" data-bs-target="#demo4">
+                    Categories <Dropdown />
+                  </button>
+                  <div id="demo4" class="collapse show">
+                    <ul>
+                      <li>
+                        <Link to={"/marketplace"} className='sub-items'>
+                          <AllNFTs />
+                          All NFTs
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={"/marketplaceCollection"} className='sub-items'>
+                          <Firearmsvg />
+                          Firearms
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={"/Soldiers"} className="sub-items">
+                          <Soldierssvg />
+                          Soldiers
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={"/Accesories"} className="sub-items">
+                          <Soldierssvg />
+                          Accesories
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div className='filtercol'>
-                  <ul>
-                    <span className='drop_down_tlt'>
-                      On Sale In <Dropdown />
-                    </span>
-                    <li>
-                      <input type='text' placeholder='Search..' />
-                    </li>
-                    <li>
-                      <div class='form-check'>
-                        <input
-                          class='form-check-input'
-                          type='checkbox'
-                          id='check1'
-                          name='option1'
-                          value='something'
-                          checked
-                        />
-                        <label class='form-check-label'>$HNTR</label>
-                      </div>
-                    </li>
-                    <li>
-                      <div class='form-check'>
-                        <input
-                          type='checkbox'
-                          class='form-check-input'
-                          id='check2'
-                          name='option2'
-                          value='something'
-                        />
-                        <label class='form-check-label' for='check2'>
-                          BUSD
-                        </label>
-                      </div>
-                    </li>
-                  </ul>
+                  <button type="button" class="drop_down_tlt mb-4" data-bs-toggle="collapse" data-bs-target="#demo5">
+                    On Sale In <Dropdown />
+                  </button>
+                  <div id="demo5" class="collapse show">
+                    <ul>
+                      <li>
+                        <input type='text' value='Filter' className="filter_apply filter-text-left filter_padd" />
+                      </li>
+                      <li>
+                      <form action="#" className="checked_form">
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="test1" name="radio-group" />
+                          <label for="test1">Apple</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input type="radio" id="test2" name="radio-group" />
+                          <label for="test2">Apple</label>
+                        </div>
+                      </form>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div> 
             </div>
